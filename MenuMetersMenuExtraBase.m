@@ -254,13 +254,16 @@
     if(!window){
         return NO;
     }
-    NSInteger windowID=window.windowNumber;
-    NSArray*onScreenWindows=CFBridgingRelease(CGWindowListCreate(kCGWindowListOptionOnScreenOnly, kCGNullWindowID));
-    for(id x in onScreenWindows){
-        if(windowID==(NSInteger)x)
-            return NO;
+    // Right after the status item is created, its window has no size yet and
+    // its occlusion state is not meaningful. Do not mistake that for hiding.
+    if(window.frame.size.width<=0 || window.frame.size.height<=0){
+        return NO;
     }
-    return YES;
+    // NSStatusItem.isVisible stays YES when the system temporarily hides an item
+    // because the menu bar is full, so use the window's occlusion state instead.
+    // Note that CGWindowList does not contain status item windows on recent macOS,
+    // so comparing window.windowNumber against that list always reports hidden.
+    return !(window.occlusionState & NSWindowOcclusionStateVisible);
 }
 -(NSColor*)menuBarTextColor
 {

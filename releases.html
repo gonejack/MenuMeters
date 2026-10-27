@@ -17,6 +17,12 @@ dt{
 </head>
 <body>
 <dl>
+    <dt>2.1.6.3 (Oct/27/2026)</dt>
+    <dd>
+        Fixes a false "MenuMeters is hidden due to lack of space" alert. The
+        status item visibility check no longer relies on CGWindowList, which
+        does not include status item windows on recent macOS versions.
+    </dd>
     <dt>2.1.6.2 (Oct/20/2026)</dt>
     <dd>
         MenuMeters no longer refuses to launch when the legacy pppconfd socket is missing,
