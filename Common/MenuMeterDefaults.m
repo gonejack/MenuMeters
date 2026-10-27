@@ -703,20 +703,44 @@
 
 - (NSColor *)loadColorPref:(NSString *)prefName defaultValue:(NSColor *)defaultValue {
 
-    NSData* data = [[NSUserDefaults standardUserDefaults] objectForKey:prefName];
-    if(data){
-        NSColor*color=[NSUnarchiver unarchiveObjectWithData:data];
-        if(color){
+    id data = [[NSUserDefaults standardUserDefaults] objectForKey:prefName];
+    if ([data isKindOfClass:[NSData class]]) {
+        NSColor *color = [NSKeyedUnarchiver unarchivedObjectOfClass:[NSColor class]
+                                                           fromData:data
+                                                              error:NULL];
+        if (!color) {
+            // Preferences written by MenuMeters 2.1.6 and earlier used the
+            // legacy NSArchiver format. Keep reading them so upgrading users
+            // do not lose their custom colours. A corrupt value must never
+            // take the app down at startup, so failures are ignored.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+            @try {
+                color = [NSUnarchiver unarchiveObjectWithData:data];
+            } @catch (NSException *exception) {
+                NSLog(@"MenuMeters could not read legacy colour pref %@: %@", prefName, exception.reason);
+            }
+#pragma clang diagnostic pop
+        }
+        if ([color isKindOfClass:[NSColor class]]) {
             return color;
         }
-	}
+    }
     return defaultValue;
 } // _loadColorPref
 
 - (void)saveColorPref:(NSString *)prefName value:(NSColor *)value {
-	if (value) {
-        [[NSUserDefaults standardUserDefaults] setObject:[NSArchiver archivedDataWithRootObject:value] forKey:prefName];
-	}
+    if (value) {
+        NSError *error = nil;
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:value
+                                             requiringSecureCoding:YES
+                                                             error:&error];
+        if (data) {
+            [[NSUserDefaults standardUserDefaults] setObject:data forKey:prefName];
+        } else {
+            NSLog(@"MenuMeters could not archive colour pref %@: %@", prefName, error);
+        }
+    }
 } // _saveColorPref
 
 - (NSString *)loadStringPref:(NSString *)prefName defaultValue:(NSString *)defaultValue {

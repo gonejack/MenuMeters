@@ -21,8 +21,8 @@
 // 	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#import <PreferencePanes/PreferencePanes.h>
 #import <SystemConfiguration/SystemConfiguration.h>
+#import <AppKit/AppKit.h>
 #import <sys/types.h>
 #import <sys/sysctl.h>
 #import <unistd.h>

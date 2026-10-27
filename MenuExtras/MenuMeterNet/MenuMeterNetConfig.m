@@ -108,7 +108,7 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
 	CFRunLoopAddSource(CFRunLoopGetCurrent(), scRunSource, kCFRunLoopDefaultMode);
 
 	// Set up IOKit port
-	kern_return_t err = IOMasterPort(MACH_PORT_NULL, &masterPort);
+	kern_return_t err = MenuMetersIOMainPort(&masterPort);
 	if ((err != KERN_SUCCESS) || !masterPort) {
 		NSLog(@"MenuMeterNetConfig unable to establish IOKit port.");
 		return nil;

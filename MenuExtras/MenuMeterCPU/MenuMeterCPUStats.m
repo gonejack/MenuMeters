@@ -64,9 +64,9 @@
 ///////////////////////////////////////////////////////////////
 
 @implementation MenuMeterCPUStats
-uint32_t cpuCount;
-uint32_t coreCount;
-uint32_t packageCount;
+static uint32_t cpuCount;
+static uint32_t coreCount;
+static uint32_t packageCount;
 
 - (id)init {
 
@@ -86,14 +86,9 @@ uint32_t packageCount;
 	// (mike.fischer at fi-works.de) for use in MenuMeters.
 	// We have to do this early so we can use the resulting format on the GHz processor string
 	NSNumberFormatter *tempFormatter = [[NSNumberFormatter alloc] init];
-	[tempFormatter setLocalizesFormat:YES];
-	[tempFormatter setFormat:@"0.00"];
-	// Go through an archive/unarchive cycle to work around a bug on pre-10.2.2 systems
-	// see http://cocoa.mamasam.com/COCOADEV/2001/12/2/21029.php
-	twoDigitFloatFormatter = [NSUnarchiver unarchiveObjectWithData:[NSArchiver archivedDataWithRootObject:tempFormatter]];
-	if (!twoDigitFloatFormatter) {
-		return nil;
-	}
+	tempFormatter.localizesFormat = YES;
+	tempFormatter.format = @"0.00";
+	twoDigitFloatFormatter = tempFormatter;
 
 	// Gather the clock rate string
     uint32_t clockRate = [self clockFrequency];
@@ -117,12 +112,12 @@ uint32_t packageCount;
 	}
 
     size_t size=sizeof(coreCount);
-    if(sysctlbyname("hw.physicalcpu", &coreCount, &size, NULL, 0)){
+    if(sysctlbyname("hw.physicalcpu", &coreCount, &size, NULL, 0) || coreCount == 0){
         coreCount=cpuCount;
     }
 
     size=sizeof(packageCount);
-    if(sysctlbyname("hw.packages", &packageCount, &size, NULL, 0)){
+    if(sysctlbyname("hw.packages", &packageCount, &size, NULL, 0) || packageCount == 0){
         packageCount=1;
     }
 
@@ -343,8 +338,6 @@ uint32_t packageCount;
 
 - (NSString *)cpuPrettyName {
 
-#if  1
-
     char cpumodel[64];
     size_t size = sizeof(cpumodel);
     if (!sysctlbyname("machdep.cpu.brand_string", cpumodel, &size, NULL, 0)){
@@ -363,42 +356,12 @@ uint32_t packageCount;
         
         NXArchInfo const *archInfo = NXGetLocalArchInfo();
         if (archInfo) {
-            s = [s stringByAppendingFormat:@" (%@)",[NSString stringWithCString:archInfo->description]];
+            s = [s stringByAppendingFormat:@" (%@)",[NSString stringWithUTF8String:archInfo->description]];
         }
         
         return s;
     }
     return @"???";
-#else
-	// Start with nothing
-	NSString					*prettyName = @"Unknown CPU";
-
-	// Try older API for the pretty name (Aquamon demonstrated this)
-	NXArchInfo const *archInfo = NXGetLocalArchInfo();
-	if (archInfo) {
-		prettyName = [NSString stringWithCString:archInfo->description];
-	}
-
-	// Now try to do better for 7455 Apollo, 7447 AlBooks, and Sahara G3s.
-	// Note that this still doesn't work for some 7455s in 10.2.
-	// Since those same machines return the correct type in Classic
-	// I'm assuming its an Apple bug.
-	SInt32 gestaltVal = 0;
-	OSStatus err = Gestalt(gestaltNativeCPUtype, &gestaltVal);
-	if (err == noErr) {
-		if (gestaltVal == gestaltCPUApollo) {
-			prettyName = @"PowerPC 7455";
-		} else if (gestaltVal == gestaltCPUG47447) {
-			// Gestalt says 7447, but CHUD says 7457. Let's believe CHUD.
-			// Patch from Alex Eddy
-			prettyName = @"PowerPC 7457";
-		} else if (gestaltVal == gestaltCPU750FX) {
-			prettyName = @"PowerPC 750fx";
-		}
-	}
-	return prettyName;
-#endif
-
 } // _cpuPrettyName
 
 - (UInt32) clockFrequency {
@@ -411,7 +374,7 @@ uint32_t packageCount;
 
     // Try using IOKit
     if (res != 0) {
-        mach_port_t platformExpertDevice = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("IOPlatformExpertDevice"));
+        mach_port_t platformExpertDevice = IOServiceGetMatchingService(MenuMetersIODefaultPort(), IOServiceMatching("IOPlatformExpertDevice"));
         CFTypeRef platformClockFrequency = IORegistryEntryCreateCFProperty(platformExpertDevice, CFSTR("clock-frequency"), kCFAllocatorDefault, 0);
         if (CFGetTypeID(platformClockFrequency) == CFDataGetTypeID()) {
             const CFDataRef platformClockFrequencyData = (const CFDataRef) platformClockFrequency;

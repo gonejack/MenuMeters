@@ -1,8 +1,0 @@
-language: objective-c
-env:
-    - MM_SCHEME='MenuMeters'
-    - MM_SCHEME='MenuMeters No Sparkle'
-osx_image:
-    - xcode12
-    - xcode11
-script: "[ \"$(sw_vers -productVersion | cut -b1-5)\" = '10.13' ] && HARD='ENABLE_HARDENED_RUNTIME=NO' ; set -o pipefail && xcodebuild -project MenuMeters.xcodeproj -scheme \"$MM_SCHEME\" -configuration Release build CODE_SIGN_IDENTITY='-' DEVELOPMENT_TEAM='' $HARD | xcpretty"

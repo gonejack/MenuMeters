@@ -144,7 +144,7 @@
 	if ([itemImages count] != [diskSpaceData count]) return extraMenu;
 
 	// Add our menu item images
-	for (int i = 0; i < [itemImages count]; i++) {
+	for (NSUInteger i = 0; i < [itemImages count]; i++) {
 		NSMenuItem *item = (NSMenuItem *)[extraMenu addItemWithTitle:@""
 															  action:@selector(openOrEjectVolume:)
 													   keyEquivalent:@""];
@@ -249,7 +249,7 @@
 	}
 
 	// Loop again, rendering the final image
-	for (int i = 0; i < [driveDetails count]; i++) {
+	for (NSUInteger i = 0; i < [driveDetails count]; i++) {
 
 		// If we are missing an icon we need an empty image, but we need
 		// the icon to decide the menuitem height
@@ -263,7 +263,7 @@
                                                                            [volIcon size].height)
                                                         flipped:NO
                                                  drawingHandler:^BOOL(NSRect dstRect) {
-                    [volIcon compositeToPoint:NSMakePoint(0, 0) operation:NSCompositeSourceOver];
+                    [volIcon drawAtPoint:NSMakePoint(0, 0) fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
                     [(NSAttributedString *)[nameStrings objectAtIndex:i]
                             drawAtPoint:NSMakePoint(ceilf((float)[volIcon size].width) + 10,
                                                     ceilf((float)[volIcon size].height / 2))];
@@ -314,42 +314,32 @@
 - (void)openOrEjectVolume:(id)sender {
 
 	// Pressed modifiers
-	UInt32 modKeys = GetCurrentKeyModifiers();
+	NSEventModifierFlags modKeys = NSEvent.modifierFlags;
 
 	// Decide action
 	BOOL eject = ([ourPrefs diskSelectMode] == kDiskSelectModeEject);
-	if (modKeys & optionKey) eject = !eject;
+	if (modKeys & NSEventModifierFlagOption) eject = !eject;
 
 	if (eject) {
-		BOOL removable = NO;
-		if (![[NSWorkspace sharedWorkspace] getFileSystemInfoForPath:[sender representedObject]
-														 isRemovable:&removable
-														  isWritable:NULL
-													   isUnmountable:NULL
-														 description:NULL
-																type:NULL]) {
-			NSLog(@"MenuMeterDisk unable to get filesystem information for \"%@\".", [sender representedObject]);
+		NSString *mountPath = [sender representedObject];
+		NSURL *mountURL = [NSURL fileURLWithPath:mountPath isDirectory:YES];
+		NSNumber *removableNumber = nil;
+		[mountURL getResourceValue:&removableNumber forKey:NSURLVolumeIsRemovableKey error:NULL];
+		BOOL removable = removableNumber.boolValue;
+
+		// diskutil remains the most reliable way to eject/unmount a volume.
+		NSTask *task = [[NSTask alloc] init];
+		task.executableURL = [NSURL fileURLWithPath:@"/usr/sbin/diskutil"];
+		task.arguments = @[removable ? @"eject" : @"unmount", mountPath];
+		NSError *error = nil;
+		if ([task launchAndReturnError:&error]) {
+			[task waitUntilExit];
+		} else {
+			NSLog(@"MenuMeterDisk unable to eject/unmount \"%@\" using diskutil: %@", mountPath, error.localizedDescription);
 		}
-		// Have to eject/unmount the volume via diskutil because Carbon calls and NSWorkspace
-		// both got bizarrely slow in 10.4.x. Wrap in exception handling for NSTask errors,
-		// using old-school for 10.2 compatibility.
-		NS_DURING
-			if (removable) {
-				[[NSTask launchedTaskWithLaunchPath:@"/usr/sbin/diskutil"
-										 arguments:[NSArray arrayWithObjects:@"eject",
-														[sender representedObject],
-														nil]] waitUntilExit];
-			} else {
-				[[NSTask launchedTaskWithLaunchPath:@"/usr/sbin/diskutil"
-										 arguments:[NSArray arrayWithObjects:@"unmount",
-														[sender representedObject],
-														nil]] waitUntilExit];
-			}
-		NS_HANDLER
-			NSLog(@"MenuMeterDisk unable to eject/unmount \"%@\" using diskutil.", [sender representedObject]);
-		NS_ENDHANDLER
 	} else {
-		if (![[NSWorkspace sharedWorkspace] openFile:[sender representedObject]]) {
+		NSURL *mountURL = [NSURL fileURLWithPath:[sender representedObject] isDirectory:YES];
+		if (![[NSWorkspace sharedWorkspace] openURL:mountURL]) {
 			NSLog(@"MenuMeterDisk unable to open \"%@\".", [sender representedObject]);
 		}
 	}
@@ -374,7 +364,6 @@
 	
 	// Read/scale the boto disk icon for those styles that need it
 	NSImage *bootDiskIcon = [[NSWorkspace sharedWorkspace] iconForFile:@"/"];
-	[bootDiskIcon setScalesWhenResized:YES];
 	[bootDiskIcon setSize:NSMakeSize(kDiskViewWidth, kDiskViewWidth)];
 
 
@@ -397,35 +386,25 @@
 		// Small disk arrow is an overlay on the boot disk icon
 		idleImage = [[NSImage alloc] initWithSize:NSMakeSize(kDiskViewWidth, menubarHeight)];
 		[idleImage lockFocus];
-		[bootDiskIcon compositeToPoint:NSMakePoint(0, (menubarHeight - kDiskViewWidth) / 2)
-							 operation:NSCompositeSourceOver];
+		[bootDiskIcon drawAtPoint:NSMakePoint(0, (menubarHeight - kDiskViewWidth) / 2) fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
 		[idleImage unlockFocus];
 		// Read
 		readImage = [[NSImage alloc] initWithSize:NSMakeSize(kDiskViewWidth, menubarHeight)];
 		[readImage lockFocus];
-		[bootDiskIcon compositeToPoint:NSMakePoint(0, (menubarHeight - kDiskViewWidth) / 2)
-							 operation:NSCompositeSourceOver];
-		[[bundle imageForResource:[imageSetNamePrefix stringByAppendingString:@"Read"]]
-			compositeToPoint:NSMakePoint(0, 0)
-				   operation:NSCompositeSourceOver];
+		[bootDiskIcon drawAtPoint:NSMakePoint(0, (menubarHeight - kDiskViewWidth) / 2) fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
+		[[bundle imageForResource:[imageSetNamePrefix stringByAppendingString:@"Read"]] drawAtPoint:NSMakePoint(0, 0) fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
 		[readImage unlockFocus];
 		// Write
 		writeImage = [[NSImage alloc] initWithSize:NSMakeSize(kDiskViewWidth, menubarHeight)];
 		[writeImage lockFocus];
-		[bootDiskIcon compositeToPoint:NSMakePoint(0, (menubarHeight - kDiskViewWidth) / 2)
-							 operation:NSCompositeSourceOver];
-		[[bundle imageForResource:[imageSetNamePrefix stringByAppendingString:@"Write"]]
-			compositeToPoint:NSMakePoint(0, 0)
-				   operation:NSCompositeSourceOver];
+		[bootDiskIcon drawAtPoint:NSMakePoint(0, (menubarHeight - kDiskViewWidth) / 2) fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
+		[[bundle imageForResource:[imageSetNamePrefix stringByAppendingString:@"Write"]] drawAtPoint:NSMakePoint(0, 0) fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
 		[writeImage unlockFocus];
 		// Read/Write
 		readwriteImage = [[NSImage alloc] initWithSize:NSMakeSize(kDiskViewWidth, menubarHeight)];
 		[readwriteImage lockFocus];
-		[bootDiskIcon compositeToPoint:NSMakePoint(0, (menubarHeight - kDiskViewWidth) / 2)
-							 operation:NSCompositeSourceOver];
-		[[bundle imageForResource:[imageSetNamePrefix stringByAppendingString:@"ReadWrite"]]
-			compositeToPoint:NSMakePoint(0, 0)
-				   operation:NSCompositeSourceOver];
+		[bootDiskIcon drawAtPoint:NSMakePoint(0, (menubarHeight - kDiskViewWidth) / 2) fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
+		[[bundle imageForResource:[imageSetNamePrefix stringByAppendingString:@"ReadWrite"]] drawAtPoint:NSMakePoint(0, 0) fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
 		[readwriteImage unlockFocus];
 	} else if ([ourPrefs diskImageset]  == kDiskArrowsLargeImageSet) {
 		// Large arrow disk icon overlays based on patches by Mac-arena the Bored Zo
@@ -433,8 +412,7 @@
 		// Read
 		readImage = [[NSImage alloc] initWithSize:NSMakeSize(kDiskViewWidth, menubarHeight)];
 		[readImage lockFocus];
-		[bootDiskIcon compositeToPoint:NSMakePoint(0, (menubarHeight - kDiskViewWidth) / 2)
-							 operation:NSCompositeSourceOver];
+		[bootDiskIcon drawAtPoint:NSMakePoint(0, (menubarHeight - kDiskViewWidth) / 2) fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
 		NSBezierPath *readArrowPath = [NSBezierPath bezierPath];
 		[readArrowPath moveToPoint:NSMakePoint(0, (menubarHeight / 2) + 1)];
 		[readArrowPath lineToPoint:NSMakePoint(kDiskViewWidth, (menubarHeight / 2) + 1)];
@@ -446,8 +424,7 @@
 		// Write
 		writeImage = [[NSImage alloc] initWithSize:NSMakeSize(kDiskViewWidth, menubarHeight)];
 		[writeImage lockFocus];
-		[bootDiskIcon compositeToPoint:NSMakePoint(0, (menubarHeight - kDiskViewWidth) / 2)
-							 operation:NSCompositeSourceOver];
+		[bootDiskIcon drawAtPoint:NSMakePoint(0, (menubarHeight - kDiskViewWidth) / 2) fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
 		NSBezierPath *writeArrowPath = [NSBezierPath bezierPath];
 		[writeArrowPath moveToPoint:NSMakePoint(0, (menubarHeight / 2) - 1)];
 		[writeArrowPath lineToPoint:NSMakePoint(kDiskViewWidth, (menubarHeight / 2) - 1)];
@@ -459,14 +436,12 @@
 		// Idle
 		idleImage = [[NSImage alloc] initWithSize:NSMakeSize(kDiskViewWidth, menubarHeight)];
 		[idleImage lockFocus];
-		[bootDiskIcon compositeToPoint:NSMakePoint(0, (menubarHeight - kDiskViewWidth) / 2)
-			operation:NSCompositeSourceOver];
+		[bootDiskIcon drawAtPoint:NSMakePoint(0, (menubarHeight - kDiskViewWidth) / 2) fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
 		[idleImage unlockFocus];
 		// Read/Write
 		readwriteImage = [[NSImage alloc] initWithSize:NSMakeSize(kDiskViewWidth, menubarHeight)];
 		[readwriteImage lockFocus];
-		[bootDiskIcon compositeToPoint:NSMakePoint(0, (menubarHeight - kDiskViewWidth) / 2)
-							 operation:NSCompositeSourceOver];
+		[bootDiskIcon drawAtPoint:NSMakePoint(0, (menubarHeight - kDiskViewWidth) / 2) fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
 		[[NSColor greenColor] set];
 		[readArrowPath fill];
 		[[NSColor redColor] set];

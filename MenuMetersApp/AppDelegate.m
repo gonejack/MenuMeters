@@ -102,6 +102,11 @@
 }
 
 
+- (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app
+{
+    return YES;
+}
+
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
 {
     [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];

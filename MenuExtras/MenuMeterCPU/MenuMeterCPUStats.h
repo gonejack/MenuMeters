@@ -22,7 +22,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <Carbon/Carbon.h>
 #import <sys/types.h>
 #import <sys/sysctl.h>
 #import <mach-o/arch.h>

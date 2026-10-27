@@ -1,35 +1,99 @@
 # MenuMeters
-My fork of MenuMeters for El Capitan, Sierra, High Sierra, Mojave, Catalina and Big Sur.
 
-# Usage:
-If you just want to use it, please go to http://member.ipmu.jp/yuji.tachikawa/MenuMetersElCapitan/ or https://github.com/yujitach/MenuMeters/releases and download the binary. The detailed installation instruction is given in the former.
+MenuMeters is a set of CPU, memory, disk, and network meters for the macOS menu
+bar. This is the maintained fork that runs as a regular menu-bar app (originally
+by Yuji Tachikawa, based on the classic MenuMeters by Alex Harper).
 
-# Other versions & related open source softwares:
+## Requirements
 
-If you run sufficiently new mac OS, try one of
+- macOS 11 Big Sur or later (Apple Silicon and Intel)
+- Xcode 16 or later, **or** the Command Line Tools
+- A full Xcode installation is only needed for Interface Builder / nib editing
 
-- https://github.com/exelban/stats
-- https://iglance.github.io
-- https://github.com/gao-sun/eul
+The app is built as a universal binary (`arm64` + `x86_64`) and uses ARC,
+modern Objective-C, and current AppKit/IOKit APIs.
 
-which are all menubar monitors with more modern look and feel and more capability. What is more, they are maintained actively. They are heavily recommended.
+## Build
 
-There are also further forks of my version of MenuMeters, which implement more features. You might want to try them out:
+### Xcode
 
-- https://github.com/emcrisostomo/MenuMeters which has DMG installers 
-- https://gitlab.com/axet/MenuMeters which has new features in the CPU meter, etc.
+1. Open `MenuMeters.xcodeproj`.
+2. Select the `MenuMeters` scheme and the `My Mac` destination.
+3. Build and run.
 
-If you'd like your version mentioned here, please tell me at the issues page.
+`Sparkle.framework` is bundled in the repository, so no package download is
+required. For a signed/notarized release, sign the app with your Developer ID
+and let Sparkle sign its updates with the matching key.
 
-# Background:
+### Command Line Tools only
 
-It's a great utility originally developed at http://www.ragingmenace.com/software/menumeters/ .
-The original version does not work on El Capitan and later, due to the fact that SystemUIServer doesn't load Menu Extras not signed by Apple any longer.
+```sh
+./build-clt.sh
+```
 
-I'm making here a minimal modification so that it runs as a faceless app, putting NSStatusItem's instead of NSMenuExtra's.
-Since then, many people contributed pull requests, most of which have been incorporated.
+This produces `out/MenuMeters`, a universal binary. To update an existing app
+bundle:
 
-More recently, starting from Catalina, MenuMeters was changed from a preference pane within System Preferences to an independent app. This is due to an increasing amount of security features imposed by Apple on preference panes running within System Preferences, which made it too cumbersome to develop MenuMeters as a preference pane.
+```sh
+cp out/MenuMeters /Applications/MenuMeters.app/Contents/MacOS/MenuMeters
+codesign -f -s - --options runtime \
+         --entitlements MenuMeters.entitlements --deep \
+         /Applications/MenuMeters.app
+```
 
-# To hack:
-Clone the git repo, open MenuMeters.xcodeproj, and build the target *MenuMeters*. This will create an independent app which runs outside of System Preferences. 
+The ad-hoc signing instructions include
+`com.apple.security.cs.disable-library-validation` because the linked
+`Sparkle.framework` is not signed with the same identity. When using a real
+Developer ID, sign the framework and the app with that identity instead.
+
+### Tests and verification
+
+There is no automated test suite. The build script is the reference build and
+exercises every source file with the current SDK. GitHub Actions runs both the
+Command Line Tools build and the Xcode project build on every push and pull
+request.
+
+## Project layout
+
+| Path | Contents |
+| --- | --- |
+| `MenuMetersApp/` | `main.m`, app delegate, main menu nib |
+| `Common/` | Preferences, shared helpers, IOKit/workspace compatibility shims |
+| `MenuExtras/MenuMeterCPU/` | CPU meter, temperature, top-process list |
+| `MenuExtras/MenuMeterDisk/` | Disk I/O and free-space meters |
+| `MenuExtras/MenuMeterMem/` | Memory meter |
+| `MenuExtras/MenuMeterNet/` | Network meter and PPP support |
+| `PrefPane/` | Preferences window, login-item handling |
+| `hardware_reader/` | AppleSMC / Apple Silicon temperature readers |
+| `build-clt.sh` | Universal build without Xcode |
+
+## Modernization notes
+
+The codebase was originally written for Mac OS X 10.2–10.4. It has been kept
+running through successive macOS releases; see
+[`Docs/Modernization.md`](Docs/Modernization.md) for the current state, the
+compatibility shims, and known follow-up work (most notably the legacy Sparkle
+1.x updater and the AppleScript-based Activity Monitor pane switching).
+
+## Other versions and related software
+
+If you run a sufficiently new macOS, also consider these actively maintained
+menu-bar monitors:
+
+- <https://github.com/exelban/stats>
+- <https://iglance.github.io>
+- <https://github.com/gao-sun/eul>
+
+Other forks of MenuMeters:
+
+- <https://github.com/emcrisostomo/MenuMeters> (DMG installers)
+- <https://gitlab.com/axet/MenuMeters> (CPU-meter features)
+
+## Background
+
+MenuMeters was originally developed at
+<http://www.ragingmenace.com/software/menumeters/>. The original version stopped
+working on El Capitan and later because SystemUIServer no longer loads
+third-party menu extras. This fork runs as a faceless app that uses
+`NSStatusItem` instead of `NSMenuExtra`. Since Catalina it is an independent
+app rather than a System Preferences pane.

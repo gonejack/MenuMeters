@@ -174,15 +174,13 @@
 	// Set up a NumberFormatter for localization. This is based on code contributed by Mike Fischer
 	// (mike.fischer at fi-works.de) for use in MenuMeters.
 	NSNumberFormatter *tempFormat = [[NSNumberFormatter alloc] init];
-	[tempFormat setLocalizesFormat:YES];
-	[tempFormat setFormat:@"###0.0"];
-	// Go through an archive/unarchive cycle to work around a bug on pre-10.2.2 systems
-	// see http://cocoa.mamasam.com/COCOADEV/2001/12/2/21029.php
-	bytesFormatter = [NSUnarchiver unarchiveObjectWithData:[NSArchiver archivedDataWithRootObject:tempFormat]];
+	tempFormat.localizesFormat = YES;
+	tempFormat.format = @"###0.0";
+	bytesFormatter = [tempFormat copy];
 	tempFormat = [[NSNumberFormatter alloc] init];
-	[tempFormat setLocalizesFormat:YES];
-	[tempFormat setFormat:@"#,##0"];
-	prettyIntFormatter = [NSUnarchiver unarchiveObjectWithData:[NSArchiver archivedDataWithRootObject:tempFormat]];
+	tempFormat.localizesFormat = YES;
+	tempFormat.format = @"#,##0";
+	prettyIntFormatter = [tempFormat copy];
 
 	// And configure directly from prefs on first load
 	[self configFromPrefs:nil];
@@ -608,17 +606,17 @@
 			// Checkmark the interface menu if we haven't found one already
 			if ([[ourPrefs netPreferInterface] isEqualToString:kNetPrimaryInterface] && [[details objectForKey:@"primary"] boolValue]) {
 					// This is the primary and the primary is preferred
-					[titleItem setState:NSOnState];
+					[titleItem setState:NSControlStateValueOn];
 			} else if (preferredInterfaceConfig && [details objectForKey:@"devicename"]) {
 				// Is this device the one being graphed?
 				if ([[details objectForKey:@"devicename"] isEqualToString:[preferredInterfaceConfig objectForKey:@"name"]] ||
 					[[details objectForKey:@"devicename"] isEqualToString:[preferredInterfaceConfig objectForKey:@"statname"]]) {
-					[titleItem setState:NSOnState];
+					[titleItem setState:NSControlStateValueOn];
 				}
 			} else if (preferredInterfaceConfig && [details objectForKey:@"devicepppname"]) {
 				if ([[details objectForKey:@"devicepppname"] isEqualToString:[preferredInterfaceConfig objectForKey:@"name"]] ||
 					[[details objectForKey:@"devicepppname"] isEqualToString:[preferredInterfaceConfig objectForKey:@"statname"]]) {
-                    [titleItem setState:NSOnState];
+                    [titleItem setState:NSControlStateValueOn];
 				}
 			}
 			
@@ -746,12 +744,12 @@
 	}
 
 	// Loop over pixels in desired width until we're out of data
-	int renderPosition = 0;
+	NSInteger renderPosition = 0;
 	float renderHeight = graphHeight - 0.5f;  // Save room for baseline
-	for (renderPosition = 0; renderPosition < [ourPrefs netGraphLength]; renderPosition++) {
+	for (renderPosition = 0; renderPosition < (NSInteger)[ourPrefs netGraphLength]; renderPosition++) {
 		// No data at this position?
-		if ((renderPosition >= [netHistoryData count]) ||
-			(renderPosition >= [netHistoryIntervals count])) break;
+		if ((renderPosition >= (NSInteger)[netHistoryData count]) ||
+			(renderPosition >= (NSInteger)[netHistoryIntervals count])) break;
 
 		// Can't scale by zero
 		if (scaleFactor <= 0) continue;
@@ -1068,10 +1066,10 @@
     if(netLoad){ // fix for https://github.com/yujitach/MenuMeters/issues/120
 	// Add to history (at least one)
 	if ([ourPrefs netDisplayMode] & kNetDisplayGraph) {
-		if ([netHistoryData count] >= [ourPrefs netGraphLength]) {
+		if ([netHistoryData count] >= (NSUInteger)[ourPrefs netGraphLength]) {
 			[netHistoryData removeObjectsInRange:NSMakeRange(0, [netHistoryData count] - [ourPrefs netGraphLength] + 1)];
 		}
-		if ([netHistoryIntervals count] >= [ourPrefs netGraphLength]) {
+		if ([netHistoryIntervals count] >= (NSUInteger)[ourPrefs netGraphLength]) {
 			[netHistoryIntervals removeObjectsInRange:NSMakeRange(0, [netHistoryIntervals count] - [ourPrefs netGraphLength] + 1)];
 		}
 	} else {
@@ -1223,25 +1221,36 @@
 
 - (void)openNetworkUtil:(id)sender {
 
-	if (![[NSWorkspace sharedWorkspace] launchApplication:@"Network Utility.app"]) {
-		NSLog(@"MenuMeterNet unable to launch the Network Utility.");
-	}
+	MenuMetersOpenApplication(@"com.apple.NetworkUtility",
+	                          @"/System/Library/CoreServices/Applications/Network Utility.app",
+	                          @"Network Utility");
 
 } // openNetworkUtil
 
 - (void)openNetworkPrefs:(id)sender {
 
-	if (![[NSWorkspace sharedWorkspace] openFile:@"/System/Library/PreferencePanes/Network.prefPane"]) {
-		NSLog(@"MenuMeterNet unable to launch the Network Preferences.");
-	}
+    // Network.prefPane was replaced by the Network Settings extension in
+    // macOS 13. Try the legacy pane first, then fall back to the modern URL.
+    NSURL *legacyURL = [NSURL fileURLWithPath:@"/System/Library/PreferencePanes/Network.prefPane"];
+    BOOL opened = NO;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:legacyURL.path]) {
+        opened = [[NSWorkspace sharedWorkspace] openURL:legacyURL];
+    }
+    if (!opened) {
+        NSURL *settingsURL = [NSURL URLWithString:@"x-apple.systempreferences:com.apple.Network-Settings.extension"];
+        opened = settingsURL && [[NSWorkspace sharedWorkspace] openURL:settingsURL];
+    }
+    if (!opened) {
+        NSLog(@"MenuMeterNet unable to launch the Network Preferences.");
+    }
 
 } // openNetworkPrefs
 
 - (void)openInternetConnect:(id)sender {
 
-	if (![[NSWorkspace sharedWorkspace] launchApplication:@"Internet Connect.app"]) {
-		NSLog(@"MenuMeterNet unable to launch the Internet Connect application.");
-	}
+	MenuMetersOpenApplication(@"com.apple.InternetConnect",
+	                          @"/Applications/Internet Connect.app",
+	                          @"Internet Connect");
 
 } // openInternetConnect
 - (void)resetTotals:(id)sender
@@ -1271,10 +1280,10 @@
 - (void)copyAddress:(id)sender {
 
 	if ([[sender representedObject] count]) {
-		[[NSPasteboard generalPasteboard] declareTypes:[NSArray arrayWithObjects:NSStringPboardType, nil]
+		[[NSPasteboard generalPasteboard] declareTypes:[NSArray arrayWithObjects:NSPasteboardTypeString, nil]
 												 owner:nil];
 		NSString *clipContent = [[sender representedObject] componentsJoinedByString:@", "];
-		[[NSPasteboard generalPasteboard] setString:clipContent forType:NSStringPboardType];
+		[[NSPasteboard generalPasteboard] setString:clipContent forType:NSPasteboardTypeString];
 	} else {
 		NSLog(@"MenuMeterNet unable to copy IP addresses to clipboard.");
 	}

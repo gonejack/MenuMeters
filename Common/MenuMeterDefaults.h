@@ -22,7 +22,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <Carbon/Carbon.h>
 #import "MenuMeters.h"
 
 @interface MenuMeterDefaults : NSObject

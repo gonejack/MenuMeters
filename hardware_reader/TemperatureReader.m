@@ -23,7 +23,7 @@
         UInt32 count;
         NSMutableArray*a=[NSMutableArray array];
         SMCReadKeysCount(&count);
-        for(int i=0;i<count;i++){
+        for(UInt32 i=0;i<count;i++){
             SMCKeyValue val;
             SMCReadKeyAtIndex(i, &val);
             SMCCode key=val.key;

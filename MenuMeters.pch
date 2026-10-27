@@ -24,11 +24,9 @@
 #ifdef __OBJC__
 	#import <Cocoa/Cocoa.h>
 	#import <Foundation/Foundation.h>
-	#import <PreferencePanes/PreferencePanes.h>
 #endif
 
-#import <Carbon/Carbon.h>
 #import <SystemConfiguration/SystemConfiguration.h>
-#import <ApplicationServices/ApplicationServices.h>
 #import <IOKit/IOKitLib.h>
-#import <Security/Security.h>
+#import "Common/MenuMeterIOCompat.h"
+#import "Common/MenuMeterWorkspaceCompat.h"

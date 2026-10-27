@@ -105,7 +105,7 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
 -(IBAction)showAlertConcerningSystemEventsEtc:(id)sender
 {
     NSButton*b=sender;
-    if([b state]==NSOnState){
+    if([b state]==NSControlStateValueOn){
         NSAlert*alert=[[NSAlert alloc] init];
         alert.messageText=@"Using this feature for the first time will bring up two alerts by the system";
         [alert addButtonWithTitle:@"OK"];
@@ -363,11 +363,8 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
 
 	// Set up a NSFormatter for use printing timers
 	NSNumberFormatter *intervalFormatter = [[NSNumberFormatter alloc] init];
-	[intervalFormatter setLocalizesFormat:YES];
-	[intervalFormatter setFormat:@"###0.0\u2009s"];
-	// Go through an archive/unarchive cycle to work around a bug on pre-10.2.2 systems
-	// see http://cocoa.mamasam.com/COCOADEV/2001/12/2/21029.php
-	intervalFormatter = [NSUnarchiver unarchiveObjectWithData:[NSArchiver archivedDataWithRootObject:intervalFormatter]];
+	intervalFormatter.localizesFormat = YES;
+	intervalFormatter.format = @"###0.0\u2009s";
 	// Now set the formatters
 	[cpuIntervalDisplay setFormatter:intervalFormatter];
 	[diskIntervalDisplay setFormatter:intervalFormatter];
@@ -445,10 +442,10 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
 	[self connectSystemConfig];
 
 	// Set the switches on each menu toggle
-	[cpuMeterToggle setState:([self isExtraWithBundleIDLoaded:kCPUMenuBundleID] ? NSOnState : NSOffState)];
-	[diskMeterToggle setState:([self isExtraWithBundleIDLoaded:kDiskMenuBundleID] ? NSOnState : NSOffState)];
-	[memMeterToggle setState:([self isExtraWithBundleIDLoaded:kMemMenuBundleID] ? NSOnState : NSOffState)];
-	[netMeterToggle setState:([self isExtraWithBundleIDLoaded:kNetMenuBundleID] ? NSOnState : NSOffState)];
+	[cpuMeterToggle setState:([self isExtraWithBundleIDLoaded:kCPUMenuBundleID] ? NSControlStateValueOn : NSControlStateValueOff)];
+	[diskMeterToggle setState:([self isExtraWithBundleIDLoaded:kDiskMenuBundleID] ? NSControlStateValueOn : NSControlStateValueOff)];
+	[memMeterToggle setState:([self isExtraWithBundleIDLoaded:kMemMenuBundleID] ? NSControlStateValueOn : NSControlStateValueOff)];
+	[netMeterToggle setState:([self isExtraWithBundleIDLoaded:kNetMenuBundleID] ? NSControlStateValueOn : NSControlStateValueOff)];
 
 	// Build the preferred interface menu and select (this actually updates the net prefs too)
 	[self updateNetInterfaceMenu];
@@ -494,13 +491,13 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
 	NSString *bundleID = [notification object];
 	if (bundleID) {
 		if ([bundleID isEqualToString:kCPUMenuBundleID]) {
-			[cpuMeterToggle setState:NSOffState];
+			[cpuMeterToggle setState:NSControlStateValueOff];
 		} else if ([bundleID isEqualToString:kDiskMenuBundleID]) {
-			[diskMeterToggle setState:NSOffState];
+			[diskMeterToggle setState:NSControlStateValueOff];
 		} else if ([bundleID isEqualToString:kMemMenuBundleID]) {
-			[memMeterToggle setState:NSOffState];
+			[memMeterToggle setState:NSControlStateValueOff];
 		} else if ([bundleID isEqualToString:kNetMenuBundleID]) {
-			[netMeterToggle setState:NSOffState];
+			[netMeterToggle setState:NSControlStateValueOff];
 		}
 	}
     [self removeExtraWithBundleID:bundleID];
@@ -567,25 +564,25 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
 -(int)cpuDisplayMode
 {
     int r=0;
-    if([cpuPercentage state]==NSOnState)
+    if([cpuPercentage state]==NSControlStateValueOn)
         r|=kCPUDisplayPercent;
-    if([cpuGraph state]==NSOnState)
+    if([cpuGraph state]==NSControlStateValueOn)
         r|=kCPUDisplayGraph;
-    if([cpuThermometer state]==NSOnState)
+    if([cpuThermometer state]==NSControlStateValueOn)
         r|=kCPUDisplayThermometer;
-    if([cpuHorizontalThermometer state]==NSOnState)
+    if([cpuHorizontalThermometer state]==NSControlStateValueOn)
         r|=kCPUDisplayHorizontalThermometer;
     return r;
 }
 - (IBAction)cpuPrefChange:(id)sender {
 
 	// Extra load handler
-	if (([cpuMeterToggle state] == NSOnState) && ![self isExtraWithBundleIDLoaded:kCPUMenuBundleID]) {
+	if (([cpuMeterToggle state] == NSControlStateValueOn) && ![self isExtraWithBundleIDLoaded:kCPUMenuBundleID]) {
 		[self loadExtraAtURL:kCPUMenuURL withID:kCPUMenuBundleID];
-	} else if (([cpuMeterToggle state] == NSOffState) && [self isExtraWithBundleIDLoaded:kCPUMenuBundleID]) {
+	} else if (([cpuMeterToggle state] == NSControlStateValueOff) && [self isExtraWithBundleIDLoaded:kCPUMenuBundleID]) {
 		[self removeExtraWithBundleID:kCPUMenuBundleID];
 	}
-	[cpuMeterToggle setState:([self isExtraWithBundleIDLoaded:kCPUMenuBundleID] ? NSOnState : NSOffState)];
+	[cpuMeterToggle setState:([self isExtraWithBundleIDLoaded:kCPUMenuBundleID] ? NSControlStateValueOn : NSControlStateValueOff)];
 
 	// Save changes
     if (sender == cpuPercentage
@@ -594,7 +591,7 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
         || sender == cpuHorizontalThermometer) {
 		[ourPrefs saveCpuDisplayMode:[self cpuDisplayMode]];
     } else if (sender == cpuTemperatureToggle) {
-        bool show = ([cpuTemperatureToggle state] == NSOnState) ? YES : NO;
+        bool show = ([cpuTemperatureToggle state] == NSControlStateValueOn) ? YES : NO;
         [ourPrefs saveCpuTemperature:show];
    } else if (sender == cpuTemperatureUnit) {
        [ourPrefs saveCpuTemperatureUnit:(int)[cpuTemperatureUnit indexOfSelectedItem]];
@@ -656,7 +653,7 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
                 break;
             }
 	} else if (sender == cpuPowerMate) {
-		[ourPrefs saveCpuPowerMate:(([cpuPowerMate state] == NSOnState) ? YES : NO)];
+		[ourPrefs saveCpuPowerMate:(([cpuPowerMate state] == NSControlStateValueOn) ? YES : NO)];
 	} else if (sender == cpuPowerMateMode) {
 		[ourPrefs saveCpuPowerMateMode:(int)[cpuPowerMateMode indexOfSelectedItem]];
 	} else if (sender == cpuUserColor) {
@@ -674,11 +671,11 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
 	}
 
 	// Update controls
-        [cpuPercentage setState:([ourPrefs cpuDisplayMode]&kCPUDisplayPercent)?NSOnState:NSOffState];
-        [cpuGraph setState:([ourPrefs cpuDisplayMode]&kCPUDisplayGraph)?NSOnState:NSOffState];
-        [cpuThermometer setState:([ourPrefs cpuDisplayMode]&kCPUDisplayThermometer)?NSOnState:NSOffState];
-        [cpuHorizontalThermometer setState:([ourPrefs cpuDisplayMode]&kCPUDisplayHorizontalThermometer)?NSOnState:NSOffState];
-    if([cpuHorizontalThermometer state]==NSOnState){
+        [cpuPercentage setState:([ourPrefs cpuDisplayMode]&kCPUDisplayPercent)?NSControlStateValueOn:NSControlStateValueOff];
+        [cpuGraph setState:([ourPrefs cpuDisplayMode]&kCPUDisplayGraph)?NSControlStateValueOn:NSControlStateValueOff];
+        [cpuThermometer setState:([ourPrefs cpuDisplayMode]&kCPUDisplayThermometer)?NSControlStateValueOn:NSControlStateValueOff];
+        [cpuHorizontalThermometer setState:([ourPrefs cpuDisplayMode]&kCPUDisplayHorizontalThermometer)?NSControlStateValueOn:NSControlStateValueOff];
+    if([cpuHorizontalThermometer state]==NSControlStateValueOn){
         [cpuPercentage setEnabled:NO];
         [cpuGraph setEnabled:NO];
         [cpuThermometer setEnabled:NO];
@@ -709,7 +706,7 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
     }else{
         [cpuMultipleCPU selectItemAtIndex:0];
     }
-	[cpuPowerMate setState:([ourPrefs cpuPowerMate] ? NSOnState : NSOffState)];
+	[cpuPowerMate setState:([ourPrefs cpuPowerMate] ? NSControlStateValueOn : NSControlStateValueOff)];
 	[cpuPowerMateMode selectItemAtIndex:-1]; // Work around multiselects. AppKit problem?
 	[cpuPowerMateMode selectItemAtIndex:[ourPrefs cpuPowerMateMode]];
 	[cpuUserColor setColor:[ourPrefs cpuUserColor]];
@@ -717,7 +714,7 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
         [cpuTemperatureColor setColor:[ourPrefs cpuTemperatureColor]];
 	[cpuIntervalDisplay takeDoubleValueFrom:cpuInterval];
 
-/*	if ([cpuPercentage state]==NSOnState) {
+/*	if ([cpuPercentage state]==NSControlStateValueOn) {
 		[cpuPercentMode setEnabled:YES];
 		[cpuPercentModeLabel setTextColor:[NSColor controlTextColor]];
 	} else {
@@ -725,14 +722,14 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
         [cpuPercentModeLabel setTextColor:[NSColor disabledControlTextColor]];
 	}
  */
-	if ([cpuGraph state]==NSOnState) {
+	if ([cpuGraph state]==NSControlStateValueOn) {
 		[cpuGraphWidth setEnabled:YES];
 		[cpuGraphWidthLabel setTextColor:[NSColor controlTextColor]];
 	} else {
 		[cpuGraphWidth setEnabled:NO];
 		[cpuGraphWidthLabel setTextColor:[NSColor disabledControlTextColor]];
 	}
-    if ([cpuHorizontalThermometer state]==NSOnState) {
+    if ([cpuHorizontalThermometer state]==NSControlStateValueOn) {
 		[cpuHorizontalRows setEnabled:YES];
 		[cpuHorizontalRowsLabel setTextColor:[NSColor controlTextColor]];
         [cpuMenuWidth setEnabled:YES];
@@ -770,12 +767,12 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
 - (IBAction)diskPrefChange:(id)sender {
 
 	// Extra load
-	if (([diskMeterToggle state] == NSOnState) && ![self isExtraWithBundleIDLoaded:kDiskMenuBundleID]) {
+	if (([diskMeterToggle state] == NSControlStateValueOn) && ![self isExtraWithBundleIDLoaded:kDiskMenuBundleID]) {
 		[self loadExtraAtURL:kDiskMenuURL withID:kDiskMenuBundleID];
-	} else if (([diskMeterToggle state] == NSOffState) && [self isExtraWithBundleIDLoaded:kDiskMenuBundleID]) {
+	} else if (([diskMeterToggle state] == NSControlStateValueOff) && [self isExtraWithBundleIDLoaded:kDiskMenuBundleID]) {
 		[self removeExtraWithBundleID:kDiskMenuBundleID];
 	}
-	[diskMeterToggle setState:([self isExtraWithBundleIDLoaded:kDiskMenuBundleID] ? NSOnState : NSOffState)];
+	[diskMeterToggle setState:([self isExtraWithBundleIDLoaded:kDiskMenuBundleID] ? NSControlStateValueOn : NSControlStateValueOff)];
 
 	// Save changes
 	if (sender == diskImageSet) {
@@ -806,12 +803,12 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
 - (IBAction)memPrefChange:(id)sender {
 
 	// Extra load
-	if (([memMeterToggle state] == NSOnState) && ![self isExtraWithBundleIDLoaded:kMemMenuBundleID]) {
+	if (([memMeterToggle state] == NSControlStateValueOn) && ![self isExtraWithBundleIDLoaded:kMemMenuBundleID]) {
 		[self loadExtraAtURL:kMemMenuURL withID:kMemMenuBundleID];
-	} else if (([memMeterToggle state] == NSOffState) && [self isExtraWithBundleIDLoaded:kMemMenuBundleID]) {
+	} else if (([memMeterToggle state] == NSControlStateValueOff) && [self isExtraWithBundleIDLoaded:kMemMenuBundleID]) {
 		[self removeExtraWithBundleID:kMemMenuBundleID];
 	}
-	[memMeterToggle setState:([self isExtraWithBundleIDLoaded:kMemMenuBundleID] ? NSOnState : NSOffState)];
+	[memMeterToggle setState:([self isExtraWithBundleIDLoaded:kMemMenuBundleID] ? NSControlStateValueOn : NSControlStateValueOff)];
 
 	// Save changes
 	if (sender == memDisplayMode) {
@@ -819,11 +816,11 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
 	} else if (sender == memInterval) {
 		[ourPrefs saveMemInterval:[memInterval doubleValue]];
 	} else if (sender == memFreeUsedLabeling) {
-		[ourPrefs saveMemUsedFreeLabel:(([memFreeUsedLabeling state] == NSOnState) ? YES : NO)];
+		[ourPrefs saveMemUsedFreeLabel:(([memFreeUsedLabeling state] == NSControlStateValueOn) ? YES : NO)];
 	} else if (sender == memPageIndicator) {
-		[ourPrefs saveMemPageIndicator:(([memPageIndicator state] == NSOnState) ? YES : NO)];
+		[ourPrefs saveMemPageIndicator:(([memPageIndicator state] == NSControlStateValueOn) ? YES : NO)];
     } else if (sender == memPressureMode) {
-        [ourPrefs saveMemPressure:(([memPressureMode state] == NSOnState) ? YES : NO)];
+        [ourPrefs saveMemPressure:(([memPressureMode state] == NSControlStateValueOn) ? YES : NO)];
 	} else if (sender == memGraphWidth) {
 		[ourPrefs saveMemGraphLength:[memGraphWidth intValue]];
 	} else if (sender == memActiveColor) {
@@ -848,9 +845,9 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
 	[memDisplayMode selectItemAtIndex:-1]; // Work around multiselects. AppKit problem?
 	[memDisplayMode selectItemAtIndex:[ourPrefs memDisplayMode] - 1];
 	[memInterval setDoubleValue:[ourPrefs memInterval]];
-	[memFreeUsedLabeling setState:([ourPrefs memUsedFreeLabel] ? NSOnState : NSOffState)];
-	[memPageIndicator setState:([ourPrefs memPageIndicator] ? NSOnState : NSOffState)];
-    [memPressureMode setState:([ourPrefs memPressure] ? NSOnState : NSOffState)];
+	[memFreeUsedLabeling setState:([ourPrefs memUsedFreeLabel] ? NSControlStateValueOn : NSControlStateValueOff)];
+	[memPageIndicator setState:([ourPrefs memPageIndicator] ? NSControlStateValueOn : NSControlStateValueOff)];
+    [memPressureMode setState:([ourPrefs memPressure] ? NSControlStateValueOn : NSControlStateValueOff)];
 	[memGraphWidth setIntValue:[ourPrefs memGraphLength]];
 	[memActiveColor setColor:[ourPrefs memActiveColor]];
 	[memInactiveColor setColor:[ourPrefs memInactiveColor]];
@@ -877,7 +874,7 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
 		[memGraphWidth setEnabled:NO];
 		[memGraphWidthLabel setTextColor:[NSColor disabledControlTextColor]];
 	}
-	if ([memPageIndicator state] == NSOnState) {
+	if ([memPageIndicator state] == NSControlStateValueOn) {
 		[memPageinColorLabel setTextColor:[NSColor controlTextColor]];
 		[memPageoutColorLabel setTextColor:[NSColor controlTextColor]];
 		[memPageinColor setEnabled:YES];
@@ -907,13 +904,13 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
 - (IBAction)netPrefChange:(id)sender {
 
 	// Extra load
-	if (([netMeterToggle state] == NSOnState) && ![self isExtraWithBundleIDLoaded:kNetMenuBundleID]) {
+	if (([netMeterToggle state] == NSControlStateValueOn) && ![self isExtraWithBundleIDLoaded:kNetMenuBundleID]) {
 		[self loadExtraAtURL:kNetMenuURL withID:kNetMenuBundleID];
 	}
-	else if (([netMeterToggle state] == NSOffState) && [self isExtraWithBundleIDLoaded:kNetMenuBundleID]) {
+	else if (([netMeterToggle state] == NSControlStateValueOff) && [self isExtraWithBundleIDLoaded:kNetMenuBundleID]) {
 		[self removeExtraWithBundleID:kNetMenuBundleID];
 	}
-	[netMeterToggle setState:([self isExtraWithBundleIDLoaded:kNetMenuBundleID] ? NSOnState : NSOffState)];
+	[netMeterToggle setState:([self isExtraWithBundleIDLoaded:kNetMenuBundleID] ? NSControlStateValueOn : NSControlStateValueOff)];
 
 	// Save changes
 	if (sender == netDisplayMode) {
@@ -927,11 +924,11 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
 	} else if (sender == netInterval) {
 		[ourPrefs saveNetInterval:[netInterval doubleValue]];
 	} else if (sender == netThroughputLabeling) {
-		[ourPrefs saveNetThroughputLabel:(([netThroughputLabeling state] == NSOnState) ? YES : NO)];
+		[ourPrefs saveNetThroughputLabel:(([netThroughputLabeling state] == NSControlStateValueOn) ? YES : NO)];
 	} else if (sender == netThroughput1KBound) {
-		[ourPrefs saveNetThroughput1KBound:(([netThroughput1KBound state] == NSOnState) ? YES : NO)];
+		[ourPrefs saveNetThroughput1KBound:(([netThroughput1KBound state] == NSControlStateValueOn) ? YES : NO)];
 	} else if (sender == netThroughputBits) {
-		[ourPrefs saveNetThroughputBits:(([netThroughputBits state] == NSOnState) ? YES : NO)];
+		[ourPrefs saveNetThroughputBits:(([netThroughputBits state] == NSControlStateValueOn) ? YES : NO)];
 	} else if (sender == netGraphStyle) {
 		[ourPrefs saveNetGraphStyle:(int)[netGraphStyle indexOfSelectedItem]];
 	} else if (sender == netGraphWidth) {
@@ -963,9 +960,9 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
 	[netScaleCalc selectItemAtIndex:-1]; // Work around multiselects. AppKit problem?
 	[netScaleCalc selectItemAtIndex:[ourPrefs netScaleCalc]];
 	[netInterval setDoubleValue:[ourPrefs netInterval]];
-	[netThroughputLabeling setState:([ourPrefs netThroughputLabel] ? NSOnState : NSOffState)];
-	[netThroughput1KBound setState:([ourPrefs netThroughput1KBound] ? NSOnState : NSOffState)];
-	[netThroughputBits setState:([ourPrefs netThroughputBits] ? NSOnState : NSOffState)];
+	[netThroughputLabeling setState:([ourPrefs netThroughputLabel] ? NSControlStateValueOn : NSControlStateValueOff)];
+	[netThroughput1KBound setState:([ourPrefs netThroughput1KBound] ? NSControlStateValueOn : NSControlStateValueOff)];
+	[netThroughputBits setState:([ourPrefs netThroughputBits] ? NSControlStateValueOn : NSControlStateValueOff)];
 	[netGraphStyle selectItemAtIndex:-1]; // Work around multiselects. AppKit problem?
 	[netGraphStyle selectItemAtIndex:[ourPrefs netGraphStyle]];
 	[netGraphWidth setIntValue:[ourPrefs netGraphLength]];
@@ -1104,33 +1101,22 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
 
 - (void)showMenuExtraErrorSheet {
 
-	NSBeginAlertSheet(
-		// Title
-		[[NSBundle bundleForClass:[self class]] localizedStringForKey:@"Menu Extra Could Not Load"
-																value:nil
-																table:nil],
-		// Default button
-		nil,
-		// Alternate button
-		nil,
-		// Other button
-		nil,
-		// Window
-		[[self mainView] window],
-		// Delegate
-		nil,
-		// end elector
-		nil,
-		// dismiss selector
-		nil,
-		// context
-		nil,
-		// msg
-        @"%@",
-		[[NSBundle bundleForClass:[self class]]
-			localizedStringForKey:@"For instructions on enabling third-party menu extras please see the documentation."
-							value:nil
-							table:nil]);
+	NSAlert *alert = [[NSAlert alloc] init];
+	alert.messageText = [[NSBundle bundleForClass:[self class]] localizedStringForKey:@"Menu Extra Could Not Load"
+																				value:nil
+																				table:nil];
+	alert.informativeText = [[NSBundle bundleForClass:[self class]]
+		localizedStringForKey:@"For instructions on enabling third-party menu extras please see the documentation."
+						value:nil
+						table:nil];
+	[alert addButtonWithTitle:@"OK"];
+
+	NSWindow *window = [[self mainView] window];
+	if (window) {
+		[alert beginSheetModalForWindow:window completionHandler:nil];
+	} else {
+		[alert runModal];
+	}
 
 } // showMenuExtraErrorSheet
 

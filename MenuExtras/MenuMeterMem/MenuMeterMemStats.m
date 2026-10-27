@@ -23,7 +23,6 @@
 
 #import "MenuMeterMemStats.h"
 #include <sys/sysctl.h>
-#include <sys/syscall.h>
 
 ///////////////////////////////////////////////////////////////
 //
@@ -447,14 +446,14 @@ static host_statistics64_Ptr host_statistics64_Impl = NULL;
 
 - (int)memPressure
 {
-    // taken from https://github.com/tramdas/memstatpoller/blob/38fbb15efc9b28db508d21ef557c89b4b29fd94e/main.c#L95
-    int error;
-    int level=0;
-    // This is how AAPL's memory_pressure tool reports "System-wide memory free percentage":
-    //error = memorystatus_get_level((user_addr_t) level);
-    error = syscall(SYS_memorystatus_get_level, &level);
-    if(error){
-        NSLog(@"memorystatus_get_level failed: error=%@ errorno=%@ (%s)",@(error),@(errno),strerror(errno));
+    // kern.memorystatus_level is the same value memory_pressure(1) reports as
+    // the system-wide free memory percentage. It replaces the old private
+    // SYS_memorystatus_get_level syscall, which is unsupported since 10.12.
+    int level = 0;
+    size_t size = sizeof(level);
+    if (sysctlbyname("kern.memorystatus_level", &level, &size, NULL, 0) != 0) {
+        NSLog(@"kern.memorystatus_level failed: %s", strerror(errno));
+        return 0;
     }
     return level;
 }

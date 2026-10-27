@@ -182,7 +182,7 @@
 	[menuItem setEnabled:NO];
 
 	// as this list is "static" unfortunately we need all of the kCPUrocessCountMax menu items and hide/show later the un-wanted/wanted ones
-	for (NSInteger ndx = 0; ndx < kCPUrocessCountMax; ++ndx) {
+	for (NSUInteger ndx = 0; ndx < (NSUInteger)kCPUrocessCountMax; ++ndx) {
 		menuItem = [extraMenu addItemWithTitle:@"" action:nil keyEquivalent:@""];
         menuItem.indentationLevel=1;
 		[menuItem setEnabled:NO];
@@ -322,7 +322,7 @@
     // Top CPU intensive processes
     NSArray* processes = ([ourPrefs cpuMaxProcessCount] > 0 ? [cpuTopProcesses runningProcessesByCPUUsage:[ourPrefs cpuMaxProcessCount]] : nil);    
     LiveUpdateMenuItemTitleAndVisibility(extraMenu, kCPUProcessLabelMenuIndex, nil, (processes == nil));
-    for (NSInteger ndx = 0; ndx < kCPUrocessCountMax; ++ndx) {
+    for (NSUInteger ndx = 0; ndx < (NSUInteger)kCPUrocessCountMax; ++ndx) {
         if (ndx < processes.count) {
             NSString*name=processes[ndx][kProcessListItemProcessNameKey];
             float percent=[processes[ndx][kProcessListItemCPUKey] floatValue];
@@ -395,12 +395,12 @@
 	[systemPath moveToPoint:NSMakePoint(offset, 0)];
 	[userPath moveToPoint:NSMakePoint(offset, 0)];
 	// Loop over pixels in desired width until we're out of data
-	int renderPosition = 0;
+	NSInteger renderPosition = 0;
 	float renderHeight = (float)self.imageHeight - 0.5f;  // Save space for baseline
 	int cpuGraphLength = [ourPrefs cpuGraphLength];
-	for (renderPosition = 0; renderPosition < cpuGraphLength; renderPosition++) {
+	for (renderPosition = 0; renderPosition < (NSInteger)cpuGraphLength; renderPosition++) {
 		// No data at this position?
-		if (renderPosition >= [loadHistory count]) break;
+		if (renderPosition >= (NSInteger)[loadHistory count]) break;
 
 		// Grab data
             double system=0, user=0;
@@ -587,7 +587,7 @@
 
 	// Add to history (at least one)
 	if ([ourPrefs cpuDisplayMode] & kCPUDisplayGraph) {
-		if ([loadHistory count] >= [ourPrefs cpuGraphLength]) {
+		if ([loadHistory count] >= (NSUInteger)[ourPrefs cpuGraphLength]) {
 			[loadHistory removeObjectsInRange:NSMakeRange(0, [loadHistory count] - [ourPrefs cpuGraphLength] + 1)];
 		}
 	} else {
@@ -619,7 +619,7 @@
 
 - (void)updatePowerMate {
 
-    int numberOfCPUs = [cpuInfo numberOfCPUs];
+    uint32_t numberOfCPUs = (uint32_t)[cpuInfo numberOfCPUs];
 
 	// Current load (if available)
 	NSArray *currentLoad = [loadHistory lastObject];
@@ -655,18 +655,18 @@
 
 - (void)openProcessViewer:(id)sender {
 
-	if (![[NSWorkspace sharedWorkspace] launchApplication:@"Process Viewer.app"]) {
-		NSLog(@"MenuMeterCPU unable to launch the Process Viewer.");
-	}
+	MenuMetersOpenApplication(@"com.apple.ProcessViewer",
+	                          @"/Developer/Applications/Utilities/Process Viewer.app",
+	                          @"Process Viewer");
 
 } // openProcessViewer
 
 
 - (void)openConsole:(id)sender {
 
-	if (![[NSWorkspace sharedWorkspace] launchApplication:@"Console.app"]) {
-		NSLog(@"MenuMeterCPU unable to launch the Console.");
-	}
+	MenuMetersOpenApplication(@"com.apple.Console",
+	                          @"/System/Applications/Utilities/Console.app",
+	                          @"Console");
 
 } // openProcessViewer
 
@@ -808,7 +808,7 @@
         *user = load.user;
     }else{
         double s=0,u=0;
-        int numberOfCPUs = [cpuInfo numberOfCPUs];
+        uint32_t numberOfCPUs = (uint32_t)[cpuInfo numberOfCPUs];
         for (uint32_t cpuNum = 0; cpuNum < numberOfCPUs; cpuNum++) {
                 MenuMeterCPULoad *load = currentLoad[cpuNum];
             s+=load.system;

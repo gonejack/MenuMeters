@@ -6,8 +6,8 @@ Build
 *.mode1v3
 *~
 *~.nib
-*~.xib 
-.DS_Store 
+*~.xib
+.DS_Store
 xcuserdata/
 notarized_product/
 misc/
@@ -17,3 +17,4 @@ staple-and-upload
 upload
 upload-old
 out/
+.idea/

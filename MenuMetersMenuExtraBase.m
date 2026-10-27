@@ -14,7 +14,6 @@
 #import "MenuMeterMemExtra.h"
 #import "MenuMeterNetExtra.h"
 
-#define kAppleInterfaceThemeChangedNotification        @"AppleInterfaceThemeChangedNotification"
 
 @implementation MenuMetersMenuExtraBase
 -(NSColor*)colorByAdjustingForLightDark:(NSColor*)c
@@ -32,13 +31,6 @@
                                                             name:self.bundleID
                                                           object:kPrefChangeNotification];
     [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:@"tintPercentage" options:NSKeyValueObservingOptionNew context:nil];
-    if(@available(macOS 10.14,*)){
-    }else{
-        [[NSDistributedNotificationCenter defaultCenter] addObserver:self
-                                                            selector:@selector(setupColor:)
-                                                                name:kAppleInterfaceThemeChangedNotification
-                                                              object:nil];
-    }
     return self;
 }
 -(void)configFromPrefs:(NSNotification *)notification
@@ -86,7 +78,7 @@
     NSImage*canvas=[NSImage imageWithSize:image.size flipped:NO drawingHandler:^BOOL(NSRect dstRect) {
         [[[NSColor systemGrayColor] colorWithAlphaComponent:.3] setFill];
         [NSBezierPath fillRect:(CGRect) {.size = image.size}];
-        [image drawAtPoint:CGPointZero fromRect:(CGRect) {.size = image.size} operation:NSCompositeSourceOver fraction:1.0];
+        [image drawAtPoint:CGPointZero fromRect:(CGRect) {.size = image.size} operation:NSCompositingOperationSourceOver fraction:1.0];
         return YES;
     }];
     statusItem.button.image=canvas;*/
@@ -104,7 +96,7 @@
     }
     
     [canvas lockFocus];
-    [image drawAtPoint:CGPointZero fromRect:(CGRect) {.size = image.size} operation:NSCompositeCopy fraction:1.0];
+    [image drawAtPoint:CGPointZero fromRect:(CGRect) {.size = image.size} operation:NSCompositingOperationCopy fraction:1.0];
     [canvas unlockFocus];
     
     if (canvas != oldCanvas) {
@@ -143,8 +135,11 @@
             [statusItem.button addObserver:self forKeyPath:@"effectiveAppearance" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
         }
         [updateTimer invalidate];
-        updateTimer=[NSTimer timerWithTimeInterval:interval target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
-        [updateTimer setTolerance:.2*interval];
+        __weak typeof(self) weakSelf = self;
+        updateTimer = [NSTimer timerWithTimeInterval:interval repeats:YES block:^(NSTimer *timer) {
+            [weakSelf timerFired:timer];
+        }];
+        updateTimer.tolerance = .2 * interval;
         [[NSRunLoop currentRunLoop] addTimer:updateTimer forMode:NSRunLoopCommonModes];
     }else if(![ourPrefs loadBoolPref:bundleID defaultValue:YES] && statusItem){
         [self removeStatusItem];
@@ -184,9 +179,9 @@
 }
 - (void)openActivityMonitor:(id)sender {
 
-    if (![[NSWorkspace sharedWorkspace] launchApplication:@"Activity Monitor.app"]) {
-        NSLog(@"MenuMeter unable to launch the Activity Monitor.");
-    }
+    MenuMetersOpenApplication(@"com.apple.ActivityMonitor",
+                              @"/System/Applications/Utilities/Activity Monitor.app",
+                              @"Activity Monitor");
     BOOL x=[[NSUserDefaults standardUserDefaults] boolForKey:@"activityMonitorOpenSpecificPanes"];
     if(!x)
         return;
@@ -231,22 +226,14 @@
 }
 -(BOOL)isDark
 {
-#if (__MAC_OS_X_VERSION_MAX_ALLOWED >= 101400)
-    if(@available(macOS 10.14,*)){
-        // https://github.com/ruiaureliano/macOS-Appearance/blob/master/Appearance/Source/AppDelegate.swift
-        return [statusItem.button.effectiveAppearance.name containsString:@"ark"];
+    if (@available(macOS 10.14, *)) {
+        NSAppearanceName name = [statusItem.button.effectiveAppearance
+                                 bestMatchFromAppearancesWithNames:@[NSAppearanceNameAqua, NSAppearanceNameDarkAqua]];
+        return [name isEqualToString:NSAppearanceNameDarkAqua];
     }
-#endif
-    // https://stackoverflow.com/questions/25207077/how-to-detect-if-os-x-is-in-dark-mode
-    // On 10.10 there is no documented API for theme, so we'll guess a couple of different ways.
-    BOOL isDark = NO;
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults synchronize];
-    NSString *interfaceStyle = [defaults stringForKey:@"AppleInterfaceStyle"];
-    if (interfaceStyle && [interfaceStyle isEqualToString:@"Dark"]) {
-        isDark = YES;
-    }
-    return isDark;
+    // On 10.13 and earlier there is no documented appearance API.
+    NSString *interfaceStyle = [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"];
+    return [interfaceStyle isEqualToString:@"Dark"];
 }
 -(BOOL)isInstalledButHiddenBySystem
 {

@@ -75,14 +75,9 @@ static NSComparisonResult SortDiskEntryByDeviceString(NSDictionary *a, NSDiction
 	// Set up a NumberFormatter for localization. This is based on code contributed by Mike Fischer
 	// (mike.fischer at fi-works.de) for use in MenuMeters.
 	NSNumberFormatter *tempFormat = [[NSNumberFormatter alloc] init];
-	[tempFormat setLocalizesFormat:YES];
-	[tempFormat setFormat:@"####0.00"];
-	// Go through an archive/unarchive cycle to work around a bug on pre-10.2.2 systems
-	// see http://cocoa.mamasam.com/COCOADEV/2001/12/2/21029.php
-	spaceFormatter = [NSUnarchiver unarchiveObjectWithData:[NSArchiver archivedDataWithRootObject:tempFormat]];
-	if (!spaceFormatter) {
-		return nil;
-	}
+	tempFormat.localizesFormat = YES;
+	tempFormat.format = @"####0.00";
+	spaceFormatter = tempFormat;
 
 	return self;
 
@@ -131,31 +126,17 @@ static NSComparisonResult SortDiskEntryByDeviceString(NSDictionary *a, NSDiction
 									length:strlen(mountInfo[i].f_mntonname)];
 
 			// NSFileManger used to report stale volume names and many other
-			// bugs. Again, probably fixed in new OS versions, but stick with
-			// what works. Filesystem Carbon calls are available in x86_64,
-			// so we're fine with this.
-			FSRef pathRef;
-			OSStatus err = FSPathMakeRef((UInt8 *)[mountPath fileSystemRepresentation], &pathRef, NULL);
-			if (err != noErr) {
-				continue;
-			}
-			// Get catalog info
-			FSCatalogInfo catInfo;
-			err = FSGetCatalogInfo(&pathRef, kFSCatInfoVolume, &catInfo, NULL, NULL, NULL);
-			if (err != noErr) {
-				continue;
-			}
-			// Get volume info
-			FSVolumeInfo volInfo;
-			HFSUniStr255 volumeName;
-			err = FSGetVolumeInfo(catInfo.volume, 0, NULL, kFSVolInfoNone, &volInfo, &volumeName, NULL);
-			if (err != noErr) {
-				continue;
+			// bugs. Use NSURL resource values instead of the deprecated
+			// FSRef/Carbon volume APIs.
+			NSURL *mountURL = [NSURL fileURLWithPath:mountPath isDirectory:YES];
+			NSString *volumeName = nil;
+			NSError *error = nil;
+			if (![mountURL getResourceValue:&volumeName forKey:NSURLVolumeNameKey error:&error] || !volumeName) {
+				volumeName = [mountPath lastPathComponent];
 			}
 
 			// Store the name and path from the workspace
-			[diskStats setObject:[NSString stringWithCharacters:volumeName.unicode length:volumeName.length]
-						  forKey:@"name"];
+			[diskStats setObject:volumeName forKey:@"name"];
 			[diskStats setObject:mountPath forKey:@"path"];
 
 			// Store the icon

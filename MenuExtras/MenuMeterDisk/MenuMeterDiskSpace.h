@@ -22,7 +22,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <Carbon/Carbon.h>
 #import <sys/param.h>
 #import <sys/mount.h>
 #import <sys/stat.h>

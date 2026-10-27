@@ -24,7 +24,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <Carbon/Carbon.h>
 
 // OS version info
 __private_extern__ BOOL OSIsJaguarOrLater(void);

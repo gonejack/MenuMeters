@@ -185,17 +185,15 @@
 	// Set up a NumberFormatter for localization. This is based on code contributed by Mike Fischer
 	// (mike.fischer at fi-works.de) for use in MenuMeters.
 	NSNumberFormatter *tempFormat = [[NSNumberFormatter alloc] init];
-	[tempFormat setLocalizesFormat:YES];
-	[tempFormat setFormat:[NSString stringWithFormat:@"#,##0.0%@", [localizedStrings objectForKey:kMBLabel]]];
-	// Go through an archive/unarchive cycle to work around a bug on pre-10.2.2 systems
-	// see http://cocoa.mamasam.com/COCOADEV/2001/12/2/21029.php
-    memFloatMBFormatter = [NSUnarchiver unarchiveObjectWithData:[NSArchiver archivedDataWithRootObject:tempFormat]];
-	[tempFormat setFormat:[NSString stringWithFormat:@"#,##0%@", [localizedStrings objectForKey:kMBLabel]]];
-	memIntMBFormatter = [NSUnarchiver unarchiveObjectWithData:[NSArchiver archivedDataWithRootObject:tempFormat]];
-	[tempFormat setFormat:@"#,##0"];
-	prettyIntFormatter = [NSUnarchiver unarchiveObjectWithData:[NSArchiver archivedDataWithRootObject:tempFormat]];
-	[tempFormat setFormat:@"##0.0%"];
-	percentFormatter = [NSUnarchiver unarchiveObjectWithData:[NSArchiver archivedDataWithRootObject:tempFormat]];
+	tempFormat.localizesFormat = YES;
+	tempFormat.format = [NSString stringWithFormat:@"#,##0.0%@", [localizedStrings objectForKey:kMBLabel]];
+	memFloatMBFormatter = [tempFormat copy];
+	tempFormat.format = [NSString stringWithFormat:@"#,##0%@", [localizedStrings objectForKey:kMBLabel]];
+	memIntMBFormatter = [tempFormat copy];
+	tempFormat.format = @"#,##0";
+	prettyIntFormatter = [tempFormat copy];
+	tempFormat.format = @"##0.0%";
+	percentFormatter = [tempFormat copy];
 	if (!(memFloatMBFormatter && memIntMBFormatter && prettyIntFormatter && percentFormatter)) {
 		return nil;
 	}
@@ -262,7 +260,7 @@
 	NSDictionary *currentStats = [memStats memStats];
 	if (currentStats) {
 		if ([ourPrefs memDisplayMode] == kMemDisplayGraph) {
-			if ([memHistory count] >= [ourPrefs memGraphLength]) {
+			if ([memHistory count] >= (NSUInteger)[ourPrefs memGraphLength]) {
 				[memHistory removeObjectsInRange:NSMakeRange(0, [memHistory count] - [ourPrefs memGraphLength] + 1)];
 			}
 		} else {
@@ -599,14 +597,14 @@
     [activePath moveToPoint:NSMakePoint(0, 0)];
 
     // Loop over pixels in desired width until we're out of data
-    int renderPosition = 0;
+    NSInteger renderPosition = 0;
     // Graph height does not include baseline, reserve the space for real data
     // since memory usage can never be zero.
     float renderHeight = (float)self.imageHeight;
-     for (renderPosition = 0; renderPosition < [ourPrefs memGraphLength]; renderPosition++) {
+     for (renderPosition = 0; renderPosition < (NSInteger)[ourPrefs memGraphLength]; renderPosition++) {
 
         // No data at this position?
-        if (renderPosition >= [memHistory count]) break;
+        if (renderPosition >= (NSInteger)[memHistory count]) break;
 
         // Grab data
         NSDictionary *memData = [memHistory objectAtIndex:renderPosition];
@@ -647,14 +645,14 @@
 	[inactivePath moveToPoint:NSMakePoint(0, 0)];
 
 	// Loop over pixels in desired width until we're out of data
-	int renderPosition = 0;
+	NSInteger renderPosition = 0;
 	// Graph height does not include baseline, reserve the space for real data
 	// since memory usage can never be zero.
 	float renderHeight = (float)self.imageHeight;
- 	for (renderPosition = 0; renderPosition < [ourPrefs memGraphLength]; renderPosition++) {
+	for (renderPosition = 0; renderPosition < (NSInteger)[ourPrefs memGraphLength]; renderPosition++) {
 
 		// No data at this position?
-		if (renderPosition >= [memHistory count]) break;
+		if (renderPosition >= (NSInteger)[memHistory count]) break;
 
 		// Grab data
 		NSDictionary *memData = [memHistory objectAtIndex:renderPosition];
@@ -793,7 +791,7 @@
 
 	// Add to history (at least one)
 	if ([ourPrefs memDisplayMode] == kMemDisplayGraph) {
-		if ([memHistory count] >= [ourPrefs memGraphLength]) {
+		if ([memHistory count] >= (NSUInteger)[ourPrefs memGraphLength]) {
 			[memHistory removeObjectsInRange:NSMakeRange(0, [memHistory count] - [ourPrefs memGraphLength] + 1)];
 		}
 	} else {

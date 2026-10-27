@@ -64,7 +64,7 @@ static void BlockDeviceChanged(void *ref, io_iterator_t iterator) {
 	}
 
 	// Connect to IOKit and setup our notification source
-	kern_return_t err = IOMasterPort(MACH_PORT_NULL, &masterPort);
+	kern_return_t err = MenuMetersIOMainPort(&masterPort);
 	if ((err != KERN_SUCCESS) || !masterPort) {
 		return nil;
 	}

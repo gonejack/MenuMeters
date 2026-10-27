@@ -57,8 +57,7 @@ INCS=(-I. -ICommon -IMenuExtras/MenuMeterCPU -IMenuExtras/MenuMeterDisk \
 
 FLAGS=(-isysroot "$SDK" -mmacosx-version-min=11.0 -fobjc-arc -O2 -g0 \
        -include MenuMeters.pch -DELCAPITAN=1 -DSPARKLE=1 \
-       -Wno-deprecated-declarations -Wno-objc-multiple-method-names \
-       -Wno-incompatible-pointer-types -Wno-nullability-completeness \
+       -Wall -Wextra -Wno-unused-parameter \
        "${INCS[@]}" -F .)
 
 rc=0
@@ -80,8 +79,7 @@ clang -arch arm64 -arch x86_64 \
   -Wl,-rpath,@loader_path/../Frameworks \
   -o "$OUT/MenuMeters" "$OUT"/obj/*.o \
   -framework Cocoa -framework SystemConfiguration -framework IOKit \
-  -framework Carbon -framework ApplicationServices -framework Security \
-  -framework PreferencePanes -framework Foundation \
+  -framework ServiceManagement -framework Foundation \
   -F . -framework Sparkle 2>>"$OUT/clang.log" || { echo "LINK FAILED, see $OUT/clang.log"; exit 1; }
 
 VERSION=$(sed -n 's/^#define MM_VERSION[[:space:]]*\([0-9.]*\).*/\1/p' InfoPlistPreprocessor.h)

@@ -64,54 +64,86 @@ NSString* const kProcessListItemCPUKey           = @"cpuPercent";
 -(instancetype)init
 {
     self=[super init];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(taskOutput:)
-                                                 name:NSFileHandleReadCompletionNotification
-                                               object:nil];
     return self;
 }
--(void)taskOutput:(NSNotification*)n
+
+-(void)dealloc
 {
-    NSFileHandle*fh=[n object];
-    if(![[pipe fileHandleForReading] isEqualTo: fh]){
+    [self stopUpdateProcessList];
+}
+
+-(void)consumeData:(NSData *)data
+{
+    if (!pipe || !data.length) {
         return;
     }
-    NSData*d=[n userInfo][@"NSFileHandleNotificationDataItem"];
-    if([d length]){
-        NSString*s=[[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding];
-        buffer=[buffer  stringByAppendingString:s];
-        while([buffer containsString:@"\n"]){
-            NSUInteger i=[buffer rangeOfString:@"\n"].location;
-            NSString*x=[buffer substringToIndex:i];
-            [self dealWithLine:x];
-            buffer=[buffer substringFromIndex:i+1];
-        }
-        [fh readInBackgroundAndNotifyForModes:@[NSRunLoopCommonModes]];
+    NSString *chunk = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    if (!chunk) {
+        return;
+    }
+    buffer = [buffer ?: @"" stringByAppendingString:chunk];
+    while ([buffer containsString:@"\n"]) {
+        NSUInteger i = [buffer rangeOfString:@"\n"].location;
+        NSString *line = [buffer substringToIndex:i];
+        [self dealWithLine:line];
+        buffer = [buffer substringFromIndex:i+1];
     }
 }
-    
+
 - (void)startUpdateProcessList {
-    parseState=0;
-    buffer=[NSString string];
-    task = [NSTask new];
-    task.launchPath = @"/usr/bin/top";
-    task.arguments =[[NSString stringWithFormat:@"-s 1 -l 0 -stats pid,cpu,uid,user,command -o cpu -n %@",  @(kCPUrocessCountMax)] componentsSeparatedByString:@" "];
-    
+    [self stopUpdateProcessList];
+
+    parseState = 0;
+    buffer = @"";
+    processes = nil;
+
+    task = [[NSTask alloc] init];
+    task.executableURL = [NSURL fileURLWithPath:@"/usr/bin/top"];
+    task.arguments = @[@"-s", @"1", @"-l", @"0",
+                       @"-stats", @"pid,cpu,uid,user,command",
+                       @"-o", @"cpu",
+                       @"-n", [@(kCPUrocessCountMax) stringValue]];
+
     pipe = [NSPipe pipe];
     task.standardOutput = pipe;
-    [[pipe fileHandleForReading] readInBackgroundAndNotifyForModes:@[NSRunLoopCommonModes]];
-    [task launch];
+
+    __weak typeof(self) weakSelf = self;
+    pipe.fileHandleForReading.readabilityHandler = ^(NSFileHandle *fh) {
+        NSData *data = [fh availableData];
+        if (!data.length) {
+            fh.readabilityHandler = nil;
+            return;
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf consumeData:data];
+        });
+    };
+
+    NSError *error = nil;
+    if (![task launchAndReturnError:&error]) {
+        NSLog(@"MenuMeterCPU unable to launch top: %@", error.localizedDescription);
+        pipe.fileHandleForReading.readabilityHandler = nil;
+        task = nil;
+        pipe = nil;
+    }
 } // startUpdateProcessList
     
 - (void)stopUpdateProcessList {
-    [task terminate];
-    task=nil;
-    buffer=nil;
+    pipe.fileHandleForReading.readabilityHandler = nil;
+    if (task.isRunning) {
+        [task terminate];
+    }
+    task = nil;
+    pipe = nil;
+    buffer = nil;
 } // stopUpdateProcessList
     
 - (NSArray *)runningProcessesByCPUUsage:(NSUInteger)maxItem
 {
-    return [processes subarrayWithRange:NSMakeRange(0,MIN(maxItem,processes.count))];
+    if (!processes) {
+        return @[];
+    }
+    return [processes subarrayWithRange:NSMakeRange(0, MIN(maxItem, processes.count))];
 }
 -(void)dealWithLine:(NSString*)s
 {
@@ -135,6 +167,9 @@ NSString* const kProcessListItemCPUKey           = @"cpuPercent";
         if(![i isEqualToString:@""]){
             [x addObject:i];
         }
+    }
+    if (x.count < 5 || !tempArray) {
+        return;
     }
     NSArray*commandName=[x subarrayWithRange:NSMakeRange(4,x.count-4)];
     NSDictionary* entry = @{ kProcessListItemPIDKey:x[0],

@@ -71,7 +71,7 @@ static void DeviceTerminated(void *ref, io_iterator_t iterator) {
 
 	// Check for device
 	mach_port_t	localMasterPort = 0;
-	kern_return_t err = IOMasterPort(MACH_PORT_NULL, &localMasterPort);
+	kern_return_t err = MenuMetersIOMainPort(&localMasterPort);
 	if ((err != KERN_SUCCESS) || !localMasterPort) return NO;
 
 	// Construct a matching dict
@@ -113,7 +113,7 @@ static void DeviceTerminated(void *ref, io_iterator_t iterator) {
 	}
 
 	// Connect to IOKit and setup our notification source
-	kern_return_t err = IOMasterPort(MACH_PORT_NULL, &masterPort);
+	kern_return_t err = MenuMetersIOMainPort(&masterPort);
 	if ((err != KERN_SUCCESS) || !masterPort) {
 		return nil;
 	}
