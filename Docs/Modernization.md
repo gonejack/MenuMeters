@@ -1,116 +1,167 @@
 # Modernization notes
 
-MenuMeters dates back to the Mac OS X 10.2 era. The goal of the current
-modernization pass is to keep the existing behavior while removing APIs that
-no longer work or are deprecated on current macOS, and to make the project
-build cleanly with current toolchains.
+MenuMeters dates back to the Mac OS X 10.2 era. The current version is a Swift
+rewrite of the maintained fork: the user-facing meters and preferences are
+preserved, while the old Objective-C menu-extra architecture and its
+compatibility shims are gone.
 
-## Toolchain and build settings
+## Architecture
 
-- Deployment target raised from macOS 10.11 to **macOS 12.0**, matching
-  `build-clt.sh` and the minimum OS of the bundled Sparkle framework.
-- C language standard raised from `gnu99` to **`gnu17`**; C++ standard raised
-  to `gnu++17`.
-- `GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS` is enabled so new deprecated API usage
-  is visible during development.
-- The reference build (`./build-clt.sh`) produces a universal `arm64` +
-  `x86_64` binary and compiles every source file with the current SDK.
-- Carbon, Security, and PreferencePanes are no longer required by the source or
-  the link step. ApplicationServices is linked for the Accessibility API used
-  by Activity Monitor pane switching; ServiceManagement is linked for the
-  login-item implementation.
+MenuMeters is now a single Swift application. It has no nib, no Objective-C
+sources, and no preference pane.
 
-## API migrations
-
-| Old API | Replacement |
+| File | Responsibility |
 | --- | --- |
-| `NSOnState` / `NSOffState` | `NSControlStateValueOn` / `NSControlStateValueOff` |
-| `NSArchiver` / `NSUnarchiver` (colour prefs) | `NSKeyedArchiver` / `NSKeyedUnarchiver`, with a legacy read fallback |
-| Archive/unarchive cycle for `NSNumberFormatter` copies | `-[NSNumberFormatter copy]` |
-| `NSCompositeSourceOver` / `NSCompositeCopy` | `NSCompositingOperationSourceOver` / `NSCompositingOperationCopy` |
-| `compositeToPoint:operation:` | `drawAtPoint:fromRect:operation:fraction:` |
-| `stringWithCString:` | `stringWithUTF8String:` |
-| `GetCurrentKeyModifiers()` / `optionKey` | `NSEvent.modifierFlags` / `NSEventModifierFlagOption` |
-| `FSRef` / `FSGetVolumeInfo` / `FSGetCatalogInfo` | `NSURL` resource values (`NSURLVolumeNameKey`) |
-| `IOMasterPort()` / `kIOMasterPortDefault` | `IOMainPort()` / `kIOMainPortDefault`, available directly with the macOS 12 deployment target |
-| `launchApplication:` / `openFile:` | `openApplicationAtURL:configuration:completionHandler:` and `openURL:` (see `Common/MenuMeterWorkspaceCompat.h`) |
-| `NSBeginAlertSheet` | `NSAlert` sheet |
-| `LSSharedFileList` login items | `SMAppService.mainAppService` on macOS 13+, with `LSSharedFileList` fallback on macOS 12 (see `PrefPane/EMCLoginItem.m`) |
-| `readInBackgroundAndNotify` + global notification observer | `NSFileHandle.readabilityHandler` with a weak self capture |
-| `SYS_memorystatus_get_level` syscall | `sysctlbyname("kern.memorystatus_level")` |
-| `AcquireIconRef` / `ReleaseIconRef` | removed; the icon ref parameter was unused |
-| `setScalesWhenResized:` | removed; images are sized explicitly |
-| Sparkle 1.x `SUUpdater` + DSA signatures | Sparkle 2 `SPUStandardUpdaterController` + EdDSA (`SUPublicEDKey`) |
-| `MenuMetersPref.xib` | programmatic AppKit window in `PrefPane/MenuMetersPrefWindow.m` |
-| `/usr/bin/top` subprocess | `libproc` (`proc_listallpids` / `proc_pidinfo`) |
-| AppleScript + System Events for Activity Monitor | `AXUIElement` accessibility traversal and `AXPress`, best-effort |
+| `main.swift` | Creates `NSApplication`, installs the app delegate, and runs the accessory app |
+| `AppDelegate.swift` | Startup, single-instance handling, update controller, meter creation, main menu |
+| `MenuExtraBase.swift` | Shared `NSStatusItem` lifecycle, timers, menu plumbing, theme changes, Activity Monitor switching |
+| `CPUExtra.swift`, `CPUStats.swift`, `CPUTopProcesses.swift`, `Uptime.swift` | CPU meter, graphs, top processes, load and uptime |
+| `DiskExtra.swift`, `DiskIO.swift`, `DiskSpace.swift` | Disk activity and volume-space meters |
+| `MemExtra.swift`, `MemStats.swift` | Memory meter, pressure, paging, and swap information |
+| `NetExtra.swift`, `NetConfig.swift`, `NetStats.swift`, `NetPPP.swift` | Network throughput, interfaces, and PPP/VPN support |
+| `PrefsWindow.swift` | Programmatic five-tab preferences and About window |
+| `Defaults.swift` | Typed preferences, validation, and legacy migration |
+| `Support.swift` | Constants, localization, notifications, login item, app launching, version comparison |
+| `TemperatureReader.swift` | SMC / Apple Silicon temperature access |
+| `PowerMate.swift` | Griffin PowerMate support |
 
-## Performance and reliability improvements
+Each meter owns one `NSStatusItem` and is created independently. A failure in
+one meter does not prevent the updater or the preferences window from starting.
+The application is an `LSUIElement` accessory app and temporarily switches to a
+regular activation policy while the preferences window is open.
 
-- Timers are block-based and capture `self` weakly; they keep the tolerance
-  setting so the system can coalesce wake-ups.
-- The top-process reader uses `libproc` instead of launching `/usr/bin/top`.
-  It takes two `proc_pidinfo(PROC_PIDTASKINFO)` snapshots 100 ms apart and
-  compares the mach absolute-time counters, so no subprocess, pipe, or output
-  parser is involved.
-- CPU/package counts are file-local statics with guards against zero values,
-  removing global symbol pollution and a possible division by zero.
-- Disk, CPU, memory, and network formatters are created once and configured
-  with properties instead of being round-tripped through an archiver.
-- `isDark` uses `bestMatchFromAppearancesWithNames:` instead of a substring
-  check on the appearance name.
-- Theme changes are handled through the existing
-  `effectiveAppearance` KVO path; the pre-Mojave distributed-notification path
-  has been removed.
+The public notification names from the old implementation are retained:
+`openPref`, `menuExtraUnloaded`, and `hiddenBySystem`. Meter preference-change
+notifications still use the meter bundle identifier as the notification name
+and `"prefChange"` as the object.
 
-## Compatibility notes
+## Preferences and compatibility
 
-- The deployment target is macOS 12. The macOS 12 IOKit renames are available
-  directly, and the macOS 13 login-item API is still selected at runtime with
-  an `LSSharedFileList` fallback, so the same binary runs on Monterey and later.
-- Preferences written by MenuMeters 2.1.6 and earlier still load: colour
-  values fall back to the legacy unarchiver when keyed unarchiving fails.
-  Colours saved by this version use secure keyed archives, so downgrading to
-  2.1.6 or earlier will show the default colours for those preferences.
-- The menu-bar item uses `NSStatusItem`, not the private `NSMenuExtra` API.
-  `NSMenuExtra` in the source is only a local compatibility macro.
-- Sparkle is bundled at **2.10.1**, which requires macOS 12; the app's
-  deployment target was raised to macOS 12.0 to match. The framework is
-  universal (`arm64` + `x86_64`), and the appcast must contain EdDSA signatures
-  made with the private key matching the `SUPublicEDKey` in
-  `MenuMeters-Info.plist`.
-- Activity Monitor pane switching requires Accessibility permission. The app
-  uses the public Accessibility API directly; it no longer needs Apple Events
-  or the Automation entitlement.
+Preferences use `UserDefaults.standard` under the app's bundle identifier,
+`com.yujitach.MenuMeters`. On first launch the app imports values from the old
+`com.ragingmenace.MenuMeters` domain when that plist exists. Values equal to the
+bundled defaults are skipped, and a migration marker prevents the import from
+running again.
 
-## Known follow-up work
+The historical meter identifiers are unchanged:
 
-- The Activity Monitor toolbar layout is not public API. The accessibility
-  traversal is intentionally best-effort and may need adjustment after major
-  Activity Monitor redesigns.
-- Large parts of the source still use pre-literal Objective-C style
-  (`[NSNumber numberWithInt:]`, `objectForKey:`, etc.). These are semantically
-  equivalent on the modern runtime and were intentionally left alone to keep
-  this change reviewable. Convert them incrementally when touching a file.
-- The preference window is now programmatic, but its fixed frames mirror the
-  old nib. A future layout pass could make it resize more gracefully.
-- There is no automated test suite. `./build-clt.sh` verifies that every
-  translation unit compiles with the current SDK, and CI runs both the CLT and
-  Xcode builds.
+- `com.ragingmenace.MenuMeterCPU`
+- `com.ragingmenace.MenuMeterDisk`
+- `com.ragingmenace.MenuMeterMem`
+- `com.ragingmenace.MenuMeterNet`
+
+This keeps existing preferences and login-item entries working. Colors written
+by the old version are read with a keyed-archive first and the legacy
+`NSUnarchiver` path as a fallback. New colors use secure keyed archives.
+Downgrading to 2.1.6 or earlier will show default colors for colors saved by
+this version.
+
+## API modernization
+
+| Old implementation | Current implementation |
+| --- | --- |
+| Private `NSMenuExtra` / SystemUIServer menu extras | Public `NSStatusItem` in a standalone accessory app |
+| Objective-C app delegate and nib | Swift `NSApplicationDelegate`, programmatic AppKit |
+| `NSOnState` / `NSOffState` | `NSControl.StateValue.on` / `.off` |
+| `NSArchiver` / `NSUnarchiver` colors | `NSKeyedArchiver` / `NSKeyedUnarchiver`, legacy read fallback |
+| `NSBeginAlertSheet` | `NSAlert` |
+| `FSRef` / `FSGetVolumeInfo` | `URL` resource values |
+| `IOMasterPort()` | `IOMainPort()` / `kIOMainPortDefault` |
+| `String(cString:)` from raw buffers | Bounded UTF-8 conversion |
+| `/usr/bin/top` subprocess | `libproc` process snapshots |
+| AppleScript / System Events automation | `AXUIElement` accessibility traversal, best effort |
+| Sparkle 1 `SUUpdater` + DSA | Sparkle 2 `SPUStandardUpdaterController` + EdDSA |
+| `LSSharedFileList` only | `SMAppService.mainApp` on macOS 13+, `LSSharedFileList` fallback on macOS 12 |
+| Fixed `NSTimer` selectors | Block-based timers with weak captures and tolerance |
+
+Timers keep the user-selected interval and use tolerance so the system can
+coalesce wake-ups. Disk, CPU, memory, and network formatters are created once
+and configured with properties instead of being round-tripped through an
+archiver. CPU and package counts are cached file-private values with guards
+against zero.
+
+## Resources and build layout
+
+All app resources live in `Resources/`:
+
+- `Resources/*.lproj/` contains `Localizable.strings`,
+  `MenuMetersPref.strings`, and `DiskImageSet.strings`.
+- `Resources/DiskIcons/` contains the TIFF icon sets.
+- `Resources/MenuMeters.icns` is the app icon.
+- `Resources/v2.0.8alert.rtf` is shown in the About tab.
+- `Resources/com.ragingmenace.MenuMeters.plist` provides the bundled defaults
+  used during migration.
+- `Resources/releases.html` is the release-history page.
+
+Both build paths copy the disk TIFFs and localized tables to the top level of
+`Contents/Resources`, which is where `NSImage(named:)` and
+`Bundle.localizedString(forKey:value:table:)` expect them.
+
+`build-clt.sh` is the reference build. It compiles every Swift source for
+`arm64` and `x86_64`, links against the bundled Sparkle framework, copies the
+resources, and ad-hoc signs the resulting `out/MenuMeters.app`. Setting
+`NO_SPARKLE=1` builds without the framework; the `#if canImport(Sparkle)`
+branches hide update controls in that configuration.
+
+The x86_64 link passes `-runtime-compatibility-version none` because recent
+Command Line Tools ship the Swift 5.6 back-deployment compatibility library
+with an arm64 slice only. MenuMeters does not use Swift concurrency, so the
+back-deployment library is not required.
+
+The Xcode project contains the same sources and resources, uses resource
+variant groups for the localized string tables, and embeds Sparkle with a
+`CodeSignOnCopy` build phase. The shared `MenuMeters` scheme builds the app;
+CI runs both the Xcode and Command Line Tools builds.
+
+## Deployment and signing
+
+- Minimum deployment target: **macOS 12.0**, matching Sparkle 2.10.1.
+- Architectures: `arm64` and `x86_64`.
+- Swift language mode: Swift 5.
+- Local builds use ad-hoc signing. Release builds should use a Developer ID
+  identity, sign the embedded Sparkle framework and the app with the same
+  identity, and be notarized.
+- Sparkle updates use EdDSA. The public key is in `MenuMeters-Info.plist`; the
+  private key is not in the repository.
+
+## Known limitations and follow-up work
+
+- There is no automated test suite. `./build-clt.sh` compiles every source file
+  for both architectures and the CI workflow builds the Xcode project as well.
+- Activity Monitor's toolbar is not public API. The accessibility traversal
+  used for pane switching is intentionally best effort and may need adjustment
+  after major Activity Monitor redesigns. It requires Accessibility permission.
+- `NSUnarchiver` and `LSSharedFileList` produce deprecation warnings. They are
+  retained only for reading old preferences and for the macOS 12 login-item
+  fallback.
+- The preference window uses fixed frames inherited from the old nib. A future
+  layout pass could make it resize more gracefully.
+- Existing appcast entries signed with DSA must be re-signed with the EdDSA key.
+  Users still on a DSA build may need a one-time manual update, as described in
+  the README.
 
 ## Verification
 
 ```sh
 ./build-clt.sh
+lipo -info out/MenuMeters.app/Contents/MacOS/MenuMeters
+codesign --verify --deep --strict out/MenuMeters.app
+```
 
-# Optional: compile every file with deprecation warnings visible
-SDK=$(xcrun --sdk macosx --show-sdk-path)
-find . -name '*.m' -not -path './Sparkle.framework/*' -not -path './out/*' \
-  -exec clang -fsyntax-only -isysroot "$SDK" -mmacosx-version-min=12.0 \
-  -fobjc-arc -include MenuMeters.pch -DELCAPITAN=1 -DSPARKLE=1 \
-  -Wdeprecated-declarations -Wno-unused-parameter \
-  -I. -ICommon -IMenuExtras/MenuMeterCPU \
-  -IMenuExtras/MenuMeterDisk -IMenuExtras/MenuMeterMem \
-  -IMenuExtras/MenuMeterNet -IPrefPane -IMenuMetersApp -Ihardware_reader \
-  -F . {} \;
+The no-Sparkle configuration is verified separately:
+
+```sh
+NO_SPARKLE=1 ./build-clt.sh
+```
+
+The Xcode build can be run with a full Xcode installation:
+
+```sh
+xcodebuild \
+  -project MenuMeters.xcodeproj \
+  -scheme MenuMeters \
+  -configuration Release \
+  -destination "platform=macOS" \
+  CODE_SIGNING_ALLOWED=NO \
+  build
 ```

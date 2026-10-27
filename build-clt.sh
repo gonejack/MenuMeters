@@ -2,89 +2,85 @@
 #
 # Build MenuMeters with the Command Line Tools only (no Xcode installation).
 #
-#   ./build-clt.sh                 -> out/MenuMeters (universal arm64 + x86_64)
+#   ./build-clt.sh
 #
-# To install into an existing app bundle (keeps the compiled nibs/resources):
+# Produces a complete, ad-hoc-signed universal application bundle:
 #
-#   cp out/MenuMeters /Applications/MenuMeters.app/Contents/MacOS/MenuMeters
-#   codesign -f -s - --options runtime --entitlements MenuMeters.entitlements \
-#            --deep /Applications/MenuMeters.app
+#   out/MenuMeters.app
 #
-# The app links against Sparkle.framework. If you ad-hoc sign the app with the
-# hardened runtime, add com.apple.security.cs.disable-library-validation to a
-# temporary entitlements file (do not use it for Developer ID releases),
-# otherwise the runtime refuses to load the framework. With a Developer ID
-# identity, sign the app and the framework with that identity instead.
+# The bundle contains the Swift executable (arm64 + x86_64), Sparkle, the
+# localized string tables, the disk icon sets, and the About text. Run it with
+# `open out/MenuMeters.app`.
 #
-set -u
+set -euo pipefail
 cd "$(dirname "$0")"
 
 SDK=$(xcrun --sdk macosx --show-sdk-path)
 OUT=out
-rm -rf "$OUT"
-mkdir -p "$OUT/obj"
+APP="$OUT/MenuMeters.app"
+OBJ="$OUT/obj"
+RES="$APP/Contents/Resources"
+FRAMEWORKS="$APP/Contents/Frameworks"
+DEPLOYMENT_TARGET=12.0
 
-SRCS=(
-  MenuMetersApp/main.m
-  MenuMetersApp/AppDelegate.m
-  PrefPane/MenuMetersPref.m
-  PrefPane/MenuMetersPrefWindow.m
-  PrefPane/EMCLoginItem.m
-  Common/MenuMeterDefaults.m
-  MenuMetersMenuExtraBase.m
-  Common/MenuMeterPowerMate.m
-  Common/MenuMeterWorkarounds.m
-  LocalizedStrings.m
-  MenuExtras/MenuMeterCPU/MenuMeterCPUExtra.m
-  MenuExtras/MenuMeterCPU/MenuMeterCPUStats.m
-  MenuExtras/MenuMeterCPU/MenuMeterCPUTopProcesses.m
-  MenuExtras/MenuMeterCPU/MenuMeterUptime.m
-  MenuExtras/MenuMeterDisk/MenuMeterDiskExtra.m
-  MenuExtras/MenuMeterDisk/MenuMeterDiskIO.m
-  MenuExtras/MenuMeterDisk/MenuMeterDiskSpace.m
-  MenuExtras/MenuMeterMem/MenuMeterMemExtra.m
-  MenuExtras/MenuMeterMem/MenuMeterMemStats.m
-  MenuExtras/MenuMeterNet/MenuMeterNetExtra.m
-  MenuExtras/MenuMeterNet/MenuMeterNetConfig.m
-  MenuExtras/MenuMeterNet/MenuMeterNetPPP.m
-  MenuExtras/MenuMeterNet/MenuMeterNetStats.m
-  hardware_reader/smc_reader.m
-  hardware_reader/applesilicon_hardware_reader.m
-  hardware_reader/TemperatureReader.m
+rm -rf "$OUT"
+mkdir -p "$OBJ" "$APP/Contents/MacOS" "$RES" "$FRAMEWORKS"
+
+SOURCES=(Sources/MenuMeters/*.swift)
+COMMON_FLAGS=(
+    -sdk "$SDK"
+    -module-name MenuMeters
+    -O -whole-module-optimization
+    # The macOS 15+ Command Line Tools ship libswiftCompatibility56.a with an
+    # arm64 slice only, which breaks x86_64 links against macOS 12. MenuMeters
+    # does not use Swift concurrency, so no back-deployment library is needed.
+    -runtime-compatibility-version none
+    -Xlinker -rpath -Xlinker @loader_path/../Frameworks
 )
 
-INCS=(-I. -ICommon -IMenuExtras/MenuMeterCPU -IMenuExtras/MenuMeterDisk \
-      -IMenuExtras/MenuMeterMem -IMenuExtras/MenuMeterNet -IPrefPane \
-      -IMenuMetersApp -Ihardware_reader)
-
-FLAGS=(-isysroot "$SDK" -mmacosx-version-min=12.0 -fobjc-arc -O2 -g0 \
-       -include MenuMeters.pch -DELCAPITAN=1 -DSPARKLE=1 \
-       -Wall -Wextra -Wno-unused-parameter \
-       "${INCS[@]}" -F .)
-
-rc=0
-for s in "${SRCS[@]}"; do
-  o="$OUT/obj/$(basename "$s" .m).o"
-  for arch in arm64 x86_64; do
-    clang -arch $arch -c "${FLAGS[@]}" -o "$o.$arch" "$s" 2>>"$OUT/clang.log" || rc=1
-  done
-  lipo -create "$o.arm64" "$o.x86_64" -output "$o" 2>>"$OUT/clang.log" || rc=1
-done
-
-if [ $rc -ne 0 ]; then
-  echo "COMPILE FAILED, see $OUT/clang.log"
-  exit 1
+# Sparkle is optional at compile time: without the framework the app still
+# builds, but the update controls are hidden (the `#if canImport(Sparkle)`
+# branches in the sources take care of that). Set NO_SPARKLE=1 to force a
+# build without automatic updates.
+if [ "${NO_SPARKLE:-0}" != "1" ] && [ -d Sparkle.framework ]; then
+    COMMON_FLAGS+=(-F . -framework Sparkle)
+    ditto Sparkle.framework "$FRAMEWORKS/Sparkle.framework"
+else
+    echo "note: building without automatic updates"
 fi
 
-clang -arch arm64 -arch x86_64 \
-  -isysroot "$SDK" -mmacosx-version-min=12.0 \
-  -Wl,-rpath,@loader_path/../Frameworks \
-  -o "$OUT/MenuMeters" "$OUT"/obj/*.o \
-  -framework Cocoa -framework SystemConfiguration -framework IOKit \
-  -framework ServiceManagement -framework Foundation \
-  -framework ApplicationServices \
-  -F . -framework Sparkle 2>>"$OUT/clang.log" || { echo "LINK FAILED, see $OUT/clang.log"; exit 1; }
+for arch in arm64 x86_64; do
+    echo "Compiling $arch..."
+    xcrun swiftc "${COMMON_FLAGS[@]}" \
+        -target "$arch-apple-macos$DEPLOYMENT_TARGET" \
+        -o "$OBJ/MenuMeters-$arch" \
+        "${SOURCES[@]}"
+done
 
-VERSION=$(sed -n 's/^#define MM_VERSION[[:space:]]*\([0-9.]*\).*/\1/p' InfoPlistPreprocessor.h)
-echo "BUILD OK (version $VERSION)"
-file "$OUT/MenuMeters"
+lipo -create "$OBJ/MenuMeters-arm64" "$OBJ/MenuMeters-x86_64" \
+    -output "$APP/Contents/MacOS/MenuMeters"
+chmod +x "$APP/Contents/MacOS/MenuMeters"
+
+# Info.plist is already a concrete, Xcode-variable-free plist.
+cp MenuMeters-Info.plist "$APP/Contents/Info.plist"
+printf 'APPL????' > "$APP/Contents/PkgInfo"
+
+# Application resources.
+cp Resources/MenuMeters.icns "$RES/"
+cp Resources/v2.0.8alert.rtf "$RES/"
+cp Resources/com.ragingmenace.MenuMeters.plist "$RES/"
+cp Resources/releases.html "$RES/"
+cp LICENSE "$RES/"
+cp Resources/DiskIcons/*.tiff "$RES/"
+cp -R Resources/*.lproj "$RES/"
+
+# Ad-hoc signing is enough for local use. Release builds should be signed with
+# a Developer ID identity instead.
+if command -v codesign >/dev/null 2>&1; then
+    codesign --force --sign - "$APP" >/dev/null
+    codesign --verify --deep --strict "$APP"
+fi
+
+echo "BUILD OK"
+file "$APP/Contents/MacOS/MenuMeters"
+echo "Output: $APP"

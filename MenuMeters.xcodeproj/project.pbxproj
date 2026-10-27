@@ -7,1268 +7,537 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		330247652366CB7A00F88D61 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 330247642366CB7A00F88D61 /* Sparkle.framework */; };
-		AA1000042A00000000000004 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1000032A00000000000003 /* ServiceManagement.framework */; };
-		AA1000052A00000000000005 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1000032A00000000000003 /* ServiceManagement.framework */; };
-		AA1000072A00000000000007 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1000062A00000000000006 /* ApplicationServices.framework */; };
-		AA1000082A00000000000008 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1000062A00000000000006 /* ApplicationServices.framework */; };
-		AA10000B2A0000000000000B /* MenuMetersPrefWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = AA10000A2A0000000000000A /* MenuMetersPrefWindow.m */; };
-		AA10000C2A0000000000000C /* MenuMetersPrefWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = AA10000A2A0000000000000A /* MenuMetersPrefWindow.m */; };
-		3302476A2366CF7F00F88D61 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 330247642366CB7A00F88D61 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		330611032367EA4C0016E763 /* MenuMetersMainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 330611022367EA4C0016E763 /* MenuMetersMainMenu.xib */; };
-		3325978C25BE7DB10070CE37 /* applesilicon_hardware_reader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3325978B25BE7DB10070CE37 /* applesilicon_hardware_reader.m */; };
-		3325979325BE7DD00070CE37 /* applesilicon_hardware_reader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3325978B25BE7DB10070CE37 /* applesilicon_hardware_reader.m */; };
-		3330C5B4257DFAED00BD5164 /* LocalizedStrings.h in Headers */ = {isa = PBXBuildFile; fileRef = 3330C5B2257DFAED00BD5164 /* LocalizedStrings.h */; };
-		3330C5B5257DFAED00BD5164 /* LocalizedStrings.h in Headers */ = {isa = PBXBuildFile; fileRef = 3330C5B2257DFAED00BD5164 /* LocalizedStrings.h */; };
-		3330C5B6257DFAED00BD5164 /* LocalizedStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 3330C5B3257DFAED00BD5164 /* LocalizedStrings.m */; };
-		3330C5B7257DFAED00BD5164 /* LocalizedStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 3330C5B3257DFAED00BD5164 /* LocalizedStrings.m */; };
-		33679E52239767B40021408D /* v2.0.8alert.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 33679E51239767B30021408D /* v2.0.8alert.rtf */; };
-		33883CF023655C9900B8AC14 /* MenuMeterDiskExtra.m in Sources */ = {isa = PBXBuildFile; fileRef = D42EC95D03D49AE400A87BC9 /* MenuMeterDiskExtra.m */; };
-		33883CF123655C9900B8AC14 /* MenuMeterWorkarounds.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A79F41018B051008E3207 /* MenuMeterWorkarounds.m */; };
-		33883CF223655C9900B8AC14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3383C1761B69B72600915D5D /* main.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		33883CF323655C9900B8AC14 /* MenuMeterPowerMate.m in Sources */ = {isa = PBXBuildFile; fileRef = D4BBBF750463514700A804AF /* MenuMeterPowerMate.m */; };
-		33883CF423655C9900B8AC14 /* MenuMeterCPUExtra.m in Sources */ = {isa = PBXBuildFile; fileRef = D477AAEC03D4BB8600A87BC9 /* MenuMeterCPUExtra.m */; };
-		33883CF523655C9900B8AC14 /* MenuMeterMemExtra.m in Sources */ = {isa = PBXBuildFile; fileRef = D45F12DF03D48A1300A87BC9 /* MenuMeterMemExtra.m */; };
-		33883CF623655C9900B8AC14 /* MenuMeterDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = D432074903D3DCBA00A87BC9 /* MenuMeterDefaults.m */; };
-		33883CF723655C9900B8AC14 /* MenuMeterCPUStats.m in Sources */ = {isa = PBXBuildFile; fileRef = D477AAF103D4BB9200A87BC9 /* MenuMeterCPUStats.m */; };
-		33883CF823655C9900B8AC14 /* MenuMetersMenuExtraBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3345DD2E1B6BEFDE003843FC /* MenuMetersMenuExtraBase.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		33883CF923655C9900B8AC14 /* MenuMeterUptime.m in Sources */ = {isa = PBXBuildFile; fileRef = D477AAF503D4BB9D00A87BC9 /* MenuMeterUptime.m */; };
-		33883CFA23655C9900B8AC14 /* smc_reader.m in Sources */ = {isa = PBXBuildFile; fileRef = F75EBE2F235B6F3600876CF7 /* smc_reader.m */; };
-		33883CFB23655C9900B8AC14 /* MenuMeterCPUTopProcesses.m in Sources */ = {isa = PBXBuildFile; fileRef = D602BB90207F9561004984C1 /* MenuMeterCPUTopProcesses.m */; };
-		33883CFC23655C9900B8AC14 /* MenuMeterMemStats.m in Sources */ = {isa = PBXBuildFile; fileRef = D45F12E203D48A1C00A87BC9 /* MenuMeterMemStats.m */; };
-		33883CFD23655C9900B8AC14 /* MenuMeterDiskSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = D42EC96503D49AF700A87BC9 /* MenuMeterDiskSpace.m */; };
-		33883CFE23655C9900B8AC14 /* MenuMeterDiskIO.m in Sources */ = {isa = PBXBuildFile; fileRef = D42EC96203D49AF000A87BC9 /* MenuMeterDiskIO.m */; };
-		33883CFF23655C9900B8AC14 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3383C1731B69B72600915D5D /* AppDelegate.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		33883D0023655C9900B8AC14 /* MenuMeterNetPPP.m in Sources */ = {isa = PBXBuildFile; fileRef = D45B6FA103D3BACD00A87BC9 /* MenuMeterNetPPP.m */; };
-		33883D0223655C9900B8AC14 /* MenuMeterNetExtra.m in Sources */ = {isa = PBXBuildFile; fileRef = D4FC162003D26AAA00A87BC9 /* MenuMeterNetExtra.m */; };
-		33883D0423655C9900B8AC14 /* MenuMeterNetConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = D4FC162703D26AAA00A87BC9 /* MenuMeterNetConfig.m */; };
-		33883D0623655C9900B8AC14 /* MenuMeterNetStats.m in Sources */ = {isa = PBXBuildFile; fileRef = D4FC162403D26AAA00A87BC9 /* MenuMeterNetStats.m */; };
-		33883D0B23655C9900B8AC14 /* ArrowsIdle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC97303D49B6500A87BC9 /* ArrowsIdle.tiff */; };
-		33883D0C23655C9900B8AC14 /* ArrowsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC97403D49B6500A87BC9 /* ArrowsReadWrite.tiff */; };
-		33883D0D23655C9900B8AC14 /* ArrowsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC97503D49B6500A87BC9 /* ArrowsWrite.tiff */; };
-		33883D0E23655C9900B8AC14 /* ArrowsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC97603D49B6500A87BC9 /* ArrowsRead.tiff */; };
-		33883D0F23655C9900B8AC14 /* Color ArrowsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC97B03D49BD600A87BC9 /* Color ArrowsWrite.tiff */; };
-		33883D1023655C9900B8AC14 /* Color ArrowsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC97C03D49BD600A87BC9 /* Color ArrowsRead.tiff */; };
-		33883D1323655C9900B8AC14 /* Color ArrowsIdle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC97D03D49BD600A87BC9 /* Color ArrowsIdle.tiff */; };
-		33883D1623655C9900B8AC14 /* Color ArrowsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC97E03D49BD600A87BC9 /* Color ArrowsReadWrite.tiff */; };
-		33883D1723655C9900B8AC14 /* Dark ArrowsIdle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42C6C861996D9BB005F87BD /* Dark ArrowsIdle.tiff */; };
-		33883D1823655C9900B8AC14 /* Dark ArrowsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42C6C871996D9BB005F87BD /* Dark ArrowsRead.tiff */; };
-		33883D1923655C9900B8AC14 /* Dark ArrowsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42C6C881996D9BB005F87BD /* Dark ArrowsReadWrite.tiff */; };
-		33883D1A23655C9900B8AC14 /* Dark ArrowsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42C6C891996D9BB005F87BD /* Dark ArrowsWrite.tiff */; };
-		33883D1B23655C9900B8AC14 /* Dark Color ArrowsIdle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42C6C941996DA77005F87BD /* Dark Color ArrowsIdle.tiff */; };
-		33883D1C23655C9900B8AC14 /* Dark Color ArrowsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42C6C951996DA77005F87BD /* Dark Color ArrowsRead.tiff */; };
-		33883D1E23655C9900B8AC14 /* Dark Color ArrowsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42C6C961996DA77005F87BD /* Dark Color ArrowsReadWrite.tiff */; };
-		33883D1F23655C9900B8AC14 /* Dark Color ArrowsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42C6C971996DA77005F87BD /* Dark Color ArrowsWrite.tiff */; };
-		33883D2023655C9900B8AC14 /* LightsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC98303D49BDE00A87BC9 /* LightsWrite.tiff */; };
-		33883D2123655C9900B8AC14 /* LightsIdle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC98403D49BDE00A87BC9 /* LightsIdle.tiff */; };
-		33883D2223655C9900B8AC14 /* LightsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC98503D49BDE00A87BC9 /* LightsRead.tiff */; };
-		33883D2323655C9900B8AC14 /* LightsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC98603D49BDE00A87BC9 /* LightsReadWrite.tiff */; };
-		33883D2523655C9900B8AC14 /* Aqua LightsIdle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D45FEFCC0470257D00A87BC9 /* Aqua LightsIdle.tiff */; };
-		33883D2723655C9900B8AC14 /* Aqua LightsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D45FEFCD0470257D00A87BC9 /* Aqua LightsReadWrite.tiff */; };
-		33883D2923655C9900B8AC14 /* Aqua LightsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D45FEFCE0470257D00A87BC9 /* Aqua LightsWrite.tiff */; };
-		33883D2A23655C9900B8AC14 /* Aqua LightsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D45FEFCF0470257D00A87BC9 /* Aqua LightsRead.tiff */; };
-		33883D2B23655C9900B8AC14 /* Disk ArrowsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D4D9D1F30644C7E200047FDD /* Disk ArrowsRead.tiff */; };
-		33883D2C23655C9900B8AC14 /* Disk ArrowsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D4D9D1F40644C7E200047FDD /* Disk ArrowsReadWrite.tiff */; };
-		33883D2D23655C9900B8AC14 /* Disk ArrowsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D4D9D1F50644C7E200047FDD /* Disk ArrowsWrite.tiff */; };
-		33883D3423655CBF00B8AC14 /* MenuMetersPref.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E4BFA104F333B100A87BC9 /* MenuMetersPref.m */; };
-		33883D36236561B700B8AC14 /* EMCLoginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 908780A91FB087D70053DDC5 /* EMCLoginItem.m */; };
-		33883D47236568CB00B8AC14 /* MenuMetersPref.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3384540A2105C3AA00D4DA92 /* MenuMetersPref.strings */; };
-		33883D482365E3D400B8AC14 /* DiskImageSet.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4E4BF8F04F333B100A87BC9 /* DiskImageSet.strings */; };
-		33883D4C2365E61200B8AC14 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 33883D492365E61200B8AC14 /* Localizable.strings */; };
-		33883D542365E78300B8AC14 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3383C1781B69B72600915D5D /* Assets.xcassets */; };
-		3391A11825C66B5F00B83705 /* TemperatureReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 3391A11625C66B5F00B83705 /* TemperatureReader.h */; };
-		3391A11925C66B5F00B83705 /* TemperatureReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 3391A11625C66B5F00B83705 /* TemperatureReader.h */; };
-		3391A11A25C66B5F00B83705 /* TemperatureReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3391A11725C66B5F00B83705 /* TemperatureReader.m */; };
-		3391A11B25C66B5F00B83705 /* TemperatureReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3391A11725C66B5F00B83705 /* TemperatureReader.m */; };
-		339B8C90237FE17F008B9755 /* MenuMeters.icns in Resources */ = {isa = PBXBuildFile; fileRef = 339B8C8F237FE17F008B9755 /* MenuMeters.icns */; };
-		33B440112594675E00CBBEDF /* com.ragingmenace.MenuMeters.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33B440102594675E00CBBEDF /* com.ragingmenace.MenuMeters.plist */; };
-		33B440122594675E00CBBEDF /* com.ragingmenace.MenuMeters.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33B440102594675E00CBBEDF /* com.ragingmenace.MenuMeters.plist */; };
-		33F0921923673DAC00953CAB /* releases.html in Resources */ = {isa = PBXBuildFile; fileRef = 33F0921823673DAC00953CAB /* releases.html */; };
-		6349C10924BB733300C6FC99 /* EMCLoginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 908780A91FB087D70053DDC5 /* EMCLoginItem.m */; };
-		6349C10A24BB733300C6FC99 /* MenuMeterDiskExtra.m in Sources */ = {isa = PBXBuildFile; fileRef = D42EC95D03D49AE400A87BC9 /* MenuMeterDiskExtra.m */; };
-		6349C10B24BB733300C6FC99 /* MenuMeterWorkarounds.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A79F41018B051008E3207 /* MenuMeterWorkarounds.m */; };
-		6349C10C24BB733300C6FC99 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3383C1761B69B72600915D5D /* main.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		6349C10D24BB733300C6FC99 /* MenuMeterPowerMate.m in Sources */ = {isa = PBXBuildFile; fileRef = D4BBBF750463514700A804AF /* MenuMeterPowerMate.m */; };
-		6349C10E24BB733300C6FC99 /* MenuMeterCPUExtra.m in Sources */ = {isa = PBXBuildFile; fileRef = D477AAEC03D4BB8600A87BC9 /* MenuMeterCPUExtra.m */; };
-		6349C10F24BB733300C6FC99 /* MenuMeterMemExtra.m in Sources */ = {isa = PBXBuildFile; fileRef = D45F12DF03D48A1300A87BC9 /* MenuMeterMemExtra.m */; };
-		6349C11024BB733300C6FC99 /* MenuMeterDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = D432074903D3DCBA00A87BC9 /* MenuMeterDefaults.m */; };
-		6349C11124BB733300C6FC99 /* MenuMeterCPUStats.m in Sources */ = {isa = PBXBuildFile; fileRef = D477AAF103D4BB9200A87BC9 /* MenuMeterCPUStats.m */; };
-		6349C11224BB733300C6FC99 /* MenuMetersMenuExtraBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3345DD2E1B6BEFDE003843FC /* MenuMetersMenuExtraBase.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		6349C11324BB733300C6FC99 /* MenuMeterUptime.m in Sources */ = {isa = PBXBuildFile; fileRef = D477AAF503D4BB9D00A87BC9 /* MenuMeterUptime.m */; };
-		6349C11424BB733300C6FC99 /* smc_reader.m in Sources */ = {isa = PBXBuildFile; fileRef = F75EBE2F235B6F3600876CF7 /* smc_reader.m */; };
-		6349C11524BB733300C6FC99 /* MenuMeterCPUTopProcesses.m in Sources */ = {isa = PBXBuildFile; fileRef = D602BB90207F9561004984C1 /* MenuMeterCPUTopProcesses.m */; };
-		6349C11624BB733300C6FC99 /* MenuMeterMemStats.m in Sources */ = {isa = PBXBuildFile; fileRef = D45F12E203D48A1C00A87BC9 /* MenuMeterMemStats.m */; };
-		6349C11724BB733300C6FC99 /* MenuMeterDiskSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = D42EC96503D49AF700A87BC9 /* MenuMeterDiskSpace.m */; };
-		6349C11824BB733300C6FC99 /* MenuMeterDiskIO.m in Sources */ = {isa = PBXBuildFile; fileRef = D42EC96203D49AF000A87BC9 /* MenuMeterDiskIO.m */; };
-		6349C11924BB733300C6FC99 /* MenuMetersPref.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E4BFA104F333B100A87BC9 /* MenuMetersPref.m */; };
-		6349C11A24BB733300C6FC99 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3383C1731B69B72600915D5D /* AppDelegate.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		6349C11B24BB733300C6FC99 /* MenuMeterNetPPP.m in Sources */ = {isa = PBXBuildFile; fileRef = D45B6FA103D3BACD00A87BC9 /* MenuMeterNetPPP.m */; };
-		6349C11D24BB733300C6FC99 /* MenuMeterNetExtra.m in Sources */ = {isa = PBXBuildFile; fileRef = D4FC162003D26AAA00A87BC9 /* MenuMeterNetExtra.m */; };
-		6349C11F24BB733300C6FC99 /* MenuMeterNetConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = D4FC162703D26AAA00A87BC9 /* MenuMeterNetConfig.m */; };
-		6349C12124BB733300C6FC99 /* MenuMeterNetStats.m in Sources */ = {isa = PBXBuildFile; fileRef = D4FC162403D26AAA00A87BC9 /* MenuMeterNetStats.m */; };
-		6349C12724BB733300C6FC99 /* ArrowsIdle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC97303D49B6500A87BC9 /* ArrowsIdle.tiff */; };
-		6349C12824BB733300C6FC99 /* ArrowsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC97403D49B6500A87BC9 /* ArrowsReadWrite.tiff */; };
-		6349C12924BB733300C6FC99 /* ArrowsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC97503D49B6500A87BC9 /* ArrowsWrite.tiff */; };
-		6349C12A24BB733300C6FC99 /* ArrowsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC97603D49B6500A87BC9 /* ArrowsRead.tiff */; };
-		6349C12B24BB733300C6FC99 /* releases.html in Resources */ = {isa = PBXBuildFile; fileRef = 33F0921823673DAC00953CAB /* releases.html */; };
-		6349C12C24BB733300C6FC99 /* MenuMeters.icns in Resources */ = {isa = PBXBuildFile; fileRef = 339B8C8F237FE17F008B9755 /* MenuMeters.icns */; };
-		6349C12D24BB733300C6FC99 /* Color ArrowsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC97B03D49BD600A87BC9 /* Color ArrowsWrite.tiff */; };
-		6349C12E24BB733300C6FC99 /* Color ArrowsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC97C03D49BD600A87BC9 /* Color ArrowsRead.tiff */; };
-		6349C12F24BB733300C6FC99 /* Color ArrowsIdle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC97D03D49BD600A87BC9 /* Color ArrowsIdle.tiff */; };
-		6349C13024BB733300C6FC99 /* Color ArrowsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC97E03D49BD600A87BC9 /* Color ArrowsReadWrite.tiff */; };
-		6349C13124BB733300C6FC99 /* Dark ArrowsIdle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42C6C861996D9BB005F87BD /* Dark ArrowsIdle.tiff */; };
-		6349C13224BB733300C6FC99 /* Dark ArrowsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42C6C871996D9BB005F87BD /* Dark ArrowsRead.tiff */; };
-		6349C13324BB733300C6FC99 /* v2.0.8alert.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 33679E51239767B30021408D /* v2.0.8alert.rtf */; };
-		6349C13424BB733300C6FC99 /* Dark ArrowsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42C6C881996D9BB005F87BD /* Dark ArrowsReadWrite.tiff */; };
-		6349C13524BB733300C6FC99 /* MenuMetersMainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 330611022367EA4C0016E763 /* MenuMetersMainMenu.xib */; };
-		6349C13624BB733300C6FC99 /* Dark ArrowsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42C6C891996D9BB005F87BD /* Dark ArrowsWrite.tiff */; };
-		6349C13724BB733300C6FC99 /* Dark Color ArrowsIdle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42C6C941996DA77005F87BD /* Dark Color ArrowsIdle.tiff */; };
-		6349C13824BB733300C6FC99 /* Dark Color ArrowsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42C6C951996DA77005F87BD /* Dark Color ArrowsRead.tiff */; };
-		6349C13924BB733300C6FC99 /* LightsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC98303D49BDE00A87BC9 /* LightsWrite.tiff */; };
-		6349C13A24BB733300C6FC99 /* MenuMetersPref.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3384540A2105C3AA00D4DA92 /* MenuMetersPref.strings */; };
-		6349C13C24BB733300C6FC99 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 33883D492365E61200B8AC14 /* Localizable.strings */; };
-		6349C13D24BB733300C6FC99 /* DiskImageSet.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4E4BF8F04F333B100A87BC9 /* DiskImageSet.strings */; };
-		6349C13E24BB733300C6FC99 /* Dark Color ArrowsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42C6C961996DA77005F87BD /* Dark Color ArrowsReadWrite.tiff */; };
-		6349C13F24BB733300C6FC99 /* Dark Color ArrowsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42C6C971996DA77005F87BD /* Dark Color ArrowsWrite.tiff */; };
-		6349C14024BB733300C6FC99 /* LightsIdle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC98403D49BDE00A87BC9 /* LightsIdle.tiff */; };
-		6349C14124BB733300C6FC99 /* LightsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC98503D49BDE00A87BC9 /* LightsRead.tiff */; };
-		6349C14224BB733300C6FC99 /* LightsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC98603D49BDE00A87BC9 /* LightsReadWrite.tiff */; };
-		6349C14324BB733300C6FC99 /* Aqua LightsIdle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D45FEFCC0470257D00A87BC9 /* Aqua LightsIdle.tiff */; };
-		6349C14424BB733300C6FC99 /* Aqua LightsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D45FEFCD0470257D00A87BC9 /* Aqua LightsReadWrite.tiff */; };
-		6349C14524BB733300C6FC99 /* Aqua LightsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D45FEFCE0470257D00A87BC9 /* Aqua LightsWrite.tiff */; };
-		6349C14624BB733300C6FC99 /* Aqua LightsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D45FEFCF0470257D00A87BC9 /* Aqua LightsRead.tiff */; };
-		6349C14724BB733300C6FC99 /* Disk ArrowsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D4D9D1F30644C7E200047FDD /* Disk ArrowsRead.tiff */; };
-		6349C14824BB733300C6FC99 /* Disk ArrowsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D4D9D1F40644C7E200047FDD /* Disk ArrowsReadWrite.tiff */; };
-		6349C14924BB733300C6FC99 /* Disk ArrowsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D4D9D1F50644C7E200047FDD /* Disk ArrowsWrite.tiff */; };
-		6349C14A24BB733300C6FC99 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3383C1781B69B72600915D5D /* Assets.xcassets */; };
+		05D7C2B13D01F02D78931F0F /* Color ArrowsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 9DCE67716E6E1DBE0F8034A7 /* Color ArrowsWrite.tiff */; };
+		07224675AE7965F030D629D5 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = AC3FEBA35CA716669E2C9C8D /* LICENSE */; };
+		0C175C7EDF567C99FDE677E6 /* DiskSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B38C01F4B19A6BE7A38190 /* DiskSpace.swift */; };
+		0DA87EB937E899E9248C25FC /* NetExtra.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECB7FD178028B733C8B1BC6 /* NetExtra.swift */; };
+		222448F400DF1D8CD111063C /* LightsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = AF4123C00DB6F8AE35867E92 /* LightsWrite.tiff */; };
+		25FC58DB3B66F14DE51BFDFC /* Color ArrowsIdle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 34BEF32EE4F8BC9533F04370 /* Color ArrowsIdle.tiff */; };
+		313FC56E3064287781317669 /* Dark ArrowsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 147F6439D775E8AA2F83E434 /* Dark ArrowsWrite.tiff */; };
+		3202E6D6CBB8574C9330B8C5 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7E5EB26B9F0004B3DC3E92 /* main.swift */; };
+		3FEFBE7E651E9EF991DF201A /* ArrowsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 730A3FCA4F2597C3162CD5FB /* ArrowsWrite.tiff */; };
+		46393E37CFCEB4F02288E7D7 /* Disk ArrowsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = DBA515025E26BD4FD56FAD59 /* Disk ArrowsReadWrite.tiff */; };
+		476C713E1FF4D1E4E37A6742 /* LightsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 218CF5345FCDE6ABCEA2EF2B /* LightsRead.tiff */; };
+		4EEAB91008A79DA8619E39A9 /* ArrowsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FD059E0B22D4A88DB7B5F1BB /* ArrowsRead.tiff */; };
+		5513AE493A5907270F6E961C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3B9EFC40C6404D9CCA13FF /* AppDelegate.swift */; };
+		5615301BE52827A54B23BC98 /* LightsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 37CEEBBDE21A0174943A475D /* LightsReadWrite.tiff */; };
+		57A3B14B1E76284859BA4A24 /* Color ArrowsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = E7101E778AC2989F9B4246FB /* Color ArrowsRead.tiff */; };
+		6283449F03AE94F92FEFDA33 /* v2.0.8alert.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 718E03EEC00C77A1EC29FBE4 /* v2.0.8alert.rtf */; };
+		65B4889393B9BABB82BF6683 /* Uptime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C738CFDB0EF7B8EB80428CF /* Uptime.swift */; };
+		65E7D4591C6786B69D4B1A17 /* Dark ArrowsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = BDD04773A6F8FB8353F692B9 /* Dark ArrowsRead.tiff */; };
+		6E2B6DCA00CBBB6A5DAE550C /* NetConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AF2E26C27AD6858D23CDE1 /* NetConfig.swift */; };
+		6F16D6BD66215D2FC3AB47BB /* MenuMetersPref.strings in Resources */ = {isa = PBXBuildFile; fileRef = 60C4A7B3EAD1C640EB7AFC3C /* MenuMetersPref.strings */; };
+		748ACC9ECCF13F803CD86DFB /* Aqua LightsIdle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 6DCFEEC13627F5B54F7EC7CE /* Aqua LightsIdle.tiff */; };
+		765190498C861A94C25D053D /* Dark Color ArrowsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = A185D22C0300B5A540E16020 /* Dark Color ArrowsRead.tiff */; };
+		79F4062CCFDEA4D8DBD2AFD2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9026647C7FD78793732F13D0 /* Localizable.strings */; };
+		7A45F446D3DB1E8571C6E767 /* NetPPP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D37EADEE862E6CBB6B36C3E /* NetPPP.swift */; };
+		7C76E80ABA9A212EA048C132 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74EF15FA8158FF672F2EF5F /* Defaults.swift */; };
+		7F33CF2A637FE12B8FFF950B /* Dark Color ArrowsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = A408C5EF215F2DF0AE66FE18 /* Dark Color ArrowsReadWrite.tiff */; };
+		7FD2BF3DA4CC438F1FA6DB71 /* Aqua LightsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 197751A837D7EFC685655E24 /* Aqua LightsWrite.tiff */; };
+		82BD51338809BF900D152B41 /* Aqua LightsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = C69F93FB1B7FBDA3E6027A25 /* Aqua LightsRead.tiff */; };
+		839E561FB2CBF1029AEA3044 /* ArrowsIdle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 47AFE81DE14884FE30B6EF2F /* ArrowsIdle.tiff */; };
+		862C95CC1CA4D36E378C1B3D /* Disk ArrowsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 9EFDB226671196EA21EC9927 /* Disk ArrowsRead.tiff */; };
+		8768E678562F93D12CF7D29E /* MenuMeters.icns in Resources */ = {isa = PBXBuildFile; fileRef = 634DFED098C574D838C87A40 /* MenuMeters.icns */; };
+		8ADAE0F5F490051E6124B73B /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 903629BFFA928D1E6E626669 /* Sparkle.framework */; };
+		8F86391B41CE3904E767875B /* Disk ArrowsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D74BD208D7D893169C6FC234 /* Disk ArrowsWrite.tiff */; };
+		9616CDD243D782F24C015C03 /* PowerMate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B715A571DA756B1EF5F062 /* PowerMate.swift */; };
+		A04F044E74BC189444F5CB45 /* CPUStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14506AA65DAFAFE1047F458E /* CPUStats.swift */; };
+		A32EFEE12A7B326C80DECC4D /* Dark ArrowsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 14CEA75E90B824C4C411AFD6 /* Dark ArrowsReadWrite.tiff */; };
+		A6C21DD058C11FEDE68211CA /* Color ArrowsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5622E37AA45946755BF45733 /* Color ArrowsReadWrite.tiff */; };
+		AEA31FAF6763D83A942B8F67 /* LightsIdle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 577A5C111022CA019E371C64 /* LightsIdle.tiff */; };
+		B500BE46608C8FBEAA274D36 /* MemExtra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B097D471EE345BB172F6962 /* MemExtra.swift */; };
+		B805F779C3B3E96218192042 /* DiskImageSet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1E750EFF6C3E9975FC7CFB1C /* DiskImageSet.strings */; };
+		BADE326973B03F9CE1F1CC63 /* com.ragingmenace.MenuMeters.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5DCAC7BB610982711335E148 /* com.ragingmenace.MenuMeters.plist */; };
+		C179B251584574186B800A6F /* DiskExtra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C68638DA4407ECA43BE3227 /* DiskExtra.swift */; };
+		C410BBC3C4B4AC4F58F903A3 /* CPUExtra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9180752E1C38F35D9FC84B88 /* CPUExtra.swift */; };
+		C628ACF25BA924DFBD1BABA9 /* NetStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F13427E74583F2DE39B717 /* NetStats.swift */; };
+		C6F425F3BE67E71A1F5C1D06 /* MenuExtraBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7A5E9E8278D6A26391B0E0 /* MenuExtraBase.swift */; };
+		D0E2EAA54B9E1BE1086AAE70 /* Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354FDF25D96C9A4C5A0DA780 /* Support.swift */; };
+		D8DE78DA622BEC5A3D9EEDD3 /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 903629BFFA928D1E6E626669 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DEEC5CBB530F3CDC49768BE7 /* Aqua LightsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 52E4747D00CD3671CBD28581 /* Aqua LightsReadWrite.tiff */; };
+		E1EB5FA42C3945BE7C5B13DB /* PrefsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61044B0857769AE2F8C9D8D8 /* PrefsWindow.swift */; };
+		E604ADF9BA623AFB8C222C8A /* MemStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07EFA09A59AA08887439A81D /* MemStats.swift */; };
+		E90687C53149E30AE915BFF4 /* Dark Color ArrowsIdle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = B5D293DF075A752C5F6A6A3F /* Dark Color ArrowsIdle.tiff */; };
+		E9E7741AE9D08E8CC4670315 /* TemperatureReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCC24C7782482915D086E7F /* TemperatureReader.swift */; };
+		EBD424594F666517149D423F /* Dark ArrowsIdle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CCBEA9773903F680572285C9 /* Dark ArrowsIdle.tiff */; };
+		EC66EC530B542405D9830462 /* DiskIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EFA48AFEB5DEFD9DE79F31 /* DiskIO.swift */; };
+		EE49A4174574D685829A4C67 /* Dark Color ArrowsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D952F3CB72EE8141E7195241 /* Dark Color ArrowsWrite.tiff */; };
+		F0C56CE53007E5006948741B /* releases.html in Resources */ = {isa = PBXBuildFile; fileRef = DDCF90A88D17F5FB73DAAD79 /* releases.html */; };
+		F323F13E1BE45EB0C4305820 /* CPUTopProcesses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB9E16886FE1FADF1F4FF6 /* CPUTopProcesses.swift */; };
+		F8F5571A4CD34D880FBD9447 /* ArrowsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 9B49AE04BE430EF7354C0151 /* ArrowsReadWrite.tiff */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		330247692366CF6E00F88D61 /* CopyFiles */ = {
+		4DA428D6C2D5EAB4428B7FF0 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				3302476A2366CF7F00F88D61 /* Sparkle.framework in CopyFiles */,
+				D8DE78DA622BEC5A3D9EEDD3 /* Sparkle.framework in Embed Frameworks */,
 			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		08F9457D2752440700FC62A5 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
-		08F9457E2752440700FC62A5 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/DiskImageSet.strings; sourceTree = "<group>"; };
-		08F9457F2752440700FC62A5 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		330247642366CB7A00F88D61 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
-		330611022367EA4C0016E763 /* MenuMetersMainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuMetersMainMenu.xib; sourceTree = "<group>"; };
-		AA1000062A00000000000006 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
-		AA1000092A00000000000009 /* MenuMetersPrefWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuMetersPrefWindow.h; sourceTree = "<group>"; };
-		AA10000A2A0000000000000A /* MenuMetersPrefWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MenuMetersPrefWindow.m; sourceTree = "<group>"; };
-		AA10000D2A0000000000000D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
-		330D68B72105AB950041B689 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/DiskImageSet.strings"; sourceTree = "<group>"; };
-		3325978B25BE7DB10070CE37 /* applesilicon_hardware_reader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = applesilicon_hardware_reader.m; sourceTree = "<group>"; };
-		3325978F25BE7DCA0070CE37 /* applesilicon_hardware_reader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = applesilicon_hardware_reader.h; sourceTree = "<group>"; };
-		3330C5B2257DFAED00BD5164 /* LocalizedStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalizedStrings.h; sourceTree = "<group>"; };
-		3330C5B3257DFAED00BD5164 /* LocalizedStrings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalizedStrings.m; sourceTree = "<group>"; };
-		3345DD2D1B6BEFDE003843FC /* MenuMetersMenuExtraBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuMetersMenuExtraBase.h; sourceTree = "<group>"; };
-		3345DD2E1B6BEFDE003843FC /* MenuMetersMenuExtraBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuMetersMenuExtraBase.m; sourceTree = "<group>"; };
-		33679E51239767B30021408D /* v2.0.8alert.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = v2.0.8alert.rtf; sourceTree = "<group>"; };
-		336B59401E03BA68006DA445 /* MenuMeters.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuMeters.pch; sourceTree = "<group>"; };
-		3383C1721B69B72500915D5D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		3383C1731B69B72600915D5D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		3383C1761B69B72600915D5D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		3383C1781B69B72600915D5D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		3383C17D1B69B72600915D5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3384540D2105C3B100D4DA92 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
-		3384540E2105C3B300D4DA92 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
-		3384540F2105C3B600D4DA92 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
-		338454102105C3B800D4DA92 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
-		338454112105C3BB00D4DA92 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
-		338454122105C3BD00D4DA92 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MenuMetersPref.strings"; sourceTree = "<group>"; };
-		33883D3223655C9900B8AC14 /* MenuMeters.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenuMeters.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		33883D3323655C9900B8AC14 /* MenuMeters-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MenuMeters-Info.plist"; sourceTree = SOURCE_ROOT; };
-		33883D4A2365E61200B8AC14 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
-		33883D4D2365E62000B8AC14 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		33883D4E2365E62300B8AC14 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		33883D4F2365E62B00B8AC14 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
-		33883D502365E62E00B8AC14 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		33883D512365E63100B8AC14 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		33883D522365E63700B8AC14 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
-		33883D532365E63B00B8AC14 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3391A11625C66B5F00B83705 /* TemperatureReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TemperatureReader.h; sourceTree = "<group>"; };
-		3391A11725C66B5F00B83705 /* TemperatureReader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TemperatureReader.m; sourceTree = "<group>"; };
-		339B8C8F237FE17F008B9755 /* MenuMeters.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = MenuMeters.icns; sourceTree = "<group>"; };
-		33B440102594675E00CBBEDF /* com.ragingmenace.MenuMeters.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = com.ragingmenace.MenuMeters.plist; sourceTree = "<group>"; };
-		33F092172367387B00953CAB /* MenuMeters.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MenuMeters.entitlements; sourceTree = "<group>"; };
-		33F0921823673DAC00953CAB /* releases.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = releases.html; sourceTree = "<group>"; };
-		538B152824465532008BAFC2 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
-		538B152924465532008BAFC2 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/DiskImageSet.strings; sourceTree = "<group>"; };
-		538B152A24465532008BAFC2 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
-		6349C15124BB733300C6FC99 /* MenuMeters.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenuMeters.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9023745A1E91612100B096A8 /* InfoPlistPreprocessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoPlistPreprocessor.h; sourceTree = "<group>"; };
-		908780A71FB087B90053DDC5 /* EMCLoginItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EMCLoginItem.h; sourceTree = "<group>"; };
-		908780A91FB087D70053DDC5 /* EMCLoginItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EMCLoginItem.m; sourceTree = "<group>"; };
-		D40271B8083D928600D09108 /* nl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = nl; path = nl.lproj/DiskImageSet.strings; sourceTree = "<group>"; };
-		D403AD3B0E04E99C00348443 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		D403ADE20E04F17900348443 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		D403ADF30E04F1E100348443 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		D4050C3D19BFF75B00DB69A4 /* de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/DiskImageSet.strings; sourceTree = "<group>"; };
-		D40DB4C203D260E800A87BC9 /* MenuMeterMem.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MenuMeterMem.h; path = Common/MenuMeterMem.h; sourceTree = "<group>"; };
-		D40DB4C403D260E800A87BC9 /* MenuMeterCPU.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MenuMeterCPU.h; path = Common/MenuMeterCPU.h; sourceTree = "<group>"; };
-		D40DB4C503D260E800A87BC9 /* MenuMeterDisk.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MenuMeterDisk.h; path = Common/MenuMeterDisk.h; sourceTree = "<group>"; };
-		D40DB4C603D260E800A87BC9 /* MenuMeterNet.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MenuMeterNet.h; path = Common/MenuMeterNet.h; sourceTree = "<group>"; };
-		D4157ABD19D13C18008BD05F /* ja */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ja; path = ja.lproj/DiskImageSet.strings; sourceTree = "<group>"; };
-		D42C6C861996D9BB005F87BD /* Dark ArrowsIdle.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Dark ArrowsIdle.tiff"; path = "MenuExtras/MenuMeterDisk/Icons/Dark ArrowsIdle.tiff"; sourceTree = "<group>"; };
-		D42C6C871996D9BB005F87BD /* Dark ArrowsRead.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Dark ArrowsRead.tiff"; path = "MenuExtras/MenuMeterDisk/Icons/Dark ArrowsRead.tiff"; sourceTree = "<group>"; };
-		D42C6C881996D9BB005F87BD /* Dark ArrowsReadWrite.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Dark ArrowsReadWrite.tiff"; path = "MenuExtras/MenuMeterDisk/Icons/Dark ArrowsReadWrite.tiff"; sourceTree = "<group>"; };
-		D42C6C891996D9BB005F87BD /* Dark ArrowsWrite.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Dark ArrowsWrite.tiff"; path = "MenuExtras/MenuMeterDisk/Icons/Dark ArrowsWrite.tiff"; sourceTree = "<group>"; };
-		D42C6C941996DA77005F87BD /* Dark Color ArrowsIdle.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Dark Color ArrowsIdle.tiff"; path = "MenuExtras/MenuMeterDisk/Icons/Dark Color ArrowsIdle.tiff"; sourceTree = "<group>"; };
-		D42C6C951996DA77005F87BD /* Dark Color ArrowsRead.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Dark Color ArrowsRead.tiff"; path = "MenuExtras/MenuMeterDisk/Icons/Dark Color ArrowsRead.tiff"; sourceTree = "<group>"; };
-		D42C6C961996DA77005F87BD /* Dark Color ArrowsReadWrite.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Dark Color ArrowsReadWrite.tiff"; path = "MenuExtras/MenuMeterDisk/Icons/Dark Color ArrowsReadWrite.tiff"; sourceTree = "<group>"; };
-		D42C6C971996DA77005F87BD /* Dark Color ArrowsWrite.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Dark Color ArrowsWrite.tiff"; path = "MenuExtras/MenuMeterDisk/Icons/Dark Color ArrowsWrite.tiff"; sourceTree = "<group>"; };
-		D42EC95D03D49AE400A87BC9 /* MenuMeterDiskExtra.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = MenuMeterDiskExtra.m; path = MenuExtras/MenuMeterDisk/MenuMeterDiskExtra.m; sourceTree = "<group>"; };
-		D42EC95E03D49AE400A87BC9 /* MenuMeterDiskExtra.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MenuMeterDiskExtra.h; path = MenuExtras/MenuMeterDisk/MenuMeterDiskExtra.h; sourceTree = "<group>"; };
-		D42EC96103D49AF000A87BC9 /* MenuMeterDiskIO.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MenuMeterDiskIO.h; path = MenuExtras/MenuMeterDisk/MenuMeterDiskIO.h; sourceTree = "<group>"; };
-		D42EC96203D49AF000A87BC9 /* MenuMeterDiskIO.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = MenuMeterDiskIO.m; path = MenuExtras/MenuMeterDisk/MenuMeterDiskIO.m; sourceTree = "<group>"; };
-		D42EC96503D49AF700A87BC9 /* MenuMeterDiskSpace.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = MenuMeterDiskSpace.m; path = MenuExtras/MenuMeterDisk/MenuMeterDiskSpace.m; sourceTree = "<group>"; };
-		D42EC96603D49AF700A87BC9 /* MenuMeterDiskSpace.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MenuMeterDiskSpace.h; path = MenuExtras/MenuMeterDisk/MenuMeterDiskSpace.h; sourceTree = "<group>"; };
-		D42EC97303D49B6500A87BC9 /* ArrowsIdle.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ArrowsIdle.tiff; path = MenuExtras/MenuMeterDisk/Icons/ArrowsIdle.tiff; sourceTree = "<group>"; };
-		D42EC97403D49B6500A87BC9 /* ArrowsReadWrite.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ArrowsReadWrite.tiff; path = MenuExtras/MenuMeterDisk/Icons/ArrowsReadWrite.tiff; sourceTree = "<group>"; };
-		D42EC97503D49B6500A87BC9 /* ArrowsWrite.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ArrowsWrite.tiff; path = MenuExtras/MenuMeterDisk/Icons/ArrowsWrite.tiff; sourceTree = "<group>"; };
-		D42EC97603D49B6500A87BC9 /* ArrowsRead.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ArrowsRead.tiff; path = MenuExtras/MenuMeterDisk/Icons/ArrowsRead.tiff; sourceTree = "<group>"; };
-		D42EC97B03D49BD600A87BC9 /* Color ArrowsWrite.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Color ArrowsWrite.tiff"; path = "MenuExtras/MenuMeterDisk/Icons/Color ArrowsWrite.tiff"; sourceTree = "<group>"; };
-		D42EC97C03D49BD600A87BC9 /* Color ArrowsRead.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Color ArrowsRead.tiff"; path = "MenuExtras/MenuMeterDisk/Icons/Color ArrowsRead.tiff"; sourceTree = "<group>"; };
-		D42EC97D03D49BD600A87BC9 /* Color ArrowsIdle.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Color ArrowsIdle.tiff"; path = "MenuExtras/MenuMeterDisk/Icons/Color ArrowsIdle.tiff"; sourceTree = "<group>"; };
-		D42EC97E03D49BD600A87BC9 /* Color ArrowsReadWrite.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Color ArrowsReadWrite.tiff"; path = "MenuExtras/MenuMeterDisk/Icons/Color ArrowsReadWrite.tiff"; sourceTree = "<group>"; };
-		D42EC98303D49BDE00A87BC9 /* LightsWrite.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = LightsWrite.tiff; path = MenuExtras/MenuMeterDisk/Icons/LightsWrite.tiff; sourceTree = "<group>"; };
-		D42EC98403D49BDE00A87BC9 /* LightsIdle.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = LightsIdle.tiff; path = MenuExtras/MenuMeterDisk/Icons/LightsIdle.tiff; sourceTree = "<group>"; };
-		D42EC98503D49BDE00A87BC9 /* LightsRead.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = LightsRead.tiff; path = MenuExtras/MenuMeterDisk/Icons/LightsRead.tiff; sourceTree = "<group>"; };
-		D42EC98603D49BDE00A87BC9 /* LightsReadWrite.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = LightsReadWrite.tiff; path = MenuExtras/MenuMeterDisk/Icons/LightsReadWrite.tiff; sourceTree = "<group>"; };
-		D432074803D3DCBA00A87BC9 /* MenuMeterDefaults.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MenuMeterDefaults.h; path = Common/MenuMeterDefaults.h; sourceTree = "<group>"; };
-		D432074903D3DCBA00A87BC9 /* MenuMeterDefaults.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = MenuMeterDefaults.m; path = Common/MenuMeterDefaults.m; sourceTree = "<group>"; };
-		D4510D7504F2F06100A87BC9 /* GNU General Public License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "GNU General Public License.rtf"; sourceTree = "<group>"; };
-		D4510D7604F2F06100A87BC9 /* History.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = History.txt; sourceTree = "<group>"; };
-		D4510D7704F2F06100A87BC9 /* MenuMeters Read Me.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "MenuMeters Read Me.rtf"; sourceTree = "<group>"; };
-		D4510D7804F2F06100A87BC9 /* MenuMeters Source ReadMe.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "MenuMeters Source ReadMe.rtf"; sourceTree = "<group>"; };
-		D4510D9104F2F0FD00A87BC9 /* MenuMeters.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MenuMeters.h; path = Common/MenuMeters.h; sourceTree = "<group>"; };
-		D45B6FA103D3BACD00A87BC9 /* MenuMeterNetPPP.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MenuMeterNetPPP.m; sourceTree = "<group>"; };
-		D45B6FA203D3BACD00A87BC9 /* MenuMeterNetPPP.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MenuMeterNetPPP.h; sourceTree = "<group>"; };
-		D45F12DE03D48A1300A87BC9 /* MenuMeterMemExtra.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MenuMeterMemExtra.h; path = MenuExtras/MenuMeterMem/MenuMeterMemExtra.h; sourceTree = "<group>"; };
-		D45F12DF03D48A1300A87BC9 /* MenuMeterMemExtra.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = MenuMeterMemExtra.m; path = MenuExtras/MenuMeterMem/MenuMeterMemExtra.m; sourceTree = "<group>"; };
-		D45F12E203D48A1C00A87BC9 /* MenuMeterMemStats.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = MenuMeterMemStats.m; path = MenuExtras/MenuMeterMem/MenuMeterMemStats.m; sourceTree = "<group>"; };
-		D45F12E303D48A1C00A87BC9 /* MenuMeterMemStats.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MenuMeterMemStats.h; path = MenuExtras/MenuMeterMem/MenuMeterMemStats.h; sourceTree = "<group>"; };
-		D45FEFCC0470257D00A87BC9 /* Aqua LightsIdle.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Aqua LightsIdle.tiff"; path = "MenuExtras/MenuMeterDisk/Icons/Aqua LightsIdle.tiff"; sourceTree = "<group>"; };
-		D45FEFCD0470257D00A87BC9 /* Aqua LightsReadWrite.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Aqua LightsReadWrite.tiff"; path = "MenuExtras/MenuMeterDisk/Icons/Aqua LightsReadWrite.tiff"; sourceTree = "<group>"; };
-		D45FEFCE0470257D00A87BC9 /* Aqua LightsWrite.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Aqua LightsWrite.tiff"; path = "MenuExtras/MenuMeterDisk/Icons/Aqua LightsWrite.tiff"; sourceTree = "<group>"; };
-		D45FEFCF0470257D00A87BC9 /* Aqua LightsRead.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Aqua LightsRead.tiff"; path = "MenuExtras/MenuMeterDisk/Icons/Aqua LightsRead.tiff"; sourceTree = "<group>"; };
-		D477AAEC03D4BB8600A87BC9 /* MenuMeterCPUExtra.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = MenuMeterCPUExtra.m; path = MenuExtras/MenuMeterCPU/MenuMeterCPUExtra.m; sourceTree = "<group>"; };
-		D477AAED03D4BB8600A87BC9 /* MenuMeterCPUExtra.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MenuMeterCPUExtra.h; path = MenuExtras/MenuMeterCPU/MenuMeterCPUExtra.h; sourceTree = "<group>"; };
-		D477AAF003D4BB9200A87BC9 /* MenuMeterCPUStats.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MenuMeterCPUStats.h; path = MenuExtras/MenuMeterCPU/MenuMeterCPUStats.h; sourceTree = "<group>"; };
-		D477AAF103D4BB9200A87BC9 /* MenuMeterCPUStats.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = MenuMeterCPUStats.m; path = MenuExtras/MenuMeterCPU/MenuMeterCPUStats.m; sourceTree = "<group>"; };
-		D477AAF403D4BB9D00A87BC9 /* MenuMeterUptime.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MenuMeterUptime.h; path = MenuExtras/MenuMeterCPU/MenuMeterUptime.h; sourceTree = "<group>"; };
-		D477AAF503D4BB9D00A87BC9 /* MenuMeterUptime.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = MenuMeterUptime.m; path = MenuExtras/MenuMeterCPU/MenuMeterUptime.m; sourceTree = "<group>"; };
-		D478F451101A8AE100C79173 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		D48A79F31018B051008E3207 /* MenuMeterWorkarounds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuMeterWorkarounds.h; path = Common/MenuMeterWorkarounds.h; sourceTree = "<group>"; };
-		AA1000022A00000000000002 /* MenuMeterWorkspaceCompat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuMeterWorkspaceCompat.h; path = Common/MenuMeterWorkspaceCompat.h; sourceTree = "<group>"; };
-		AA1000032A00000000000003 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
-		D48A79F41018B051008E3207 /* MenuMeterWorkarounds.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuMeterWorkarounds.m; path = Common/MenuMeterWorkarounds.m; sourceTree = "<group>"; };
-		D4BBBF740463514700A804AF /* MenuMeterPowerMate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MenuMeterPowerMate.h; path = Common/MenuMeterPowerMate.h; sourceTree = "<group>"; };
-		D4BBBF750463514700A804AF /* MenuMeterPowerMate.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = MenuMeterPowerMate.m; path = Common/MenuMeterPowerMate.m; sourceTree = "<group>"; };
-		D4D2ADDC1910AD95004E2469 /* it */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/DiskImageSet.strings; sourceTree = "<group>"; };
-		D4D9D1F30644C7E200047FDD /* Disk ArrowsRead.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Disk ArrowsRead.tiff"; path = "MenuExtras/MenuMeterDisk/Icons/Disk ArrowsRead.tiff"; sourceTree = "<group>"; };
-		D4D9D1F40644C7E200047FDD /* Disk ArrowsReadWrite.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Disk ArrowsReadWrite.tiff"; path = "MenuExtras/MenuMeterDisk/Icons/Disk ArrowsReadWrite.tiff"; sourceTree = "<group>"; };
-		D4D9D1F50644C7E200047FDD /* Disk ArrowsWrite.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Disk ArrowsWrite.tiff"; path = "MenuExtras/MenuMeterDisk/Icons/Disk ArrowsWrite.tiff"; sourceTree = "<group>"; };
-		D4E4BF9004F333B100A87BC9 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/DiskImageSet.strings; sourceTree = "<group>"; };
-		D4E4BF9404F333B100A87BC9 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/DiskImageSet.strings; sourceTree = "<group>"; };
-		D4E4BF9B04F333B100A87BC9 /* MenuMetersPref.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MenuMetersPref.tiff; sourceTree = "<group>"; };
-		D4E4BF9C04F333B100A87BC9 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
-		D4E4BFA004F333B100A87BC9 /* MenuMetersPref.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MenuMetersPref.h; sourceTree = "<group>"; };
-		D4E4BFA104F333B100A87BC9 /* MenuMetersPref.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuMetersPref.m; sourceTree = "<group>"; };
-		D4E4BFA704F333B100A87BC9 /* CubeRootScale.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = CubeRootScale.tiff; sourceTree = "<group>"; };
-		D4E4BFA804F333B100A87BC9 /* LinearScale.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = LinearScale.tiff; sourceTree = "<group>"; };
-		D4E4BFA904F333B100A87BC9 /* LogScale.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = LogScale.tiff; sourceTree = "<group>"; };
-		D4E4BFAA04F333B100A87BC9 /* SquareRootScale.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = SquareRootScale.tiff; sourceTree = "<group>"; };
-		D4EAD0070608D20800503A52 /* MenuMeters FAQ.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "MenuMeters FAQ.rtf"; sourceTree = "<group>"; };
-		D4ECB2CA05FE6FA500954E26 /* DefaultsBundleInfo.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = DefaultsBundleInfo.plist; sourceTree = "<group>"; };
-		D4ECB3B705FE730000954E26 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D4FC162003D26AAA00A87BC9 /* MenuMeterNetExtra.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MenuMeterNetExtra.m; sourceTree = "<group>"; };
-		D4FC162103D26AAA00A87BC9 /* MenuMeterNetConfig.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MenuMeterNetConfig.h; sourceTree = "<group>"; };
-		D4FC162403D26AAA00A87BC9 /* MenuMeterNetStats.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MenuMeterNetStats.m; sourceTree = "<group>"; };
-		D4FC162503D26AAA00A87BC9 /* MenuMeterNetStats.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MenuMeterNetStats.h; sourceTree = "<group>"; };
-		D4FC162603D26AAA00A87BC9 /* MenuMeterNetExtra.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MenuMeterNetExtra.h; sourceTree = "<group>"; };
-		D4FC162703D26AAA00A87BC9 /* MenuMeterNetConfig.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MenuMeterNetConfig.m; sourceTree = "<group>"; };
-		D602BB8F207F9561004984C1 /* MenuMeterCPUTopProcesses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuMeterCPUTopProcesses.h; path = MenuExtras/MenuMeterCPU/MenuMeterCPUTopProcesses.h; sourceTree = "<group>"; };
-		D602BB90207F9561004984C1 /* MenuMeterCPUTopProcesses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuMeterCPUTopProcesses.m; path = MenuExtras/MenuMeterCPU/MenuMeterCPUTopProcesses.m; sourceTree = "<group>"; };
-		F75EBE2E235B6F3600876CF7 /* smc_reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smc_reader.h; sourceTree = "<group>"; };
-		F75EBE2F235B6F3600876CF7 /* smc_reader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = smc_reader.m; sourceTree = "<group>"; };
+		06EED02F2F3AFDA990E24ADD /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
+		07EFA09A59AA08887439A81D /* MemStats.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemStats.swift; sourceTree = "<group>"; };
+		0C68638DA4407ECA43BE3227 /* DiskExtra.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DiskExtra.swift; sourceTree = "<group>"; };
+		14506AA65DAFAFE1047F458E /* CPUStats.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CPUStats.swift; sourceTree = "<group>"; };
+		147F6439D775E8AA2F83E434 /* Dark ArrowsWrite.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = "Dark ArrowsWrite.tiff"; sourceTree = "<group>"; };
+		14CEA75E90B824C4C411AFD6 /* Dark ArrowsReadWrite.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = "Dark ArrowsReadWrite.tiff"; sourceTree = "<group>"; };
+		197751A837D7EFC685655E24 /* Aqua LightsWrite.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = "Aqua LightsWrite.tiff"; sourceTree = "<group>"; };
+		218CF5345FCDE6ABCEA2EF2B /* LightsRead.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = LightsRead.tiff; sourceTree = "<group>"; };
+		23449FBF088A685B4084438C /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/DiskImageSet.strings; sourceTree = "<group>"; };
+		34BEF32EE4F8BC9533F04370 /* Color ArrowsIdle.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = "Color ArrowsIdle.tiff"; sourceTree = "<group>"; };
+		354FDF25D96C9A4C5A0DA780 /* Support.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Support.swift; sourceTree = "<group>"; };
+		37CEEBBDE21A0174943A475D /* LightsReadWrite.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = LightsReadWrite.tiff; sourceTree = "<group>"; };
+		3B401761D8500FC06CB6B553 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/DiskImageSet.strings; sourceTree = "<group>"; };
+		3DAA44A4AFA2D25551C88459 /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/DiskImageSet.strings; sourceTree = "<group>"; };
+		3DCC24C7782482915D086E7F /* TemperatureReader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TemperatureReader.swift; sourceTree = "<group>"; };
+		47AFE81DE14884FE30B6EF2F /* ArrowsIdle.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = ArrowsIdle.tiff; sourceTree = "<group>"; };
+		4B1BF14D867EBFEECE40520B /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4C738CFDB0EF7B8EB80428CF /* Uptime.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Uptime.swift; sourceTree = "<group>"; };
+		4CBB9E16886FE1FADF1F4FF6 /* CPUTopProcesses.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CPUTopProcesses.swift; sourceTree = "<group>"; };
+		4E7A5E9E8278D6A26391B0E0 /* MenuExtraBase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MenuExtraBase.swift; sourceTree = "<group>"; };
+		4E87F00F38BF0DFE8FEEF139 /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		52E4747D00CD3671CBD28581 /* Aqua LightsReadWrite.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = "Aqua LightsReadWrite.tiff"; sourceTree = "<group>"; };
+		53B715A571DA756B1EF5F062 /* PowerMate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PowerMate.swift; sourceTree = "<group>"; };
+		5622E37AA45946755BF45733 /* Color ArrowsReadWrite.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = "Color ArrowsReadWrite.tiff"; sourceTree = "<group>"; };
+		577A5C111022CA019E371C64 /* LightsIdle.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = LightsIdle.tiff; sourceTree = "<group>"; };
+		5A3B9EFC40C6404D9CCA13FF /* AppDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		5A55840AFE355B313E235A0D /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
+		5AA1B9EC0266D828735357FB /* zh-Hans */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/DiskImageSet.strings"; sourceTree = "<group>"; };
+		5B097D471EE345BB172F6962 /* MemExtra.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemExtra.swift; sourceTree = "<group>"; };
+		5DCAC7BB610982711335E148 /* com.ragingmenace.MenuMeters.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = com.ragingmenace.MenuMeters.plist; sourceTree = "<group>"; };
+		61044B0857769AE2F8C9D8D8 /* PrefsWindow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PrefsWindow.swift; sourceTree = "<group>"; };
+		634DFED098C574D838C87A40 /* MenuMeters.icns */ = {isa = PBXFileReference; includeInIndex = 1; path = MenuMeters.icns; sourceTree = "<group>"; };
+		6BE1F9368C38F5E8B7F99EC9 /* tr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/DiskImageSet.strings; sourceTree = "<group>"; };
+		6DCFEEC13627F5B54F7EC7CE /* Aqua LightsIdle.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = "Aqua LightsIdle.tiff"; sourceTree = "<group>"; };
+		6E6CC905BE0C22FF03631F34 /* ja */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
+		718E03EEC00C77A1EC29FBE4 /* v2.0.8alert.rtf */ = {isa = PBXFileReference; includeInIndex = 1; path = v2.0.8alert.rtf; sourceTree = "<group>"; };
+		730A3FCA4F2597C3162CD5FB /* ArrowsWrite.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = ArrowsWrite.tiff; sourceTree = "<group>"; };
+		76D39F0C28A66920026AFFD6 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
+		773E948F12FDBCBD17AF0B3E /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
+		77E8009B800C5C1C8E50A98C /* Base */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		78371B7C6C792B5787468D01 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		83AF2E26C27AD6858D23CDE1 /* NetConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetConfig.swift; sourceTree = "<group>"; };
+		8D37EADEE862E6CBB6B36C3E /* NetPPP.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetPPP.swift; sourceTree = "<group>"; };
+		8D93B963B8C87B888C0ABF0A /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/DiskImageSet.strings; sourceTree = "<group>"; };
+		903629BFFA928D1E6E626669 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		9180752E1C38F35D9FC84B88 /* CPUExtra.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CPUExtra.swift; sourceTree = "<group>"; };
+		93B38C01F4B19A6BE7A38190 /* DiskSpace.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DiskSpace.swift; sourceTree = "<group>"; };
+		93D2DB854A59DE02AFB77506 /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9AE1DEE3E548134D58B73AF4 /* MenuMeters-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "MenuMeters-Info.plist"; sourceTree = "<group>"; };
+		9B49AE04BE430EF7354C0151 /* ArrowsReadWrite.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = ArrowsReadWrite.tiff; sourceTree = "<group>"; };
+		9C7E5EB26B9F0004B3DC3E92 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		9DCE67716E6E1DBE0F8034A7 /* Color ArrowsWrite.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = "Color ArrowsWrite.tiff"; sourceTree = "<group>"; };
+		9EFD572ACD13C258109F2E6C /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9EFDB226671196EA21EC9927 /* Disk ArrowsRead.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = "Disk ArrowsRead.tiff"; sourceTree = "<group>"; };
+		A185D22C0300B5A540E16020 /* Dark Color ArrowsRead.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = "Dark Color ArrowsRead.tiff"; sourceTree = "<group>"; };
+		A408C5EF215F2DF0AE66FE18 /* Dark Color ArrowsReadWrite.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = "Dark Color ArrowsReadWrite.tiff"; sourceTree = "<group>"; };
+		A9DA551246D5D5340545F6BF /* zh-Hans */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		AB47C47DF8B052378A316205 /* MenuMeters.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = MenuMeters.app; path = MenuMeters.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC3FEBA35CA716669E2C9C8D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		AF4123C00DB6F8AE35867E92 /* LightsWrite.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = LightsWrite.tiff; sourceTree = "<group>"; };
+		B5D293DF075A752C5F6A6A3F /* Dark Color ArrowsIdle.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = "Dark Color ArrowsIdle.tiff"; sourceTree = "<group>"; };
+		B74E618BBB161528A04F5012 /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
+		B9F13427E74583F2DE39B717 /* NetStats.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetStats.swift; sourceTree = "<group>"; };
+		BBEE2FCDDBFB81B69C7A122F /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DiskImageSet.strings; sourceTree = "<group>"; };
+		BDD04773A6F8FB8353F692B9 /* Dark ArrowsRead.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = "Dark ArrowsRead.tiff"; sourceTree = "<group>"; };
+		C045274413FB9A821298EE9D /* tr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
+		C69F93FB1B7FBDA3E6027A25 /* Aqua LightsRead.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = "Aqua LightsRead.tiff"; sourceTree = "<group>"; };
+		C9BF650820720D8859780382 /* fi */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/DiskImageSet.strings; sourceTree = "<group>"; };
+		CBCF7B9437DD59CDA74FE0C1 /* fi */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
+		CCBEA9773903F680572285C9 /* Dark ArrowsIdle.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = "Dark ArrowsIdle.tiff"; sourceTree = "<group>"; };
+		D1DE917798BD0E67E214E59D /* zh-Hans */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MenuMetersPref.strings"; sourceTree = "<group>"; };
+		D6AE820132CE1667D0E10E0A /* fi */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D74BD208D7D893169C6FC234 /* Disk ArrowsWrite.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = "Disk ArrowsWrite.tiff"; sourceTree = "<group>"; };
+		D952F3CB72EE8141E7195241 /* Dark Color ArrowsWrite.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = "Dark Color ArrowsWrite.tiff"; sourceTree = "<group>"; };
+		DBA515025E26BD4FD56FAD59 /* Disk ArrowsReadWrite.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = "Disk ArrowsReadWrite.tiff"; sourceTree = "<group>"; };
+		DDCF90A88D17F5FB73DAAD79 /* releases.html */ = {isa = PBXFileReference; includeInIndex = 1; path = releases.html; sourceTree = "<group>"; };
+		E5D6BBE5F61FCDE07655734C /* tr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E7101E778AC2989F9B4246FB /* Color ArrowsRead.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = "Color ArrowsRead.tiff"; sourceTree = "<group>"; };
+		EECB7FD178028B733C8B1BC6 /* NetExtra.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetExtra.swift; sourceTree = "<group>"; };
+		F4EFA48AFEB5DEFD9DE79F31 /* DiskIO.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DiskIO.swift; sourceTree = "<group>"; };
+		F74BC47E7CDB19D09B38A0F6 /* ja */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/DiskImageSet.strings; sourceTree = "<group>"; };
+		F74EF15FA8158FF672F2EF5F /* Defaults.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		FD059E0B22D4A88DB7B5F1BB /* ArrowsRead.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = ArrowsRead.tiff; sourceTree = "<group>"; };
+		FFD4100C6D52643DE155CD24 /* ja */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		33883D0823655C9900B8AC14 /* Frameworks */ = {
+		7CF6325B56F08C17B71ADC71 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				330247652366CB7A00F88D61 /* Sparkle.framework in Frameworks */,
-				AA1000042A00000000000004 /* ServiceManagement.framework in Frameworks */,
-				AA1000072A00000000000007 /* ApplicationServices.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6349C12324BB733300C6FC99 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AA1000052A00000000000005 /* ServiceManagement.framework in Frameworks */,
-				AA1000082A00000000000008 /* ApplicationServices.framework in Frameworks */,
+				8ADAE0F5F490051E6124B73B /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		30C0F2A6227A19BF003E6699 /* Frameworks */ = {
+		5EB279C026C0A6021433154F /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				330247642366CB7A00F88D61 /* Sparkle.framework */,
+				F9C18FE186E64C414B9599DB /* MenuMeters */,
+			);
+			name = Sources;
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		6EBCDD444263FE52065339C9 /* DiskIcons */ = {
+			isa = PBXGroup;
+			children = (
+				6DCFEEC13627F5B54F7EC7CE /* Aqua LightsIdle.tiff */,
+				C69F93FB1B7FBDA3E6027A25 /* Aqua LightsRead.tiff */,
+				52E4747D00CD3671CBD28581 /* Aqua LightsReadWrite.tiff */,
+				197751A837D7EFC685655E24 /* Aqua LightsWrite.tiff */,
+				47AFE81DE14884FE30B6EF2F /* ArrowsIdle.tiff */,
+				FD059E0B22D4A88DB7B5F1BB /* ArrowsRead.tiff */,
+				9B49AE04BE430EF7354C0151 /* ArrowsReadWrite.tiff */,
+				730A3FCA4F2597C3162CD5FB /* ArrowsWrite.tiff */,
+				34BEF32EE4F8BC9533F04370 /* Color ArrowsIdle.tiff */,
+				E7101E778AC2989F9B4246FB /* Color ArrowsRead.tiff */,
+				5622E37AA45946755BF45733 /* Color ArrowsReadWrite.tiff */,
+				9DCE67716E6E1DBE0F8034A7 /* Color ArrowsWrite.tiff */,
+				CCBEA9773903F680572285C9 /* Dark ArrowsIdle.tiff */,
+				BDD04773A6F8FB8353F692B9 /* Dark ArrowsRead.tiff */,
+				14CEA75E90B824C4C411AFD6 /* Dark ArrowsReadWrite.tiff */,
+				147F6439D775E8AA2F83E434 /* Dark ArrowsWrite.tiff */,
+				B5D293DF075A752C5F6A6A3F /* Dark Color ArrowsIdle.tiff */,
+				A185D22C0300B5A540E16020 /* Dark Color ArrowsRead.tiff */,
+				A408C5EF215F2DF0AE66FE18 /* Dark Color ArrowsReadWrite.tiff */,
+				D952F3CB72EE8141E7195241 /* Dark Color ArrowsWrite.tiff */,
+				9EFDB226671196EA21EC9927 /* Disk ArrowsRead.tiff */,
+				DBA515025E26BD4FD56FAD59 /* Disk ArrowsReadWrite.tiff */,
+				D74BD208D7D893169C6FC234 /* Disk ArrowsWrite.tiff */,
+				577A5C111022CA019E371C64 /* LightsIdle.tiff */,
+				218CF5345FCDE6ABCEA2EF2B /* LightsRead.tiff */,
+				37CEEBBDE21A0174943A475D /* LightsReadWrite.tiff */,
+				AF4123C00DB6F8AE35867E92 /* LightsWrite.tiff */,
+			);
+			name = DiskIcons;
+			path = DiskIcons;
+			sourceTree = "<group>";
+		};
+		BA3911D3495E7E17EA9716FA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F9E68E67394C8AE5486A8CB8 /* OS X */,
+				903629BFFA928D1E6E626669 /* Sparkle.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		3383C1711B69B72500915D5D /* MenuMetersApp */ = {
+		C188E0E1C6F495D7E5A1EDDD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				339B8C8F237FE17F008B9755 /* MenuMeters.icns */,
-				3383C1721B69B72500915D5D /* AppDelegate.h */,
-				3383C1731B69B72600915D5D /* AppDelegate.m */,
-				330611022367EA4C0016E763 /* MenuMetersMainMenu.xib */,
-				3383C1781B69B72600915D5D /* Assets.xcassets */,
-				33883D492365E61200B8AC14 /* Localizable.strings */,
-				3383C17D1B69B72600915D5D /* Info.plist */,
-				3383C1751B69B72600915D5D /* Supporting Files */,
-			);
-			path = MenuMetersApp;
-			sourceTree = "<group>";
-		};
-		3383C1751B69B72600915D5D /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				3383C1761B69B72600915D5D /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		D40DB4A303D25F2100A87BC9 = {
-			isa = PBXGroup;
-			children = (
-				33F092172367387B00953CAB /* MenuMeters.entitlements */,
-				9023745A1E91612100B096A8 /* InfoPlistPreprocessor.h */,
-				F75EBE2D235B6F3600876CF7 /* hardware_reader */,
-				336B59401E03BA68006DA445 /* MenuMeters.pch */,
-				D4510D7304F2F06100A87BC9 /* Docs */,
-				D40DB4B303D25F9E00A87BC9 /* Common */,
-				D40DB4A903D25F4C00A87BC9 /* MenuExtras */,
-				D4E4BF8B04F333B100A87BC9 /* PrefPane */,
-				3383C1711B69B72500915D5D /* MenuMetersApp */,
-				D40DB4B003D25F6400A87BC9 /* Products */,
-				D40DB4B803D2600C00A87BC9 /* System Frameworks */,
-				30C0F2A6227A19BF003E6699 /* Frameworks */,
-				33883D3323655C9900B8AC14 /* MenuMeters-Info.plist */,
-				33F0921823673DAC00953CAB /* releases.html */,
-			);
-			sourceTree = "<group>";
-		};
-		D40DB4A903D25F4C00A87BC9 /* MenuExtras */ = {
-			isa = PBXGroup;
-			children = (
-				D477AAD603D4B9DE00A87BC9 /* MenuMeterCPU */,
-				D42EC94703D498CC00A87BC9 /* MenuMeterDisk */,
-				D45F12C503D4886000A87BC9 /* MenuMeterMem */,
-				D40DB4CD03D2618F00A87BC9 /* MenuMeterNet */,
-			);
-			name = MenuExtras;
-			sourceTree = "<group>";
-		};
-		D40DB4B003D25F6400A87BC9 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				33883D3223655C9900B8AC14 /* MenuMeters.app */,
-				6349C15124BB733300C6FC99 /* MenuMeters.app */,
+				AB47C47DF8B052378A316205 /* MenuMeters.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D40DB4B303D25F9E00A87BC9 /* Common */ = {
+		CA7AC791ACC356D9C9DBDD4F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				3345DD2D1B6BEFDE003843FC /* MenuMetersMenuExtraBase.h */,
-				3345DD2E1B6BEFDE003843FC /* MenuMetersMenuExtraBase.m */,
-				D4510D9104F2F0FD00A87BC9 /* MenuMeters.h */,
-				D40DB4C403D260E800A87BC9 /* MenuMeterCPU.h */,
-				D40DB4C503D260E800A87BC9 /* MenuMeterDisk.h */,
-				D40DB4C203D260E800A87BC9 /* MenuMeterMem.h */,
-				D40DB4C603D260E800A87BC9 /* MenuMeterNet.h */,
-				33B440102594675E00CBBEDF /* com.ragingmenace.MenuMeters.plist */,
-				D432074803D3DCBA00A87BC9 /* MenuMeterDefaults.h */,
-				D432074903D3DCBA00A87BC9 /* MenuMeterDefaults.m */,
-				D4BBBF740463514700A804AF /* MenuMeterPowerMate.h */,
-				D4BBBF750463514700A804AF /* MenuMeterPowerMate.m */,
-				D48A79F31018B051008E3207 /* MenuMeterWorkarounds.h */,
-				D48A79F41018B051008E3207 /* MenuMeterWorkarounds.m */,
-				AA1000022A00000000000002 /* MenuMeterWorkspaceCompat.h */,
-				3330C5B2257DFAED00BD5164 /* LocalizedStrings.h */,
-				3330C5B3257DFAED00BD5164 /* LocalizedStrings.m */,
-				D4ECB2C905FE6FA500954E26 /* Resources */,
-			);
-			name = Common;
-			sourceTree = "<group>";
-		};
-		D40DB4B803D2600C00A87BC9 /* System Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				D403AD3B0E04E99C00348443 /* Foundation.framework */,
-				D403ADE20E04F17900348443 /* Cocoa.framework */,
-				D403ADF30E04F1E100348443 /* SystemConfiguration.framework */,
-				D478F451101A8AE100C79173 /* IOKit.framework */,
-				AA1000032A00000000000003 /* ServiceManagement.framework */,
-				AA1000062A00000000000006 /* ApplicationServices.framework */,
-			);
-			name = "System Frameworks";
-			sourceTree = "<group>";
-		};
-		D40DB4CD03D2618F00A87BC9 /* MenuMeterNet */ = {
-			isa = PBXGroup;
-			children = (
-				D4FC162603D26AAA00A87BC9 /* MenuMeterNetExtra.h */,
-				D4FC162003D26AAA00A87BC9 /* MenuMeterNetExtra.m */,
-				D4FC162103D26AAA00A87BC9 /* MenuMeterNetConfig.h */,
-				D4FC162703D26AAA00A87BC9 /* MenuMeterNetConfig.m */,
-				D4FC162503D26AAA00A87BC9 /* MenuMeterNetStats.h */,
-				D4FC162403D26AAA00A87BC9 /* MenuMeterNetStats.m */,
-				D45B6FA203D3BACD00A87BC9 /* MenuMeterNetPPP.h */,
-				D45B6FA103D3BACD00A87BC9 /* MenuMeterNetPPP.m */,
-			);
-			name = MenuMeterNet;
-			path = MenuExtras/MenuMeterNet;
-			sourceTree = "<group>";
-		};
-		D42EC94703D498CC00A87BC9 /* MenuMeterDisk */ = {
-			isa = PBXGroup;
-			children = (
-				D42EC95E03D49AE400A87BC9 /* MenuMeterDiskExtra.h */,
-				D42EC95D03D49AE400A87BC9 /* MenuMeterDiskExtra.m */,
-				D42EC96103D49AF000A87BC9 /* MenuMeterDiskIO.h */,
-				D42EC96203D49AF000A87BC9 /* MenuMeterDiskIO.m */,
-				D42EC96603D49AF700A87BC9 /* MenuMeterDiskSpace.h */,
-				D42EC96503D49AF700A87BC9 /* MenuMeterDiskSpace.m */,
-				D42EC97203D49B5A00A87BC9 /* Icons */,
-			);
-			name = MenuMeterDisk;
-			sourceTree = "<group>";
-		};
-		D42EC97203D49B5A00A87BC9 /* Icons */ = {
-			isa = PBXGroup;
-			children = (
-				D42EC97303D49B6500A87BC9 /* ArrowsIdle.tiff */,
-				D42EC97403D49B6500A87BC9 /* ArrowsReadWrite.tiff */,
-				D42EC97503D49B6500A87BC9 /* ArrowsWrite.tiff */,
-				D42EC97603D49B6500A87BC9 /* ArrowsRead.tiff */,
-				D42EC97B03D49BD600A87BC9 /* Color ArrowsWrite.tiff */,
-				D42EC97C03D49BD600A87BC9 /* Color ArrowsRead.tiff */,
-				D42EC97D03D49BD600A87BC9 /* Color ArrowsIdle.tiff */,
-				D42EC97E03D49BD600A87BC9 /* Color ArrowsReadWrite.tiff */,
-				D42C6C861996D9BB005F87BD /* Dark ArrowsIdle.tiff */,
-				D42C6C871996D9BB005F87BD /* Dark ArrowsRead.tiff */,
-				D42C6C881996D9BB005F87BD /* Dark ArrowsReadWrite.tiff */,
-				D42C6C891996D9BB005F87BD /* Dark ArrowsWrite.tiff */,
-				D42C6C941996DA77005F87BD /* Dark Color ArrowsIdle.tiff */,
-				D42C6C951996DA77005F87BD /* Dark Color ArrowsRead.tiff */,
-				D42C6C961996DA77005F87BD /* Dark Color ArrowsReadWrite.tiff */,
-				D42C6C971996DA77005F87BD /* Dark Color ArrowsWrite.tiff */,
-				D42EC98303D49BDE00A87BC9 /* LightsWrite.tiff */,
-				D42EC98403D49BDE00A87BC9 /* LightsIdle.tiff */,
-				D42EC98503D49BDE00A87BC9 /* LightsRead.tiff */,
-				D42EC98603D49BDE00A87BC9 /* LightsReadWrite.tiff */,
-				D45FEFCC0470257D00A87BC9 /* Aqua LightsIdle.tiff */,
-				D45FEFCD0470257D00A87BC9 /* Aqua LightsReadWrite.tiff */,
-				D45FEFCE0470257D00A87BC9 /* Aqua LightsWrite.tiff */,
-				D45FEFCF0470257D00A87BC9 /* Aqua LightsRead.tiff */,
-				D4D9D1F30644C7E200047FDD /* Disk ArrowsRead.tiff */,
-				D4D9D1F40644C7E200047FDD /* Disk ArrowsReadWrite.tiff */,
-				D4D9D1F50644C7E200047FDD /* Disk ArrowsWrite.tiff */,
-			);
-			name = Icons;
-			sourceTree = "<group>";
-		};
-		D4510D7304F2F06100A87BC9 /* Docs */ = {
-			isa = PBXGroup;
-			children = (
-				D4510D7604F2F06100A87BC9 /* History.txt */,
-				D4510D7704F2F06100A87BC9 /* MenuMeters Read Me.rtf */,
-				D4EAD0070608D20800503A52 /* MenuMeters FAQ.rtf */,
-				D4510D7804F2F06100A87BC9 /* MenuMeters Source ReadMe.rtf */,
-				D4510D7504F2F06100A87BC9 /* GNU General Public License.rtf */,
-			);
-			path = Docs;
-			sourceTree = "<group>";
-		};
-		D45F12C503D4886000A87BC9 /* MenuMeterMem */ = {
-			isa = PBXGroup;
-			children = (
-				D45F12DE03D48A1300A87BC9 /* MenuMeterMemExtra.h */,
-				D45F12DF03D48A1300A87BC9 /* MenuMeterMemExtra.m */,
-				D45F12E303D48A1C00A87BC9 /* MenuMeterMemStats.h */,
-				D45F12E203D48A1C00A87BC9 /* MenuMeterMemStats.m */,
-			);
-			name = MenuMeterMem;
-			sourceTree = "<group>";
-		};
-		D477AAD603D4B9DE00A87BC9 /* MenuMeterCPU */ = {
-			isa = PBXGroup;
-			children = (
-				D477AAED03D4BB8600A87BC9 /* MenuMeterCPUExtra.h */,
-				D477AAEC03D4BB8600A87BC9 /* MenuMeterCPUExtra.m */,
-				D477AAF003D4BB9200A87BC9 /* MenuMeterCPUStats.h */,
-				D477AAF103D4BB9200A87BC9 /* MenuMeterCPUStats.m */,
-				D602BB8F207F9561004984C1 /* MenuMeterCPUTopProcesses.h */,
-				D602BB90207F9561004984C1 /* MenuMeterCPUTopProcesses.m */,
-				D477AAF403D4BB9D00A87BC9 /* MenuMeterUptime.h */,
-				D477AAF503D4BB9D00A87BC9 /* MenuMeterUptime.m */,
-			);
-			name = MenuMeterCPU;
-			sourceTree = "<group>";
-		};
-		D4E4BF8B04F333B100A87BC9 /* PrefPane */ = {
-			isa = PBXGroup;
-			children = (
-				D4E4BFA004F333B100A87BC9 /* MenuMetersPref.h */,
-				D4E4BFA104F333B100A87BC9 /* MenuMetersPref.m */,
-				AA1000092A00000000000009 /* MenuMetersPrefWindow.h */,
-				AA10000A2A0000000000000A /* MenuMetersPrefWindow.m */,
-				D4E4BFB904F333D000A87BC9 /* Resources */,
-				908780A71FB087B90053DDC5 /* EMCLoginItem.h */,
-				908780A91FB087D70053DDC5 /* EMCLoginItem.m */,
-			);
-			path = PrefPane;
-			sourceTree = "<group>";
-		};
-		D4E4BF9904F333B100A87BC9 /* Icon */ = {
-			isa = PBXGroup;
-			children = (
-				D4E4BF9B04F333B100A87BC9 /* MenuMetersPref.tiff */,
-			);
-			path = Icon;
-			sourceTree = "<group>";
-		};
-		D4E4BFA504F333B100A87BC9 /* Scales */ = {
-			isa = PBXGroup;
-			children = (
-				D4E4BFA704F333B100A87BC9 /* CubeRootScale.tiff */,
-				D4E4BFA804F333B100A87BC9 /* LinearScale.tiff */,
-				D4E4BFA904F333B100A87BC9 /* LogScale.tiff */,
-				D4E4BFAA04F333B100A87BC9 /* SquareRootScale.tiff */,
-			);
-			path = Scales;
-			sourceTree = "<group>";
-		};
-		D4E4BFB904F333D000A87BC9 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				33679E51239767B30021408D /* v2.0.8alert.rtf */,
-				D4ECB3B705FE730000954E26 /* Info.plist */,
-				3384540A2105C3AA00D4DA92 /* MenuMetersPref.strings */,
-				D4E4BF9C04F333B100A87BC9 /* InfoPlist.strings */,
-				D4E4BF8F04F333B100A87BC9 /* DiskImageSet.strings */,
-				D4E4BF9904F333B100A87BC9 /* Icon */,
-				D4E4BFA504F333B100A87BC9 /* Scales */,
+				6EBCDD444263FE52065339C9 /* DiskIcons */,
+				634DFED098C574D838C87A40 /* MenuMeters.icns */,
+				718E03EEC00C77A1EC29FBE4 /* v2.0.8alert.rtf */,
+				5DCAC7BB610982711335E148 /* com.ragingmenace.MenuMeters.plist */,
+				DDCF90A88D17F5FB73DAAD79 /* releases.html */,
+				9026647C7FD78793732F13D0 /* Localizable.strings */,
+				60C4A7B3EAD1C640EB7AFC3C /* MenuMetersPref.strings */,
+				1E750EFF6C3E9975FC7CFB1C /* DiskImageSet.strings */,
 			);
 			name = Resources;
+			path = Resources;
 			sourceTree = "<group>";
 		};
-		D4ECB2C905FE6FA500954E26 /* Resources */ = {
+		F9C18FE186E64C414B9599DB /* MenuMeters */ = {
 			isa = PBXGroup;
 			children = (
-				D4ECB2CA05FE6FA500954E26 /* DefaultsBundleInfo.plist */,
+				5A3B9EFC40C6404D9CCA13FF /* AppDelegate.swift */,
+				9180752E1C38F35D9FC84B88 /* CPUExtra.swift */,
+				14506AA65DAFAFE1047F458E /* CPUStats.swift */,
+				4CBB9E16886FE1FADF1F4FF6 /* CPUTopProcesses.swift */,
+				F74EF15FA8158FF672F2EF5F /* Defaults.swift */,
+				0C68638DA4407ECA43BE3227 /* DiskExtra.swift */,
+				F4EFA48AFEB5DEFD9DE79F31 /* DiskIO.swift */,
+				93B38C01F4B19A6BE7A38190 /* DiskSpace.swift */,
+				5B097D471EE345BB172F6962 /* MemExtra.swift */,
+				07EFA09A59AA08887439A81D /* MemStats.swift */,
+				4E7A5E9E8278D6A26391B0E0 /* MenuExtraBase.swift */,
+				83AF2E26C27AD6858D23CDE1 /* NetConfig.swift */,
+				EECB7FD178028B733C8B1BC6 /* NetExtra.swift */,
+				8D37EADEE862E6CBB6B36C3E /* NetPPP.swift */,
+				B9F13427E74583F2DE39B717 /* NetStats.swift */,
+				53B715A571DA756B1EF5F062 /* PowerMate.swift */,
+				61044B0857769AE2F8C9D8D8 /* PrefsWindow.swift */,
+				354FDF25D96C9A4C5A0DA780 /* Support.swift */,
+				3DCC24C7782482915D086E7F /* TemperatureReader.swift */,
+				4C738CFDB0EF7B8EB80428CF /* Uptime.swift */,
+				9C7E5EB26B9F0004B3DC3E92 /* main.swift */,
 			);
-			name = Resources;
-			path = Common/Resources;
+			name = MenuMeters;
+			path = MenuMeters;
 			sourceTree = "<group>";
 		};
-		F75EBE2D235B6F3600876CF7 /* hardware_reader */ = {
+		F9E68E67394C8AE5486A8CB8 /* OS X */ = {
 			isa = PBXGroup;
 			children = (
-				F75EBE2E235B6F3600876CF7 /* smc_reader.h */,
-				F75EBE2F235B6F3600876CF7 /* smc_reader.m */,
-				3325978B25BE7DB10070CE37 /* applesilicon_hardware_reader.m */,
-				3325978F25BE7DCA0070CE37 /* applesilicon_hardware_reader.h */,
-				3391A11625C66B5F00B83705 /* TemperatureReader.h */,
-				3391A11725C66B5F00B83705 /* TemperatureReader.m */,
 			);
-			path = hardware_reader;
+			name = "OS X";
+			sourceTree = "<group>";
+		};
+		FF507DDE0E4D3EAA40FF8296 = {
+			isa = PBXGroup;
+			children = (
+				C188E0E1C6F495D7E5A1EDDD /* Products */,
+				BA3911D3495E7E17EA9716FA /* Frameworks */,
+				5EB279C026C0A6021433154F /* Sources */,
+				CA7AC791ACC356D9C9DBDD4F /* Resources */,
+				9AE1DEE3E548134D58B73AF4 /* MenuMeters-Info.plist */,
+				AC3FEBA35CA716669E2C9C8D /* LICENSE */,
+			);
+			name = MenuMeters;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		6349C15524BB8C4200C6FC99 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3391A11825C66B5F00B83705 /* TemperatureReader.h in Headers */,
-				3330C5B4257DFAED00BD5164 /* LocalizedStrings.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6349C15724BB8C5900C6FC99 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3391A11925C66B5F00B83705 /* TemperatureReader.h in Headers */,
-				3330C5B5257DFAED00BD5164 /* LocalizedStrings.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
-		33883CEE23655C9900B8AC14 /* MenuMeters */ = {
+		061F85C4485BAC2AFE445E6B /* MenuMeters */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 33883D2F23655C9900B8AC14 /* Build configuration list for PBXNativeTarget "MenuMeters" */;
+			buildConfigurationList = CD90EC018224C1525CEF78C0 /* Build configuration list for PBXNativeTarget "MenuMeters" */;
 			buildPhases = (
-				6349C15524BB8C4200C6FC99 /* Headers */,
-				33883CEF23655C9900B8AC14 /* Sources */,
-				33883D0823655C9900B8AC14 /* Frameworks */,
-				33883D0A23655C9900B8AC14 /* Resources */,
-				330247692366CF6E00F88D61 /* CopyFiles */,
-				33F09216236737EB00953CAB /* ShellScript */,
+				37C9D9D29FA2020543364763 /* Sources */,
+				7CF6325B56F08C17B71ADC71 /* Frameworks */,
+				57B156C97AD0C201B50D6F7B /* Resources */,
+				4DA428D6C2D5EAB4428B7FF0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = MenuMeters;
-			productName = MenuMetersApp;
-			productReference = 33883D3223655C9900B8AC14 /* MenuMeters.app */;
-			productType = "com.apple.product-type.application";
-		};
-		6349C10724BB733300C6FC99 /* MenuMeters No Sparkle */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6349C14E24BB733300C6FC99 /* Build configuration list for PBXNativeTarget "MenuMeters No Sparkle" */;
-			buildPhases = (
-				6349C15724BB8C5900C6FC99 /* Headers */,
-				6349C10824BB733300C6FC99 /* Sources */,
-				6349C12324BB733300C6FC99 /* Frameworks */,
-				6349C12624BB733300C6FC99 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "MenuMeters No Sparkle";
-			productName = MenuMetersApp;
-			productReference = 6349C15124BB733300C6FC99 /* MenuMeters.app */;
+			productName = MenuMeters;
+			productReference = AB47C47DF8B052378A316205 /* MenuMeters.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		D40DB4A703D25F2100A87BC9 /* Project object */ = {
+		117B4FA3A691F1E21DAFED6C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1110;
-				TargetAttributes = {
-					33883CEE23655C9900B8AC14 = {
-						DevelopmentTeam = 95AQ7YKR5A;
-						ProvisioningStyle = Automatic;
-					};
-					6349C10724BB733300C6FC99 = {
-						ProvisioningStyle = Automatic;
-					};
-				};
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
 			};
-			buildConfigurationList = D4AFB342087726B20023B640 /* Build configuration list for PBXProject "MenuMeters" */;
+			buildConfigurationList = 8C184550AA84321C61BA0BE4 /* Build configuration list for PBXProject "MenuMeters" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
-			hasScannedForEncodings = 1;
+			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				ja,
-				fr,
-				de,
-				nl,
-				it,
 				Base,
-				"zh-Hans",
+				de,
 				fi,
+				fr,
+				it,
+				ja,
+				nl,
 				tr,
+				"zh-Hans",
 			);
-			mainGroup = D40DB4A303D25F2100A87BC9;
-			productRefGroup = D40DB4B003D25F6400A87BC9 /* Products */;
+			mainGroup = FF507DDE0E4D3EAA40FF8296;
+			minimizedProjectReferenceProxies = 0;
+			preferredProjectObjectVersion = 100;
+			productRefGroup = C188E0E1C6F495D7E5A1EDDD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				33883CEE23655C9900B8AC14 /* MenuMeters */,
-				6349C10724BB733300C6FC99 /* MenuMeters No Sparkle */,
+				061F85C4485BAC2AFE445E6B /* MenuMeters */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		33883D0A23655C9900B8AC14 /* Resources */ = {
+		57B156C97AD0C201B50D6F7B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33883D0B23655C9900B8AC14 /* ArrowsIdle.tiff in Resources */,
-				33883D0C23655C9900B8AC14 /* ArrowsReadWrite.tiff in Resources */,
-				33883D0D23655C9900B8AC14 /* ArrowsWrite.tiff in Resources */,
-				33883D0E23655C9900B8AC14 /* ArrowsRead.tiff in Resources */,
-				33F0921923673DAC00953CAB /* releases.html in Resources */,
-				339B8C90237FE17F008B9755 /* MenuMeters.icns in Resources */,
-				33883D0F23655C9900B8AC14 /* Color ArrowsWrite.tiff in Resources */,
-				33883D1023655C9900B8AC14 /* Color ArrowsRead.tiff in Resources */,
-				33883D1323655C9900B8AC14 /* Color ArrowsIdle.tiff in Resources */,
-				33883D1623655C9900B8AC14 /* Color ArrowsReadWrite.tiff in Resources */,
-				33883D1723655C9900B8AC14 /* Dark ArrowsIdle.tiff in Resources */,
-				33883D1823655C9900B8AC14 /* Dark ArrowsRead.tiff in Resources */,
-				33679E52239767B40021408D /* v2.0.8alert.rtf in Resources */,
-				33883D1923655C9900B8AC14 /* Dark ArrowsReadWrite.tiff in Resources */,
-				330611032367EA4C0016E763 /* MenuMetersMainMenu.xib in Resources */,
-				33883D1A23655C9900B8AC14 /* Dark ArrowsWrite.tiff in Resources */,
-				33883D1B23655C9900B8AC14 /* Dark Color ArrowsIdle.tiff in Resources */,
-				33883D1C23655C9900B8AC14 /* Dark Color ArrowsRead.tiff in Resources */,
-				33883D2023655C9900B8AC14 /* LightsWrite.tiff in Resources */,
-				33883D47236568CB00B8AC14 /* MenuMetersPref.strings in Resources */,
-				33883D4C2365E61200B8AC14 /* Localizable.strings in Resources */,
-				33883D482365E3D400B8AC14 /* DiskImageSet.strings in Resources */,
-				33B440112594675E00CBBEDF /* com.ragingmenace.MenuMeters.plist in Resources */,
-				33883D1E23655C9900B8AC14 /* Dark Color ArrowsReadWrite.tiff in Resources */,
-				33883D1F23655C9900B8AC14 /* Dark Color ArrowsWrite.tiff in Resources */,
-				33883D2123655C9900B8AC14 /* LightsIdle.tiff in Resources */,
-				33883D2223655C9900B8AC14 /* LightsRead.tiff in Resources */,
-				33883D2323655C9900B8AC14 /* LightsReadWrite.tiff in Resources */,
-				33883D2523655C9900B8AC14 /* Aqua LightsIdle.tiff in Resources */,
-				33883D2723655C9900B8AC14 /* Aqua LightsReadWrite.tiff in Resources */,
-				33883D2923655C9900B8AC14 /* Aqua LightsWrite.tiff in Resources */,
-				33883D2A23655C9900B8AC14 /* Aqua LightsRead.tiff in Resources */,
-				33883D2B23655C9900B8AC14 /* Disk ArrowsRead.tiff in Resources */,
-				33883D2C23655C9900B8AC14 /* Disk ArrowsReadWrite.tiff in Resources */,
-				33883D2D23655C9900B8AC14 /* Disk ArrowsWrite.tiff in Resources */,
-				33883D542365E78300B8AC14 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6349C12624BB733300C6FC99 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6349C12724BB733300C6FC99 /* ArrowsIdle.tiff in Resources */,
-				6349C12824BB733300C6FC99 /* ArrowsReadWrite.tiff in Resources */,
-				6349C12924BB733300C6FC99 /* ArrowsWrite.tiff in Resources */,
-				6349C12A24BB733300C6FC99 /* ArrowsRead.tiff in Resources */,
-				6349C12B24BB733300C6FC99 /* releases.html in Resources */,
-				6349C12C24BB733300C6FC99 /* MenuMeters.icns in Resources */,
-				6349C12D24BB733300C6FC99 /* Color ArrowsWrite.tiff in Resources */,
-				6349C12E24BB733300C6FC99 /* Color ArrowsRead.tiff in Resources */,
-				6349C12F24BB733300C6FC99 /* Color ArrowsIdle.tiff in Resources */,
-				6349C13024BB733300C6FC99 /* Color ArrowsReadWrite.tiff in Resources */,
-				6349C13124BB733300C6FC99 /* Dark ArrowsIdle.tiff in Resources */,
-				6349C13224BB733300C6FC99 /* Dark ArrowsRead.tiff in Resources */,
-				6349C13324BB733300C6FC99 /* v2.0.8alert.rtf in Resources */,
-				6349C13424BB733300C6FC99 /* Dark ArrowsReadWrite.tiff in Resources */,
-				6349C13524BB733300C6FC99 /* MenuMetersMainMenu.xib in Resources */,
-				6349C13624BB733300C6FC99 /* Dark ArrowsWrite.tiff in Resources */,
-				6349C13724BB733300C6FC99 /* Dark Color ArrowsIdle.tiff in Resources */,
-				6349C13824BB733300C6FC99 /* Dark Color ArrowsRead.tiff in Resources */,
-				6349C13924BB733300C6FC99 /* LightsWrite.tiff in Resources */,
-				6349C13A24BB733300C6FC99 /* MenuMetersPref.strings in Resources */,
-				6349C13C24BB733300C6FC99 /* Localizable.strings in Resources */,
-				6349C13D24BB733300C6FC99 /* DiskImageSet.strings in Resources */,
-				33B440122594675E00CBBEDF /* com.ragingmenace.MenuMeters.plist in Resources */,
-				6349C13E24BB733300C6FC99 /* Dark Color ArrowsReadWrite.tiff in Resources */,
-				6349C13F24BB733300C6FC99 /* Dark Color ArrowsWrite.tiff in Resources */,
-				6349C14024BB733300C6FC99 /* LightsIdle.tiff in Resources */,
-				6349C14124BB733300C6FC99 /* LightsRead.tiff in Resources */,
-				6349C14224BB733300C6FC99 /* LightsReadWrite.tiff in Resources */,
-				6349C14324BB733300C6FC99 /* Aqua LightsIdle.tiff in Resources */,
-				6349C14424BB733300C6FC99 /* Aqua LightsReadWrite.tiff in Resources */,
-				6349C14524BB733300C6FC99 /* Aqua LightsWrite.tiff in Resources */,
-				6349C14624BB733300C6FC99 /* Aqua LightsRead.tiff in Resources */,
-				6349C14724BB733300C6FC99 /* Disk ArrowsRead.tiff in Resources */,
-				6349C14824BB733300C6FC99 /* Disk ArrowsReadWrite.tiff in Resources */,
-				6349C14924BB733300C6FC99 /* Disk ArrowsWrite.tiff in Resources */,
-				6349C14A24BB733300C6FC99 /* Assets.xcassets in Resources */,
+				8768E678562F93D12CF7D29E /* MenuMeters.icns in Resources */,
+				6283449F03AE94F92FEFDA33 /* v2.0.8alert.rtf in Resources */,
+				BADE326973B03F9CE1F1CC63 /* com.ragingmenace.MenuMeters.plist in Resources */,
+				F0C56CE53007E5006948741B /* releases.html in Resources */,
+				748ACC9ECCF13F803CD86DFB /* Aqua LightsIdle.tiff in Resources */,
+				82BD51338809BF900D152B41 /* Aqua LightsRead.tiff in Resources */,
+				DEEC5CBB530F3CDC49768BE7 /* Aqua LightsReadWrite.tiff in Resources */,
+				7FD2BF3DA4CC438F1FA6DB71 /* Aqua LightsWrite.tiff in Resources */,
+				839E561FB2CBF1029AEA3044 /* ArrowsIdle.tiff in Resources */,
+				4EEAB91008A79DA8619E39A9 /* ArrowsRead.tiff in Resources */,
+				F8F5571A4CD34D880FBD9447 /* ArrowsReadWrite.tiff in Resources */,
+				3FEFBE7E651E9EF991DF201A /* ArrowsWrite.tiff in Resources */,
+				25FC58DB3B66F14DE51BFDFC /* Color ArrowsIdle.tiff in Resources */,
+				57A3B14B1E76284859BA4A24 /* Color ArrowsRead.tiff in Resources */,
+				A6C21DD058C11FEDE68211CA /* Color ArrowsReadWrite.tiff in Resources */,
+				05D7C2B13D01F02D78931F0F /* Color ArrowsWrite.tiff in Resources */,
+				EBD424594F666517149D423F /* Dark ArrowsIdle.tiff in Resources */,
+				65E7D4591C6786B69D4B1A17 /* Dark ArrowsRead.tiff in Resources */,
+				A32EFEE12A7B326C80DECC4D /* Dark ArrowsReadWrite.tiff in Resources */,
+				313FC56E3064287781317669 /* Dark ArrowsWrite.tiff in Resources */,
+				E90687C53149E30AE915BFF4 /* Dark Color ArrowsIdle.tiff in Resources */,
+				765190498C861A94C25D053D /* Dark Color ArrowsRead.tiff in Resources */,
+				7F33CF2A637FE12B8FFF950B /* Dark Color ArrowsReadWrite.tiff in Resources */,
+				EE49A4174574D685829A4C67 /* Dark Color ArrowsWrite.tiff in Resources */,
+				862C95CC1CA4D36E378C1B3D /* Disk ArrowsRead.tiff in Resources */,
+				46393E37CFCEB4F02288E7D7 /* Disk ArrowsReadWrite.tiff in Resources */,
+				8F86391B41CE3904E767875B /* Disk ArrowsWrite.tiff in Resources */,
+				AEA31FAF6763D83A942B8F67 /* LightsIdle.tiff in Resources */,
+				476C713E1FF4D1E4E37A6742 /* LightsRead.tiff in Resources */,
+				5615301BE52827A54B23BC98 /* LightsReadWrite.tiff in Resources */,
+				222448F400DF1D8CD111063C /* LightsWrite.tiff in Resources */,
+				79F4062CCFDEA4D8DBD2AFD2 /* Localizable.strings in Resources */,
+				6F16D6BD66215D2FC3AB47BB /* MenuMetersPref.strings in Resources */,
+				B805F779C3B3E96218192042 /* DiskImageSet.strings in Resources */,
+				07224675AE7965F030D629D5 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		33F09216236737EB00953CAB /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nLOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\n\n# By default, use the configured code signing identity for the project/target\nIDENTITY=\"${CODE_SIGN_IDENTITY}\"\nif [ \"$IDENTITY\" == \"\" ]\nthen\n# If a code signing identity is not specified, use ad hoc signing\nIDENTITY=\"-\"\nfi\nSPARKLE=\"$LOCATION/Sparkle.framework/Versions/B\"\ncodesign --verbose --force --deep -o runtime --sign \"$IDENTITY\" \"$SPARKLE/XPCServices/Installer.xpc\"\ncodesign --verbose --force --deep -o runtime --sign \"$IDENTITY\" \"$SPARKLE/XPCServices/Downloader.xpc\"\ncodesign --verbose --force --deep -o runtime --sign \"$IDENTITY\" \"$SPARKLE/Autoupdate\"\ncodesign --verbose --force --deep -o runtime --sign \"$IDENTITY\" \"$SPARKLE/Updater.app\"\ncodesign --verbose --force -o runtime --sign \"$IDENTITY\" \"$SPARKLE\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		33883CEF23655C9900B8AC14 /* Sources */ = {
+		37C9D9D29FA2020543364763 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3391A11A25C66B5F00B83705 /* TemperatureReader.m in Sources */,
-				33883D36236561B700B8AC14 /* EMCLoginItem.m in Sources */,
-				33883CF023655C9900B8AC14 /* MenuMeterDiskExtra.m in Sources */,
-				33883CF123655C9900B8AC14 /* MenuMeterWorkarounds.m in Sources */,
-				33883CF223655C9900B8AC14 /* main.m in Sources */,
-				33883CF323655C9900B8AC14 /* MenuMeterPowerMate.m in Sources */,
-				33883CF423655C9900B8AC14 /* MenuMeterCPUExtra.m in Sources */,
-				33883CF523655C9900B8AC14 /* MenuMeterMemExtra.m in Sources */,
-				33883CF623655C9900B8AC14 /* MenuMeterDefaults.m in Sources */,
-				3330C5B6257DFAED00BD5164 /* LocalizedStrings.m in Sources */,
-				33883CF723655C9900B8AC14 /* MenuMeterCPUStats.m in Sources */,
-				33883CF823655C9900B8AC14 /* MenuMetersMenuExtraBase.m in Sources */,
-				3325978C25BE7DB10070CE37 /* applesilicon_hardware_reader.m in Sources */,
-				33883CF923655C9900B8AC14 /* MenuMeterUptime.m in Sources */,
-				33883CFA23655C9900B8AC14 /* smc_reader.m in Sources */,
-				33883CFB23655C9900B8AC14 /* MenuMeterCPUTopProcesses.m in Sources */,
-				33883CFC23655C9900B8AC14 /* MenuMeterMemStats.m in Sources */,
-				33883CFD23655C9900B8AC14 /* MenuMeterDiskSpace.m in Sources */,
-				33883CFE23655C9900B8AC14 /* MenuMeterDiskIO.m in Sources */,
-				33883D3423655CBF00B8AC14 /* MenuMetersPref.m in Sources */,
-				AA10000B2A0000000000000B /* MenuMetersPrefWindow.m in Sources */,
-				33883CFF23655C9900B8AC14 /* AppDelegate.m in Sources */,
-				33883D0023655C9900B8AC14 /* MenuMeterNetPPP.m in Sources */,
-				33883D0223655C9900B8AC14 /* MenuMeterNetExtra.m in Sources */,
-				33883D0423655C9900B8AC14 /* MenuMeterNetConfig.m in Sources */,
-				33883D0623655C9900B8AC14 /* MenuMeterNetStats.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6349C10824BB733300C6FC99 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3391A11B25C66B5F00B83705 /* TemperatureReader.m in Sources */,
-				6349C10924BB733300C6FC99 /* EMCLoginItem.m in Sources */,
-				6349C10A24BB733300C6FC99 /* MenuMeterDiskExtra.m in Sources */,
-				6349C10B24BB733300C6FC99 /* MenuMeterWorkarounds.m in Sources */,
-				6349C10C24BB733300C6FC99 /* main.m in Sources */,
-				6349C10D24BB733300C6FC99 /* MenuMeterPowerMate.m in Sources */,
-				6349C10E24BB733300C6FC99 /* MenuMeterCPUExtra.m in Sources */,
-				6349C10F24BB733300C6FC99 /* MenuMeterMemExtra.m in Sources */,
-				6349C11024BB733300C6FC99 /* MenuMeterDefaults.m in Sources */,
-				3330C5B7257DFAED00BD5164 /* LocalizedStrings.m in Sources */,
-				6349C11124BB733300C6FC99 /* MenuMeterCPUStats.m in Sources */,
-				6349C11224BB733300C6FC99 /* MenuMetersMenuExtraBase.m in Sources */,
-				3325979325BE7DD00070CE37 /* applesilicon_hardware_reader.m in Sources */,
-				6349C11324BB733300C6FC99 /* MenuMeterUptime.m in Sources */,
-				6349C11424BB733300C6FC99 /* smc_reader.m in Sources */,
-				6349C11524BB733300C6FC99 /* MenuMeterCPUTopProcesses.m in Sources */,
-				6349C11624BB733300C6FC99 /* MenuMeterMemStats.m in Sources */,
-				6349C11724BB733300C6FC99 /* MenuMeterDiskSpace.m in Sources */,
-				6349C11824BB733300C6FC99 /* MenuMeterDiskIO.m in Sources */,
-				6349C11924BB733300C6FC99 /* MenuMetersPref.m in Sources */,
-				AA10000C2A0000000000000C /* MenuMetersPrefWindow.m in Sources */,
-				6349C11A24BB733300C6FC99 /* AppDelegate.m in Sources */,
-				6349C11B24BB733300C6FC99 /* MenuMeterNetPPP.m in Sources */,
-				6349C11D24BB733300C6FC99 /* MenuMeterNetExtra.m in Sources */,
-				6349C11F24BB733300C6FC99 /* MenuMeterNetConfig.m in Sources */,
-				6349C12124BB733300C6FC99 /* MenuMeterNetStats.m in Sources */,
+				5513AE493A5907270F6E961C /* AppDelegate.swift in Sources */,
+				C410BBC3C4B4AC4F58F903A3 /* CPUExtra.swift in Sources */,
+				A04F044E74BC189444F5CB45 /* CPUStats.swift in Sources */,
+				F323F13E1BE45EB0C4305820 /* CPUTopProcesses.swift in Sources */,
+				7C76E80ABA9A212EA048C132 /* Defaults.swift in Sources */,
+				C179B251584574186B800A6F /* DiskExtra.swift in Sources */,
+				EC66EC530B542405D9830462 /* DiskIO.swift in Sources */,
+				0C175C7EDF567C99FDE677E6 /* DiskSpace.swift in Sources */,
+				B500BE46608C8FBEAA274D36 /* MemExtra.swift in Sources */,
+				E604ADF9BA623AFB8C222C8A /* MemStats.swift in Sources */,
+				C6F425F3BE67E71A1F5C1D06 /* MenuExtraBase.swift in Sources */,
+				6E2B6DCA00CBBB6A5DAE550C /* NetConfig.swift in Sources */,
+				0DA87EB937E899E9248C25FC /* NetExtra.swift in Sources */,
+				7A45F446D3DB1E8571C6E767 /* NetPPP.swift in Sources */,
+				C628ACF25BA924DFBD1BABA9 /* NetStats.swift in Sources */,
+				9616CDD243D782F24C015C03 /* PowerMate.swift in Sources */,
+				E1EB5FA42C3945BE7C5B13DB /* PrefsWindow.swift in Sources */,
+				D0E2EAA54B9E1BE1086AAE70 /* Support.swift in Sources */,
+				E9E7741AE9D08E8CC4670315 /* TemperatureReader.swift in Sources */,
+				65B4889393B9BABB82BF6683 /* Uptime.swift in Sources */,
+				3202E6D6CBB8574C9330B8C5 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		3384540A2105C3AA00D4DA92 /* MenuMetersPref.strings */ = {
+		1E750EFF6C3E9975FC7CFB1C /* DiskImageSet.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				AA10000D2A0000000000000D /* en */,
-				3384540D2105C3B100D4DA92 /* ja */,
-				3384540E2105C3B300D4DA92 /* fr */,
-				3384540F2105C3B600D4DA92 /* de */,
-				338454102105C3B800D4DA92 /* nl */,
-				338454112105C3BB00D4DA92 /* it */,
-				338454122105C3BD00D4DA92 /* zh-Hans */,
-				538B152824465532008BAFC2 /* fi */,
-				08F9457D2752440700FC62A5 /* tr */,
+				BBEE2FCDDBFB81B69C7A122F /* en */,
+				23449FBF088A685B4084438C /* de */,
+				C9BF650820720D8859780382 /* fi */,
+				8D93B963B8C87B888C0ABF0A /* fr */,
+				3DAA44A4AFA2D25551C88459 /* it */,
+				F74BC47E7CDB19D09B38A0F6 /* ja */,
+				3B401761D8500FC06CB6B553 /* nl */,
+				6BE1F9368C38F5E8B7F99EC9 /* tr */,
+				5AA1B9EC0266D828735357FB /* zh-Hans */,
+			);
+			name = DiskImageSet.strings;
+			sourceTree = "<group>";
+		};
+		60C4A7B3EAD1C640EB7AFC3C /* MenuMetersPref.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B74E618BBB161528A04F5012 /* en */,
+				773E948F12FDBCBD17AF0B3E /* de */,
+				CBCF7B9437DD59CDA74FE0C1 /* fi */,
+				06EED02F2F3AFDA990E24ADD /* fr */,
+				5A55840AFE355B313E235A0D /* it */,
+				6E6CC905BE0C22FF03631F34 /* ja */,
+				76D39F0C28A66920026AFFD6 /* nl */,
+				C045274413FB9A821298EE9D /* tr */,
+				D1DE917798BD0E67E214E59D /* zh-Hans */,
 			);
 			name = MenuMetersPref.strings;
 			sourceTree = "<group>";
 		};
-		33883D492365E61200B8AC14 /* Localizable.strings */ = {
+		9026647C7FD78793732F13D0 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				33883D4A2365E61200B8AC14 /* Base */,
-				33883D4D2365E62000B8AC14 /* en */,
-				33883D4E2365E62300B8AC14 /* zh-Hans */,
-				33883D4F2365E62B00B8AC14 /* nl */,
-				33883D502365E62E00B8AC14 /* fr */,
-				33883D512365E63100B8AC14 /* de */,
-				33883D522365E63700B8AC14 /* it */,
-				33883D532365E63B00B8AC14 /* ja */,
-				538B152A24465532008BAFC2 /* fi */,
-				08F9457F2752440700FC62A5 /* tr */,
+				77E8009B800C5C1C8E50A98C /* Base */,
+				93D2DB854A59DE02AFB77506 /* en */,
+				9EFD572ACD13C258109F2E6C /* de */,
+				D6AE820132CE1667D0E10E0A /* fi */,
+				4B1BF14D867EBFEECE40520B /* fr */,
+				4E87F00F38BF0DFE8FEEF139 /* it */,
+				FFD4100C6D52643DE155CD24 /* ja */,
+				78371B7C6C792B5787468D01 /* nl */,
+				E5D6BBE5F61FCDE07655734C /* tr */,
+				A9DA551246D5D5340545F6BF /* zh-Hans */,
 			);
 			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		D4E4BF8F04F333B100A87BC9 /* DiskImageSet.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D4E4BF9004F333B100A87BC9 /* en */,
-				D4E4BF9404F333B100A87BC9 /* fr */,
-				D40271B8083D928600D09108 /* nl */,
-				D4D2ADDC1910AD95004E2469 /* it */,
-				D4050C3D19BFF75B00DB69A4 /* de */,
-				D4157ABD19D13C18008BD05F /* ja */,
-				330D68B72105AB950041B689 /* zh-Hans */,
-				538B152924465532008BAFC2 /* fi */,
-				08F9457E2752440700FC62A5 /* tr */,
-			);
-			name = DiskImageSet.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		33883D3023655C9900B8AC14 /* Release */ = {
+		4AB31BE6E5BF2CA06FBBDC70 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = MenuMeters.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = MM_VERSION;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 95AQ7YKR5A;
-				DSTROOT = "/tmp/$(PROJECT_NAME)App.dst";
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
-					"$(PROJECT_DIR)",
-				);
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = MenuMeters.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"ELCAPITAN=1",
-					"$(inherited)",
-					"SPARKLE=1",
-				);
-				GCC_VERSION = "";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "MenuMeters-Info.plist";
-				INFOPLIST_PREFIX_HEADER = ./InfoPlistPreprocessor.h;
-				INFOPLIST_PREPROCESS = YES;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yujitach.MenuMeters;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = macosx;
-			};
-			name = Release;
-		};
-		33883D3123655C9900B8AC14 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = MenuMeters.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = MM_VERSION;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 95AQ7YKR5A;
-				DSTROOT = "/tmp/$(PROJECT_NAME)App.dst";
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
-					"$(PROJECT_DIR)",
-				);
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = MenuMeters.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"ELCAPITAN=1",
-					"DEBUG=1",
-					"$(inherited)",
-					"SPARKLE=1",
-				);
-				GCC_VERSION = "";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "MenuMeters-Info.plist";
-				INFOPLIST_PREFIX_HEADER = ./InfoPlistPreprocessor.h;
-				INFOPLIST_PREPROCESS = YES;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yujitach.MenuMeters;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = macosx;
-			};
-			name = Debug;
-		};
-		6349C14F24BB733300C6FC99 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = MenuMeters.entitlements;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = MM_VERSION;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
-				DSTROOT = "/tmp/$(PROJECT_NAME)App.dst";
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
-					"$(PROJECT_DIR)",
-				);
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = MenuMeters.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"ELCAPITAN=1",
-					"$(inherited)",
-				);
-				GCC_VERSION = "";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "MenuMeters-Info.plist";
-				INFOPLIST_PREFIX_HEADER = ./InfoPlistPreprocessor.h;
-				INFOPLIST_PREPROCESS = YES;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yujitach.MenuMeters;
-				PRODUCT_NAME = MenuMeters;
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = macosx;
-			};
-			name = Release;
-		};
-		6349C15024BB733300C6FC99 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = MenuMeters.entitlements;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = MM_VERSION;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
-				DSTROOT = "/tmp/$(PROJECT_NAME)App.dst";
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
-					"$(PROJECT_DIR)",
-				);
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = MenuMeters.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"ELCAPITAN=1",
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_VERSION = "";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "MenuMeters-Info.plist";
-				INFOPLIST_PREFIX_HEADER = ./InfoPlistPreprocessor.h;
-				INFOPLIST_PREPROCESS = YES;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yujitach.MenuMeters;
-				PRODUCT_NAME = MenuMeters;
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = macosx;
-			};
-			name = Debug;
-		};
-		D4AFB343087726B20023B640 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = NO;
+				CURRENT_PROJECT_VERSION = 2.1.6.3;
 				DEAD_CODE_STRIPPING = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks";
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = MenuMeters.pch;
-				GCC_VERSION = "";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "MenuMeters-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 2.1.6.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yujitach.MenuMeters;
+				PRODUCT_NAME = MenuMeters;
 				SDKROOT = macosx;
-				SEPARATE_STRIP = YES;
-				WARNING_CFLAGS = (
-					"-Wall",
-					"-Werror",
-					"-Wshorten-64-to-32",
-				);
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
 		};
-		D4CD20430D88E34100481A51 /* Debug */ = {
+		5B1D5E8BD3C8A1CC77AE6831 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
@@ -1276,72 +545,151 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
-				DEAD_CODE_STRIPPING = NO;
+				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		696CD842CDF895BC4E76E9C2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks";
 				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = MenuMeters.pch;
-				GCC_VERSION = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SEPARATE_STRIP = YES;
-				WARNING_CFLAGS = (
-					"-Wall",
-					"-Werror",
-					"-Wshorten-64-to-32",
-				);
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		93490B427B63733C52C22F66 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = NO;
+				CURRENT_PROJECT_VERSION = 2.1.6.3;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "MenuMeters-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 2.1.6.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yujitach.MenuMeters;
+				PRODUCT_NAME = MenuMeters;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		33883D2F23655C9900B8AC14 /* Build configuration list for PBXNativeTarget "MenuMeters" */ = {
+		8C184550AA84321C61BA0BE4 /* Build configuration list for PBXProject "MenuMeters" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				33883D3023655C9900B8AC14 /* Release */,
-				33883D3123655C9900B8AC14 /* Debug */,
+				696CD842CDF895BC4E76E9C2 /* Debug */,
+				5B1D5E8BD3C8A1CC77AE6831 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6349C14E24BB733300C6FC99 /* Build configuration list for PBXNativeTarget "MenuMeters No Sparkle" */ = {
+		CD90EC018224C1525CEF78C0 /* Build configuration list for PBXNativeTarget "MenuMeters" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				6349C14F24BB733300C6FC99 /* Release */,
-				6349C15024BB733300C6FC99 /* Debug */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D4AFB342087726B20023B640 /* Build configuration list for PBXProject "MenuMeters" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D4AFB343087726B20023B640 /* Release */,
-				D4CD20430D88E34100481A51 /* Debug */,
+				4AB31BE6E5BF2CA06FBBDC70 /* Release */,
+				93490B427B63733C52C22F66 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = D40DB4A703D25F2100A87BC9 /* Project object */;
+	rootObject = 117B4FA3A691F1E21DAFED6C /* Project object */;
 }

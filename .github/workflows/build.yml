@@ -16,13 +16,20 @@ jobs:
           xcodebuild -version || true
           swift --version
           clang --version
-      - name: Build universal binary
+      - name: Build universal app bundle
         run: ./build-clt.sh
-      - name: Upload binary
+      - name: Verify app bundle
+        run: |
+          lipo -info out/MenuMeters.app/Contents/MacOS/MenuMeters
+          lipo -info out/MenuMeters.app/Contents/Frameworks/Sparkle.framework/Versions/B/Sparkle
+          codesign --verify --deep --strict out/MenuMeters.app
+          test -f out/MenuMeters.app/Contents/Resources/en.lproj/Localizable.strings
+          test -f "out/MenuMeters.app/Contents/Resources/Color ArrowsIdle.tiff"
+      - name: Upload app bundle
         uses: actions/upload-artifact@v4
         with:
           name: MenuMeters-clt
-          path: out/MenuMeters
+          path: out/MenuMeters.app
 
   xcode:
     name: Xcode build
@@ -35,8 +42,21 @@ jobs:
         run: |
           xcodebuild \
             -project MenuMeters.xcodeproj \
-            -scheme "MenuMeters No Sparkle" \
+            -scheme MenuMeters \
             -configuration Release \
             -destination "platform=macOS" \
+            -derivedDataPath out/DerivedData \
             CODE_SIGNING_ALLOWED=NO \
             build
+      - name: Verify Xcode app bundle
+        run: |
+          APP=out/DerivedData/Build/Products/Release/MenuMeters.app
+          test -x "$APP/Contents/MacOS/MenuMeters"
+          test -d "$APP/Contents/Frameworks/Sparkle.framework"
+          test -f "$APP/Contents/Resources/en.lproj/Localizable.strings"
+          test -f "$APP/Contents/Resources/Color ArrowsIdle.tiff"
+      - name: Upload app bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: MenuMeters-xcode
+          path: out/DerivedData/Build/Products/Release/MenuMeters.app
