@@ -9,7 +9,7 @@ kern_return_t SMCOpen()
     io_iterator_t iterator;
     io_object_t   device;
 
-    result = IOServiceGetMatchingServices(MenuMetersIODefaultPort(), IOServiceMatching(IO_SERVICE_NAME), &iterator);
+    result = IOServiceGetMatchingServices(kIOMainPortDefault, IOServiceMatching(IO_SERVICE_NAME), &iterator);
     if (result != kIOReturnSuccess)
     {
         printf("Error: IOServiceGetMatchingServices() = %08x\n", result);

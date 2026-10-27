@@ -27,7 +27,6 @@
 - (void)openMenuMetersPref:(id)sender;
 - (void)openActivityMonitor:(id)sender;
 - (void)addStandardMenuEntriesTo:(NSMenu*)extraMenu;
-- (void)setupAppearance;
 - (BOOL)isDark;
 - (BOOL)isInstalledButHiddenBySystem;
 - (CGFloat)height;

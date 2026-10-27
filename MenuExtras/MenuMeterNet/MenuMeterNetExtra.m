@@ -201,8 +201,6 @@
 
 - (BOOL)renderImage {
 
-        [self setupAppearance];
-    
 	// Don't render without data
 	if (![netHistoryData count]) return NO;
 

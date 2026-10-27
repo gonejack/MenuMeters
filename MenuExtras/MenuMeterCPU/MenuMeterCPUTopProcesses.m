@@ -1,5 +1,5 @@
 //
-//  MenuMeterCPUTopProcesses.mm
+//  MenuMeterCPUTopProcesses.m
 //
 // 	Reader object for top CPU hogging process list
 //
@@ -24,6 +24,12 @@
 #import "MenuMeterCPUTopProcesses.h"
 #import "MenuMeterCPU.h"
 
+#import <libproc.h>
+#import <sys/proc_info.h>
+#import <sys/types.h>
+#import <pwd.h>
+#import <mach/mach_time.h>
+#import <string.h>
 
 ///////////////////////////////////////////////////////////////
 //
@@ -40,10 +46,91 @@ NSString* const kProcessListItemCPUKey           = @"cpuPercent";
 
 ///////////////////////////////////////////////////////////////
 //
-//    Private categories
+//    libproc snapshot helpers
 //
 ///////////////////////////////////////////////////////////////
 
+typedef struct {
+    pid_t pid;
+    uid_t uid;
+    uint64_t cpuTime;
+    char name[2 * MAXCOMLEN];
+} MMProcessSample;
+
+// The per-process CPU counters returned by PROC_PIDTASKINFO are in mach
+// absolute-time units, the same units as mach_absolute_time(). This means a
+// percentage can be computed without converting through the timebase:
+// deltaCPU / deltaWall * 100.
+static int MMCollectProcessSamples(MMProcessSample **outSamples) {
+    *outSamples = NULL;
+
+    int capacity = proc_listallpids(NULL, 0);
+    if (capacity <= 0) {
+        return 0;
+    }
+
+    pid_t *pids = calloc((size_t)capacity, sizeof(pid_t));
+    if (!pids) {
+        return 0;
+    }
+
+    int count = proc_listallpids(pids, capacity * (int)sizeof(pid_t));
+    if (count <= 0) {
+        free(pids);
+        return 0;
+    }
+
+    MMProcessSample *samples = calloc((size_t)count, sizeof(MMProcessSample));
+    if (!samples) {
+        free(pids);
+        return 0;
+    }
+
+    int used = 0;
+    for (int i = 0; i < count; i++) {
+        struct proc_taskinfo taskInfo;
+        if (proc_pidinfo(pids[i], PROC_PIDTASKINFO, 0, &taskInfo, sizeof(taskInfo)) != sizeof(taskInfo)) {
+            continue;
+        }
+
+        struct proc_bsdinfo bsdInfo;
+        if (proc_pidinfo(pids[i], PROC_PIDTBSDINFO, 0, &bsdInfo, sizeof(bsdInfo)) != sizeof(bsdInfo)) {
+            continue;
+        }
+
+        MMProcessSample *sample = &samples[used++];
+        sample->pid = pids[i];
+        sample->uid = bsdInfo.pbi_uid;
+        sample->cpuTime = taskInfo.pti_total_user + taskInfo.pti_total_system;
+        if (bsdInfo.pbi_name[0] != '\0') {
+            strlcpy(sample->name, bsdInfo.pbi_name, sizeof(sample->name));
+        } else {
+            strlcpy(sample->name, bsdInfo.pbi_comm, sizeof(sample->name));
+        }
+    }
+
+    free(pids);
+    *outSamples = samples;
+    return used;
+}
+
+static NSString *MMUserNameForUID(uid_t uid, NSMutableDictionary<NSNumber *, NSString *> *cache) {
+    NSNumber *key = @(uid);
+    NSString *name = cache[key];
+    if (name) {
+        return name;
+    }
+
+    struct passwd *pw = getpwuid(uid);
+    if (pw && pw->pw_name) {
+        name = [NSString stringWithUTF8String:pw->pw_name];
+    }
+    if (!name) {
+        name = key.stringValue;
+    }
+    cache[key] = name;
+    return name;
+}
 
 ///////////////////////////////////////////////////////////////
 //
@@ -53,14 +140,9 @@ NSString* const kProcessListItemCPUKey           = @"cpuPercent";
 
 @implementation MenuMeterCPUTopProcesses
 {
-    NSArray*processes;
-    NSTask*task;
-    NSPipe*pipe;
-    NSString*buffer;
-    int parseState; //0 is before the first PID, COMMAND ... ; 1 is just after it saw PID, ...
-    NSMutableArray*tempArray;
+    NSArray *processes;
 }
-    
+
 -(instancetype)init
 {
     self=[super init];
@@ -72,72 +154,79 @@ NSString* const kProcessListItemCPUKey           = @"cpuPercent";
     [self stopUpdateProcessList];
 }
 
--(void)consumeData:(NSData *)data
-{
-    if (!pipe || !data.length) {
-        return;
-    }
-    NSString *chunk = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    if (!chunk) {
-        return;
-    }
-    buffer = [buffer ?: @"" stringByAppendingString:chunk];
-    while ([buffer containsString:@"\n"]) {
-        NSUInteger i = [buffer rangeOfString:@"\n"].location;
-        NSString *line = [buffer substringToIndex:i];
-        [self dealWithLine:line];
-        buffer = [buffer substringFromIndex:i+1];
-    }
-}
-
 - (void)startUpdateProcessList {
-    [self stopUpdateProcessList];
+    MMProcessSample *first = NULL;
+    int firstCount = MMCollectProcessSamples(&first);
 
-    parseState = 0;
-    buffer = @"";
-    processes = nil;
+    uint64_t start = mach_absolute_time();
+    // A short interval gives a current reading rather than an average over the
+    // lifetime of each process. This replaces the one-second sample that the
+    // old /usr/bin/top subprocess took.
+    usleep(100 * 1000);
+    uint64_t end = mach_absolute_time();
 
-    task = [[NSTask alloc] init];
-    task.executableURL = [NSURL fileURLWithPath:@"/usr/bin/top"];
-    task.arguments = @[@"-s", @"1", @"-l", @"0",
-                       @"-stats", @"pid,cpu,uid,user,command",
-                       @"-o", @"cpu",
-                       @"-n", [@(kCPUrocessCountMax) stringValue]];
+    MMProcessSample *second = NULL;
+    int secondCount = MMCollectProcessSamples(&second);
 
-    pipe = [NSPipe pipe];
-    task.standardOutput = pipe;
+    if (!first || !second || firstCount <= 0 || secondCount <= 0 || end <= start) {
+        free(first);
+        free(second);
+        return;
+    }
 
-    __weak typeof(self) weakSelf = self;
-    pipe.fileHandleForReading.readabilityHandler = ^(NSFileHandle *fh) {
-        NSData *data = [fh availableData];
-        if (!data.length) {
-            fh.readabilityHandler = nil;
-            return;
+    NSMutableDictionary<NSNumber *, NSNumber *> *previousTimes =
+        [NSMutableDictionary dictionaryWithCapacity:(NSUInteger)firstCount];
+    for (int i = 0; i < firstCount; i++) {
+        previousTimes[@(first[i].pid)] = @(first[i].cpuTime);
+    }
+
+    NSMutableDictionary<NSNumber *, NSString *> *userNameCache = [NSMutableDictionary dictionary];
+    NSMutableArray<NSDictionary *> *entries = [NSMutableArray arrayWithCapacity:(NSUInteger)secondCount];
+    double wall = (double)(end - start);
+
+    for (int i = 0; i < secondCount; i++) {
+        MMProcessSample *sample = &second[i];
+        NSNumber *previous = previousTimes[@(sample->pid)];
+        double percent = 0.0;
+        if (previous && sample->cpuTime >= previous.unsignedLongLongValue) {
+            uint64_t delta = sample->cpuTime - previous.unsignedLongLongValue;
+            percent = ((double)delta / wall) * 100.0;
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf consumeData:data];
-        });
-    };
 
-    NSError *error = nil;
-    if (![task launchAndReturnError:&error]) {
-        NSLog(@"MenuMeterCPU unable to launch top: %@", error.localizedDescription);
-        pipe.fileHandleForReading.readabilityHandler = nil;
-        task = nil;
-        pipe = nil;
+        NSString *name = [NSString stringWithUTF8String:sample->name] ?: @"";
+        [entries addObject:@{
+            kProcessListItemPIDKey: @(sample->pid),
+            kProcessListItemCPUKey: @(percent),
+            kProcessListItemUserIDKey: @(sample->uid),
+            kProcessListItemUserNameKey: MMUserNameForUID(sample->uid, userNameCache),
+            kProcessListItemProcessNameKey: [self normalizedCommand:name]
+        }];
     }
+
+    [entries sortUsingComparator:^NSComparisonResult(NSDictionary *a, NSDictionary *b) {
+        double aCPU = [a[kProcessListItemCPUKey] doubleValue];
+        double bCPU = [b[kProcessListItemCPUKey] doubleValue];
+        if (aCPU > bCPU) {
+            return NSOrderedAscending;
+        }
+        if (aCPU < bCPU) {
+            return NSOrderedDescending;
+        }
+        return [a[kProcessListItemProcessNameKey] compare:b[kProcessListItemProcessNameKey]];
+    }];
+
+    processes = entries;
+
+    free(first);
+    free(second);
 } // startUpdateProcessList
-    
+
 - (void)stopUpdateProcessList {
-    pipe.fileHandleForReading.readabilityHandler = nil;
-    if (task.isRunning) {
-        [task terminate];
-    }
-    task = nil;
-    pipe = nil;
-    buffer = nil;
+    // Sampling is synchronous now, so there is no subprocess or timer to tear
+    // down. Keep the last result so a menu that is being rebuilt does not lose
+    // its rows.
 } // stopUpdateProcessList
-    
+
 - (NSArray *)runningProcessesByCPUUsage:(NSUInteger)maxItem
 {
     if (!processes) {
@@ -145,64 +234,25 @@ NSString* const kProcessListItemCPUKey           = @"cpuPercent";
     }
     return [processes subarrayWithRange:NSMakeRange(0, MIN(maxItem, processes.count))];
 }
--(void)dealWithLine:(NSString*)s
-{
-    if(parseState==0){
-        if([s hasPrefix:@"PID"]){
-            parseState=1;
-            tempArray=[NSMutableArray array];
-        }
-        return;
-    }
-    if([s hasPrefix:@"Processes:"]){
-        parseState=0;
-        // one sample completed
-        processes=tempArray;
-        return;
-    }
-    
-    NSArray*a=[s componentsSeparatedByString:@" "];
-    NSMutableArray*x=[NSMutableArray array];
-    for(NSString*i in a){
-        if(![i isEqualToString:@""]){
-            [x addObject:i];
-        }
-    }
-    if (x.count < 5 || !tempArray) {
-        return;
-    }
-    NSArray*commandName=[x subarrayWithRange:NSMakeRange(4,x.count-4)];
-    NSDictionary* entry = @{ kProcessListItemPIDKey:x[0],
-                             kProcessListItemCPUKey:x[1],
-                             kProcessListItemUserIDKey:x[2],
-                             kProcessListItemUserNameKey:x[3],
-                             kProcessListItemProcessNameKey:[self normalizedCommand:[commandName componentsJoinedByString:@" "]]
-                             };
-    [tempArray addObject:entry];
-}
-
-
-
 
 - (NSString *)normalizedCommand:(NSString *)name
 {
     NSString* result = name;
-    
+
     // remove leading/trailing whitespaces
     result = [result stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    
+
     // remove login shell prefixes
     for (int i = 0; i < 2; ++i) {
-        if (name.length > 0) {
+        if (result.length > 0) {
             result = [result stringByReplacingOccurrencesOfString:@"-" withString:@"" options:0 range:NSMakeRange(0, 1)];
         }
     }
-    
+
     // continue other clean up here
-    
+
     return result;
-    
+
 } // normalizedCommand:
 
-    
 @end

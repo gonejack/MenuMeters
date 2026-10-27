@@ -26,7 +26,6 @@
 #import <sys/types.h>
 #import <sys/sysctl.h>
 #import <unistd.h>
-#import <AppKit/AppKit.h>
 #import "MenuMeters.h"
 #import "MenuMeterDefaults.h"
 #import "MenuMeterWorkarounds.h"
@@ -40,7 +39,7 @@
 #endif
 
 @interface MenuMetersPref :
-NSWindowController<NSWindowDelegate, NSToolbarDelegate, NSTabViewDelegate> 
+NSWindowController<NSWindowDelegate, NSToolbarDelegate, NSTabViewDelegate>
 {
 
 	// Our preferences
@@ -49,88 +48,93 @@ NSWindowController<NSWindowDelegate, NSToolbarDelegate, NSTabViewDelegate>
 	SCDynamicStoreRef				scSession;
 	CFRunLoopSourceRef				scRunSource;
 	// Main controls
-	IBOutlet NSTabView				*prefTabs;
-    __unsafe_unretained IBOutlet NSTextView *aboutView;
-    // CPU pane controlsaverage
-	IBOutlet NSButton				*cpuMeterToggle;
-    __weak IBOutlet NSButton *cpuPercentage;
-    __weak IBOutlet NSButton *cpuGraph;
-    __weak IBOutlet NSButton *cpuThermometer;
-    __weak IBOutlet NSButton *cpuHorizontalThermometer;
-    
-    IBOutlet NSButton               *cpuTemperatureToggle;
-    __weak IBOutlet NSPopUpButton *cpuTemperatureUnit;
-	IBOutlet NSTextField			*cpuIntervalDisplay;
-	IBOutlet NSSlider				*cpuInterval;
-	IBOutlet NSPopUpButton			*cpuPercentMode;
-	IBOutlet NSTextField			*cpuPercentModeLabel;
-    IBOutlet NSSlider               *cpuMaxProcessCount;
-    IBOutlet NSTextField            *cpuMaxProcessCountCountLabel;
-	IBOutlet NSSlider				*cpuGraphWidth;
-	IBOutlet NSTextField			*cpuGraphWidthLabel;
-	IBOutlet NSSlider				*cpuHorizontalRows;
-	IBOutlet NSTextField			*cpuHorizontalRowsLabel;
-    IBOutlet NSSlider               *cpuMenuWidth;
-	IBOutlet NSTextField			*cpuMenuWidthLabel;
-	IBOutlet NSPopUpButton				*cpuMultipleCPU;
-	IBOutlet NSButton				*cpuPowerMate;
-	IBOutlet NSPopUpButton			*cpuPowerMateMode;
-	IBOutlet NSColorWell			*cpuUserColor;
-    IBOutlet NSColorWell            *cpuTemperatureColor;
-    IBOutlet NSPopUpButton* cpuTemperatureSensor;
-	IBOutlet NSTextField			*cpuUserColorLabel;
-	IBOutlet NSColorWell			*cpuSystemColor;
-	IBOutlet NSTextField			*cpuSystemColorLabel;
+	NSTabView				*prefTabs;
+	NSTextView				*aboutView;
+	// CPU pane controls
+	NSButton				*cpuMeterToggle;
+	NSButton				*cpuPercentage;
+	NSButton				*cpuGraph;
+	NSButton				*cpuThermometer;
+	NSButton				*cpuHorizontalThermometer;
+
+	NSButton				*cpuTemperatureToggle;
+	NSPopUpButton			*cpuTemperatureUnit;
+	NSTextField				*cpuIntervalDisplay;
+	NSSlider				*cpuInterval;
+	NSPopUpButton			*cpuPercentMode;
+	NSTextField				*cpuPercentModeLabel;
+	NSSlider				*cpuMaxProcessCount;
+	NSTextField				*cpuMaxProcessCountCountLabel;
+	NSSlider				*cpuGraphWidth;
+	NSTextField				*cpuGraphWidthLabel;
+	NSSlider				*cpuHorizontalRows;
+	NSTextField				*cpuHorizontalRowsLabel;
+	NSSlider				*cpuMenuWidth;
+	NSTextField				*cpuMenuWidthLabel;
+	NSPopUpButton			*cpuMultipleCPU;
+	NSButton				*cpuPowerMate;
+	NSPopUpButton			*cpuPowerMateMode;
+	NSColorWell				*cpuUserColor;
+	NSColorWell				*cpuTemperatureColor;
+	NSPopUpButton			*cpuTemperatureSensor;
+	NSTextField				*cpuUserColorLabel;
+	NSColorWell				*cpuSystemColor;
+	NSTextField				*cpuSystemColorLabel;
 	// Disk pane controls
-	IBOutlet NSButton				*diskMeterToggle;
-	IBOutlet NSPopUpButton			*diskImageSet;
-	IBOutlet NSTextField			*diskIntervalDisplay;
-	IBOutlet NSSlider				*diskInterval;
-	IBOutlet NSPopUpButton			*diskSelectMode;
+	NSButton				*diskMeterToggle;
+	NSPopUpButton			*diskImageSet;
+	NSTextField				*diskIntervalDisplay;
+	NSSlider				*diskInterval;
+	NSPopUpButton			*diskSelectMode;
 	// Mem pane controls
-	IBOutlet NSButton				*memMeterToggle;
-	IBOutlet NSPopUpButton			*memDisplayMode;
-	IBOutlet NSTextField			*memIntervalDisplay;
-	IBOutlet NSSlider				*memInterval;
-	IBOutlet NSButton				*memFreeUsedLabeling;
-	IBOutlet NSButton				*memPageIndicator;
-	IBOutlet NSSlider				*memGraphWidth;
-	IBOutlet NSTextField			*memGraphWidthLabel;
-	IBOutlet NSColorWell			*memActiveColor;
-	IBOutlet NSColorWell			*memInactiveColor;
-	IBOutlet NSColorWell			*memWiredColor;
-	IBOutlet NSColorWell			*memCompressedColor;
-        IBOutlet NSColorWell			*memFreeColor;
-	IBOutlet NSColorWell			*memUsedColor;
-	IBOutlet NSColorWell			*memPageinColor;
-	IBOutlet NSTextField			*memPageinColorLabel;
-	IBOutlet NSColorWell			*memPageoutColor;
-	IBOutlet NSTextField			*memPageoutColorLabel;
-        IBOutlet NSButton               *memPressureMode;
+	NSButton				*memMeterToggle;
+	NSPopUpButton			*memDisplayMode;
+	NSTextField				*memIntervalDisplay;
+	NSSlider				*memInterval;
+	NSButton				*memFreeUsedLabeling;
+	NSButton				*memPageIndicator;
+	NSSlider				*memGraphWidth;
+	NSTextField				*memGraphWidthLabel;
+	NSColorWell				*memActiveColor;
+	NSColorWell				*memInactiveColor;
+	NSColorWell				*memWiredColor;
+	NSColorWell				*memCompressedColor;
+	NSColorWell				*memFreeColor;
+	NSColorWell				*memUsedColor;
+	NSColorWell				*memPageinColor;
+	NSTextField				*memPageinColorLabel;
+	NSColorWell				*memPageoutColor;
+	NSTextField				*memPageoutColorLabel;
+	NSButton				*memPressureMode;
 	// Net pane controls
-	IBOutlet NSButton				*netMeterToggle;
-	IBOutlet NSPopUpButton			*netDisplayMode;
-	IBOutlet NSPopUpButton			*netDisplayOrientation;
-	IBOutlet NSPopUpButton			*netPreferInterface;
-	IBOutlet NSPopUpButton			*netScaleMode;
-	IBOutlet NSTextField			*netScaleModeLabel;
-	IBOutlet NSPopUpButton			*netScaleCalc;
-	IBOutlet NSTextField			*netScaleCalcLabel;
-	IBOutlet NSTextField			*netIntervalDisplay;
-	IBOutlet NSSlider				*netInterval;
-	IBOutlet NSButton				*netThroughputLabeling;
-	IBOutlet NSButton				*netThroughput1KBound;
-	IBOutlet NSButton				*netThroughputBits;
-	IBOutlet NSPopUpButton			*netGraphStyle;
-	IBOutlet NSTextField			*netGraphStyleLabel;
-	IBOutlet NSSlider				*netGraphWidth;
-	IBOutlet NSTextField			*netGraphWidthLabel;
-	IBOutlet NSColorWell			*netTxColor;
-	IBOutlet NSColorWell			*netRxColor;
-	IBOutlet NSColorWell			*netInactiveColor;
-    __weak IBOutlet NSPopUpButton *updateIntervalButton;
-    IBOutlet NSView					*sparkleUIContainer;
-    BOOL hiddenAlertIsShown;
+	NSButton				*netMeterToggle;
+	NSPopUpButton			*netDisplayMode;
+	NSPopUpButton			*netDisplayOrientation;
+	NSPopUpButton			*netPreferInterface;
+	NSPopUpButton			*netScaleMode;
+	NSTextField				*netScaleModeLabel;
+	NSPopUpButton			*netScaleCalc;
+	NSTextField				*netScaleCalcLabel;
+	NSTextField				*netIntervalDisplay;
+	NSSlider				*netInterval;
+	NSButton				*netThroughputLabeling;
+	NSButton				*netThroughput1KBound;
+	NSButton				*netThroughputBits;
+	NSPopUpButton			*netGraphStyle;
+	NSTextField				*netGraphStyleLabel;
+	NSSlider				*netGraphWidth;
+	NSTextField				*netGraphWidthLabel;
+	NSColorWell				*netTxColor;
+	NSColorWell				*netRxColor;
+	NSColorWell				*netInactiveColor;
+	// About pane controls
+	NSTextField				*updateIntervalLabel;
+	NSPopUpButton			*updateIntervalButton;
+	NSButton				*checkUpdatesButton;
+	NSButton				*activityMonitorPaneCheckbox;
+	NSSlider				*tintPercentageSlider;
+	NSView					*sparkleUIContainer;
+	BOOL hiddenAlertIsShown;
 } // MenuMetersPref
 
 // Pref pane standard methods
@@ -139,7 +143,7 @@ NSWindowController<NSWindowDelegate, NSToolbarDelegate, NSTabViewDelegate>
 - (void)didUnselect;
 
 #ifdef SPARKLE
--(instancetype)initWithAboutFileName:(NSString*)about andUpdater:(SUUpdater*)updater_;
+-(instancetype)initWithAboutFileName:(NSString*)about andUpdater:(SPUUpdater*)updater_;
 #else
 -(instancetype)initWithAboutFileName:(NSString*)about;
 #endif
@@ -150,5 +154,8 @@ NSWindowController<NSWindowDelegate, NSToolbarDelegate, NSTabViewDelegate>
 - (IBAction)diskPrefChange:(id)sender;
 - (IBAction)memPrefChange:(id)sender;
 - (IBAction)netPrefChange:(id)sender;
+- (IBAction)updateInterval:(id)sender;
+- (IBAction)tintPercentageChanged:(id)sender;
+- (IBAction)showAlertConcerningSystemEventsEtc:(id)sender;
 
 @end

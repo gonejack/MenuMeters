@@ -10,10 +10,11 @@
 #   codesign -f -s - --options runtime --entitlements MenuMeters.entitlements \
 #            --deep /Applications/MenuMeters.app
 #
-# The app links against Sparkle.framework. Ad-hoc signed builds therefore also
-# need com.apple.security.cs.disable-library-validation, otherwise the hardened
-# runtime refuses to load the framework. With a Developer ID identity, sign the
-# app and the framework with that identity instead and drop the extra key.
+# The app links against Sparkle.framework. If you ad-hoc sign the app with the
+# hardened runtime, add com.apple.security.cs.disable-library-validation to a
+# temporary entitlements file (do not use it for Developer ID releases),
+# otherwise the runtime refuses to load the framework. With a Developer ID
+# identity, sign the app and the framework with that identity instead.
 #
 set -u
 cd "$(dirname "$0")"
@@ -27,6 +28,7 @@ SRCS=(
   MenuMetersApp/main.m
   MenuMetersApp/AppDelegate.m
   PrefPane/MenuMetersPref.m
+  PrefPane/MenuMetersPrefWindow.m
   PrefPane/EMCLoginItem.m
   Common/MenuMeterDefaults.m
   MenuMetersMenuExtraBase.m
@@ -55,7 +57,7 @@ INCS=(-I. -ICommon -IMenuExtras/MenuMeterCPU -IMenuExtras/MenuMeterDisk \
       -IMenuExtras/MenuMeterMem -IMenuExtras/MenuMeterNet -IPrefPane \
       -IMenuMetersApp -Ihardware_reader)
 
-FLAGS=(-isysroot "$SDK" -mmacosx-version-min=11.0 -fobjc-arc -O2 -g0 \
+FLAGS=(-isysroot "$SDK" -mmacosx-version-min=12.0 -fobjc-arc -O2 -g0 \
        -include MenuMeters.pch -DELCAPITAN=1 -DSPARKLE=1 \
        -Wall -Wextra -Wno-unused-parameter \
        "${INCS[@]}" -F .)
@@ -75,11 +77,12 @@ if [ $rc -ne 0 ]; then
 fi
 
 clang -arch arm64 -arch x86_64 \
-  -isysroot "$SDK" -mmacosx-version-min=11.0 \
+  -isysroot "$SDK" -mmacosx-version-min=12.0 \
   -Wl,-rpath,@loader_path/../Frameworks \
   -o "$OUT/MenuMeters" "$OUT"/obj/*.o \
   -framework Cocoa -framework SystemConfiguration -framework IOKit \
   -framework ServiceManagement -framework Foundation \
+  -framework ApplicationServices \
   -F . -framework Sparkle 2>>"$OUT/clang.log" || { echo "LINK FAILED, see $OUT/clang.log"; exit 1; }
 
 VERSION=$(sed -n 's/^#define MM_VERSION[[:space:]]*\([0-9.]*\).*/\1/p' InfoPlistPreprocessor.h)

@@ -374,7 +374,7 @@ static uint32_t packageCount;
 
     // Try using IOKit
     if (res != 0) {
-        mach_port_t platformExpertDevice = IOServiceGetMatchingService(MenuMetersIODefaultPort(), IOServiceMatching("IOPlatformExpertDevice"));
+        mach_port_t platformExpertDevice = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("IOPlatformExpertDevice"));
         CFTypeRef platformClockFrequency = IORegistryEntryCreateCFProperty(platformExpertDevice, CFSTR("clock-frequency"), kCFAllocatorDefault, 0);
         if (CFGetTypeID(platformClockFrequency) == CFDataGetTypeID()) {
             const CFDataRef platformClockFrequencyData = (const CFDataRef) platformClockFrequency;

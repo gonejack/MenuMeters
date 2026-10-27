@@ -217,8 +217,6 @@
 ///////////////////////////////////////////////////////////////
 
 - (BOOL)renderImage {
-        [self setupAppearance];
-
 	// Don't render without data
 	if (![memHistory count]) return NO;
 

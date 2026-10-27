@@ -14,11 +14,114 @@
 #import "MenuMeterMemExtra.h"
 #import "MenuMeterNetExtra.h"
 
+#import <ApplicationServices/ApplicationServices.h>
+
+///////////////////////////////////////////////////////////////
+//
+//	Activity Monitor Accessibility helpers
+//
+///////////////////////////////////////////////////////////////
+
+static NSString *MMAXRole(AXUIElementRef element) {
+    CFTypeRef value = NULL;
+    if (AXUIElementCopyAttributeValue(element, kAXRoleAttribute, &value) == kAXErrorSuccess && value) {
+        if (CFGetTypeID(value) == CFStringGetTypeID()) {
+            return CFBridgingRelease(value);
+        }
+        CFRelease(value);
+    }
+    return nil;
+}
+
+static NSArray *MMAXChildren(AXUIElementRef element) {
+    CFTypeRef value = NULL;
+    if (AXUIElementCopyAttributeValue(element, kAXChildrenAttribute, &value) == kAXErrorSuccess && value) {
+        if (CFGetTypeID(value) == CFArrayGetTypeID()) {
+            return CFBridgingRelease(value);
+        }
+        CFRelease(value);
+    }
+    return @[];
+}
+
+// Collects the radio buttons of the first radio group found below `element`.
+// Activity Monitor puts its pane picker inside the window toolbar, but older
+// and newer releases have used slightly different group nesting, so search
+// the whole window instead of hard-coding a path.
+static BOOL MMAXCollectRadioButtons(AXUIElementRef element, NSInteger depth,
+                                    NSMutableArray *buttons, BOOL *foundGroup) {
+    if (depth > 12) {
+        return NO;
+    }
+
+    NSString *role = MMAXRole(element);
+    if ([role isEqualToString:(__bridge NSString *)kAXRadioGroupRole]) {
+        NSMutableArray *groupButtons = [NSMutableArray array];
+        for (id child in MMAXChildren(element)) {
+            NSString *childRole = MMAXRole((__bridge AXUIElementRef)child);
+            if ([childRole isEqualToString:(__bridge NSString *)kAXRadioButtonRole]) {
+                [groupButtons addObject:child];
+            }
+        }
+        if (groupButtons.count > 0) {
+            [buttons addObjectsFromArray:groupButtons];
+            *foundGroup = YES;
+            return YES;
+        }
+    }
+
+    for (id child in MMAXChildren(element)) {
+        if (MMAXCollectRadioButtons((__bridge AXUIElementRef)child, depth + 1, buttons, foundGroup)) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+static BOOL MMAXPressActivityMonitorTab(AXUIElementRef appElement, NSInteger tab) {
+    NSArray *windows = nil;
+    CFTypeRef windowsValue = NULL;
+    if (AXUIElementCopyAttributeValue(appElement, kAXWindowsAttribute, &windowsValue) == kAXErrorSuccess &&
+        windowsValue && CFGetTypeID(windowsValue) == CFArrayGetTypeID()) {
+        windows = CFBridgingRelease(windowsValue);
+    } else if (windowsValue) {
+        CFRelease(windowsValue);
+    }
+    if (windows.count == 0) {
+        return NO;
+    }
+
+    AXUIElementRef window = (__bridge AXUIElementRef)windows.firstObject;
+    NSMutableArray *buttons = [NSMutableArray array];
+    BOOL foundGroup = NO;
+
+    MMAXCollectRadioButtons(window, 0, buttons, &foundGroup);
+    if (buttons.count == 0) {
+        return NO;
+    }
+
+    NSInteger index = 0;
+    if (tab > 0) {
+        index = tab - 1;
+    } else {
+        index = (NSInteger)buttons.count + tab;
+    }
+    if (index < 0 || index >= (NSInteger)buttons.count) {
+        return NO;
+    }
+
+    return AXUIElementPerformAction((__bridge AXUIElementRef)buttons[(NSUInteger)index],
+                                    kAXPressAction) == kAXErrorSuccess;
+}
+
+@interface MenuMetersMenuExtraBase ()
+- (void)selectActivityMonitorTab:(NSInteger)tab attempt:(NSInteger)attempt;
+@end
+
 
 @implementation MenuMetersMenuExtraBase
 -(NSColor*)colorByAdjustingForLightDark:(NSColor*)c
 {
-    [self setupAppearance];
     return [c blendedColorWithFraction:[[NSUserDefaults standardUserDefaults] floatForKey:@"tintPercentage"]/100  ofColor:self.isDark?[[NSColor whiteColor] colorWithAlphaComponent:[c alphaComponent]]:[[NSColor blackColor] colorWithAlphaComponent:[c alphaComponent]]];
 }
 -(instancetype)initWithBundleID:(NSString*)bundleID
@@ -55,10 +158,15 @@
 -(NSImage*)image
 {
     NSSize imageSize=NSMakeSize(menuWidth,self.imageHeight);
+    NSAppearance *appearance = statusItem.button.effectiveAppearance;
     return [NSImage imageWithSize:imageSize
                           flipped:NO
                    drawingHandler:^BOOL(NSRect dstRect) {
-        return [self renderImage];
+        __block BOOL rendered = NO;
+        [appearance performAsCurrentDrawingAppearance:^{
+            rendered = [self renderImage];
+        }];
+        return rendered;
     }];
 }
 -(BOOL)renderImage
@@ -182,36 +290,61 @@
     MenuMetersOpenApplication(@"com.apple.ActivityMonitor",
                               @"/System/Applications/Utilities/Activity Monitor.app",
                               @"Activity Monitor");
-    BOOL x=[[NSUserDefaults standardUserDefaults] boolForKey:@"activityMonitorOpenSpecificPanes"];
-    if(!x)
+    BOOL useSpecificPanes = [[NSUserDefaults standardUserDefaults] boolForKey:@"activityMonitorOpenSpecificPanes"];
+    if(!useSpecificPanes)
         return;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(),^{
-//        if(@available(macOS 10.15,*)){
-            int tab=1;
-            if([self isKindOfClass:[MenuMeterCPUExtra class]]){
-                tab=1;
-            }
-            // on some Mac's there is a "GPU" tab at the 2nd position.
-            // So the rest needs to be addressed from the last
-            if([self isKindOfClass:[MenuMeterDiskExtra class]]){
-                tab=-2;
-            }
-            if([self isKindOfClass:[MenuMeterMemExtra class]]){
-                tab=-4;
-            }
-            if([self isKindOfClass:[MenuMeterNetExtra class]]){
-                tab=-1;
-            }
-            NSString*source=[NSString stringWithFormat:@"tell application \"System Events\" to tell process \"Activity Monitor\" to click radio button %@ of radio group 1 of group 2 of toolbar of window 1", @(tab)];
-            NSAppleScript*script=[[NSAppleScript alloc] initWithSource:source];
-            NSDictionary* errorDict=nil;
-            [script executeAndReturnError:&errorDict];
-            if(errorDict){
-                NSLog(@"%@",errorDict);
-            }
-//        }
-    });
+
+    // MenuMeters used to drive System Events through AppleScript. The public
+    // Accessibility API does the same job without an Apple Events permission.
+    if (!AXIsProcessTrusted()) {
+        NSDictionary *options = @{ (__bridge NSString *)kAXTrustedCheckOptionPrompt: @YES };
+        AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)options);
+    }
+
+    int tab=1;
+    if([self isKindOfClass:[MenuMeterCPUExtra class]]){
+        tab=1;
+    }
+    // on some Mac's there is a "GPU" tab at the 2nd position.
+    // So the rest needs to be addressed from the last
+    if([self isKindOfClass:[MenuMeterDiskExtra class]]){
+        tab=-2;
+    }
+    if([self isKindOfClass:[MenuMeterMemExtra class]]){
+        tab=-4;
+    }
+    if([self isKindOfClass:[MenuMeterNetExtra class]]){
+        tab=-1;
+    }
+
+    [self selectActivityMonitorTab:tab attempt:0];
 } // openActivityMonitor
+
+- (void)selectActivityMonitorTab:(NSInteger)tab attempt:(NSInteger)attempt {
+    if (attempt > 12) {
+        NSLog(@"MenuMeters: unable to select Activity Monitor pane (accessibility permission?)");
+        return;
+    }
+
+    NSRunningApplication *app = [NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.apple.ActivityMonitor"].firstObject;
+    if (app) {
+        AXUIElementRef appElement = AXUIElementCreateApplication(app.processIdentifier);
+        if (appElement) {
+            AXUIElementSetMessagingTimeout(appElement, 1.0);
+            BOOL pressed = MMAXPressActivityMonitorTab(appElement, tab);
+            CFRelease(appElement);
+            if (pressed) {
+                return;
+            }
+        }
+    }
+
+    __weak typeof(self) weakSelf = self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+        [weakSelf selectActivityMonitorTab:tab attempt:attempt + 1];
+    });
+}
 - (void)addStandardMenuEntriesTo:(NSMenu*)extraMenu
 {
     NSMenuItem* menuItem = (NSMenuItem *)[extraMenu addItemWithTitle:NSLocalizedString(kOpenActivityMonitorTitle, kOpenActivityMonitorTitle)
@@ -272,13 +405,6 @@
         height=22; // the value before Big Sur.
     }
     return height;
-}
-- (void)setupAppearance {
-#if (__MAC_OS_X_VERSION_MAX_ALLOWED >= 101400)
-    if(@available(macOS 10.14,*)){
-        [NSAppearance setCurrentAppearance:statusItem.button.effectiveAppearance];
-    }
-#endif
 }
 #pragma mark NSMenuDelegate
 - (void)menuNeedsUpdate:(NSMenu*)menu {

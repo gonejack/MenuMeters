@@ -28,5 +28,4 @@
 
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <IOKit/IOKitLib.h>
-#import "Common/MenuMeterIOCompat.h"
 #import "Common/MenuMeterWorkspaceCompat.h"

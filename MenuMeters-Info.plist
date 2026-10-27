@@ -30,19 +30,17 @@
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>LSUIElement</key>
 	<true/>
-	<key>NSAppleEventsUsageDescription</key>
-	<string>This is to control the Activity Monitor to open specific panes such as memory or network. Another alert might be shown soon afterwards.</string>
 	<key>NSMainNibFile</key>
 	<string>MenuMetersMainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
-	<key>SUPublicDSAKeyFile</key>
-	<string>dsa_pub.pem</string>
+	<key>SUFeedURL</key>
+	<string>https://member.ipmu.jp/yuji.tachikawa/MenuMetersElCapitan/MenuMeters-Update.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>D8HvzxzrWvsinNA2EqgBnD7YtIL+v9f/TDtoww5y65U=</string>
 	<key>SUScheduledCheckInterval</key>
 	<integer>36000</integer>
-	<key>SUSendProfileInfo</key>
-	<true/>
 </dict>
 </plist>

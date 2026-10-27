@@ -29,7 +29,7 @@
     MenuMeterMemExtra*memExtra;
     MenuMetersPref*pref;
 #ifdef SPARKLE
-    SUUpdater*updater;
+    SPUStandardUpdaterController *updaterController;
 #endif
     NSTimer*timer;
 }
@@ -37,7 +37,7 @@
 -(IBAction)checkForUpdates:(id)sender
 {
 #ifdef SPARKLE
-    [updater checkForUpdates:sender];
+    [updaterController checkForUpdates:sender];
 #endif
 }
 
@@ -74,9 +74,15 @@
     }
     [self killOlderInstances];
 #ifdef SPARKLE
-    updater=[SUUpdater sharedUpdater];
-    updater.feedURL=[NSURL URLWithString:@"https://member.ipmu.jp/yuji.tachikawa/MenuMetersElCapitan/MenuMeters-Update.xml"];
-    pref=[[MenuMetersPref alloc] initWithAboutFileName:WELCOME andUpdater:updater];
+    updaterController = [[SPUStandardUpdaterController alloc] initWithStartingUpdater:NO
+                                                                     updaterDelegate:nil
+                                                                  userDriverDelegate:nil];
+    // Older versions used -[SUUpdater setFeedURL:], which persists the URL in
+    // user defaults and takes precedence over SUFeedURL. Drop that value before
+    // starting the updater so the feed configured in Info.plist is used.
+    [updaterController.updater clearFeedURLFromUserDefaults];
+    [updaterController startUpdater];
+    pref=[[MenuMetersPref alloc] initWithAboutFileName:WELCOME andUpdater:updaterController.updater];
 #else
     pref=[[MenuMetersPref alloc] initWithAboutFileName:WELCOME];
 #endif

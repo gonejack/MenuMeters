@@ -10,7 +10,10 @@
 		330247652366CB7A00F88D61 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 330247642366CB7A00F88D61 /* Sparkle.framework */; };
 		AA1000042A00000000000004 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1000032A00000000000003 /* ServiceManagement.framework */; };
 		AA1000052A00000000000005 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1000032A00000000000003 /* ServiceManagement.framework */; };
-		330247672366CEA800F88D61 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 330247662366CEA800F88D61 /* dsa_pub.pem */; };
+		AA1000072A00000000000007 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1000062A00000000000006 /* ApplicationServices.framework */; };
+		AA1000082A00000000000008 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1000062A00000000000006 /* ApplicationServices.framework */; };
+		AA10000B2A0000000000000B /* MenuMetersPrefWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = AA10000A2A0000000000000A /* MenuMetersPrefWindow.m */; };
+		AA10000C2A0000000000000C /* MenuMetersPrefWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = AA10000A2A0000000000000A /* MenuMetersPrefWindow.m */; };
 		3302476A2366CF7F00F88D61 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 330247642366CB7A00F88D61 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		330611032367EA4C0016E763 /* MenuMetersMainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 330611022367EA4C0016E763 /* MenuMetersMainMenu.xib */; };
 		3325978C25BE7DB10070CE37 /* applesilicon_hardware_reader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3325978B25BE7DB10070CE37 /* applesilicon_hardware_reader.m */; };
@@ -69,7 +72,7 @@
 		33883D2D23655C9900B8AC14 /* Disk ArrowsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D4D9D1F50644C7E200047FDD /* Disk ArrowsWrite.tiff */; };
 		33883D3423655CBF00B8AC14 /* MenuMetersPref.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E4BFA104F333B100A87BC9 /* MenuMetersPref.m */; };
 		33883D36236561B700B8AC14 /* EMCLoginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 908780A91FB087D70053DDC5 /* EMCLoginItem.m */; };
-		33883D47236568CB00B8AC14 /* MenuMetersPref.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3384540A2105C3AA00D4DA92 /* MenuMetersPref.xib */; };
+		33883D47236568CB00B8AC14 /* MenuMetersPref.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3384540A2105C3AA00D4DA92 /* MenuMetersPref.strings */; };
 		33883D482365E3D400B8AC14 /* DiskImageSet.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4E4BF8F04F333B100A87BC9 /* DiskImageSet.strings */; };
 		33883D4C2365E61200B8AC14 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 33883D492365E61200B8AC14 /* Localizable.strings */; };
 		33883D542365E78300B8AC14 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3383C1781B69B72600915D5D /* Assets.xcassets */; };
@@ -122,8 +125,7 @@
 		6349C13724BB733300C6FC99 /* Dark Color ArrowsIdle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42C6C941996DA77005F87BD /* Dark Color ArrowsIdle.tiff */; };
 		6349C13824BB733300C6FC99 /* Dark Color ArrowsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42C6C951996DA77005F87BD /* Dark Color ArrowsRead.tiff */; };
 		6349C13924BB733300C6FC99 /* LightsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42EC98303D49BDE00A87BC9 /* LightsWrite.tiff */; };
-		6349C13A24BB733300C6FC99 /* MenuMetersPref.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3384540A2105C3AA00D4DA92 /* MenuMetersPref.xib */; };
-		6349C13B24BB733300C6FC99 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 330247662366CEA800F88D61 /* dsa_pub.pem */; };
+		6349C13A24BB733300C6FC99 /* MenuMetersPref.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3384540A2105C3AA00D4DA92 /* MenuMetersPref.strings */; };
 		6349C13C24BB733300C6FC99 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 33883D492365E61200B8AC14 /* Localizable.strings */; };
 		6349C13D24BB733300C6FC99 /* DiskImageSet.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4E4BF8F04F333B100A87BC9 /* DiskImageSet.strings */; };
 		6349C13E24BB733300C6FC99 /* Dark Color ArrowsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D42C6C961996DA77005F87BD /* Dark Color ArrowsReadWrite.tiff */; };
@@ -159,8 +161,11 @@
 		08F9457E2752440700FC62A5 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/DiskImageSet.strings; sourceTree = "<group>"; };
 		08F9457F2752440700FC62A5 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		330247642366CB7A00F88D61 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
-		330247662366CEA800F88D61 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		330611022367EA4C0016E763 /* MenuMetersMainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuMetersMainMenu.xib; sourceTree = "<group>"; };
+		AA1000062A00000000000006 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		AA1000092A00000000000009 /* MenuMetersPrefWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuMetersPrefWindow.h; sourceTree = "<group>"; };
+		AA10000A2A0000000000000A /* MenuMetersPrefWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MenuMetersPrefWindow.m; sourceTree = "<group>"; };
+		AA10000D2A0000000000000D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
 		330D68B72105AB950041B689 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/DiskImageSet.strings"; sourceTree = "<group>"; };
 		3325978B25BE7DB10070CE37 /* applesilicon_hardware_reader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = applesilicon_hardware_reader.m; sourceTree = "<group>"; };
 		3325978F25BE7DCA0070CE37 /* applesilicon_hardware_reader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = applesilicon_hardware_reader.h; sourceTree = "<group>"; };
@@ -175,7 +180,6 @@
 		3383C1761B69B72600915D5D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3383C1781B69B72600915D5D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3383C17D1B69B72600915D5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3384540B2105C3AA00D4DA92 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MenuMetersPref.xib; sourceTree = "<group>"; };
 		3384540D2105C3B100D4DA92 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
 		3384540E2105C3B300D4DA92 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
 		3384540F2105C3B600D4DA92 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
@@ -266,7 +270,6 @@
 		D477AAF503D4BB9D00A87BC9 /* MenuMeterUptime.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = MenuMeterUptime.m; path = MenuExtras/MenuMeterCPU/MenuMeterUptime.m; sourceTree = "<group>"; };
 		D478F451101A8AE100C79173 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		D48A79F31018B051008E3207 /* MenuMeterWorkarounds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuMeterWorkarounds.h; path = Common/MenuMeterWorkarounds.h; sourceTree = "<group>"; };
-		AA1000012A00000000000001 /* MenuMeterIOCompat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuMeterIOCompat.h; path = Common/MenuMeterIOCompat.h; sourceTree = "<group>"; };
 		AA1000022A00000000000002 /* MenuMeterWorkspaceCompat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuMeterWorkspaceCompat.h; path = Common/MenuMeterWorkspaceCompat.h; sourceTree = "<group>"; };
 		AA1000032A00000000000003 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		D48A79F41018B051008E3207 /* MenuMeterWorkarounds.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuMeterWorkarounds.m; path = Common/MenuMeterWorkarounds.m; sourceTree = "<group>"; };
@@ -308,6 +311,7 @@
 			files = (
 				330247652366CB7A00F88D61 /* Sparkle.framework in Frameworks */,
 				AA1000042A00000000000004 /* ServiceManagement.framework in Frameworks */,
+				AA1000072A00000000000007 /* ApplicationServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,6 +320,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA1000052A00000000000005 /* ServiceManagement.framework in Frameworks */,
+				AA1000082A00000000000008 /* ApplicationServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,7 +342,6 @@
 				3383C1721B69B72500915D5D /* AppDelegate.h */,
 				3383C1731B69B72600915D5D /* AppDelegate.m */,
 				330611022367EA4C0016E763 /* MenuMetersMainMenu.xib */,
-				330247662366CEA800F88D61 /* dsa_pub.pem */,
 				3383C1781B69B72600915D5D /* Assets.xcassets */,
 				33883D492365E61200B8AC14 /* Localizable.strings */,
 				3383C17D1B69B72600915D5D /* Info.plist */,
@@ -411,7 +415,6 @@
 				D4BBBF750463514700A804AF /* MenuMeterPowerMate.m */,
 				D48A79F31018B051008E3207 /* MenuMeterWorkarounds.h */,
 				D48A79F41018B051008E3207 /* MenuMeterWorkarounds.m */,
-				AA1000012A00000000000001 /* MenuMeterIOCompat.h */,
 				AA1000022A00000000000002 /* MenuMeterWorkspaceCompat.h */,
 				3330C5B2257DFAED00BD5164 /* LocalizedStrings.h */,
 				3330C5B3257DFAED00BD5164 /* LocalizedStrings.m */,
@@ -428,6 +431,7 @@
 				D403ADF30E04F1E100348443 /* SystemConfiguration.framework */,
 				D478F451101A8AE100C79173 /* IOKit.framework */,
 				AA1000032A00000000000003 /* ServiceManagement.framework */,
+				AA1000062A00000000000006 /* ApplicationServices.framework */,
 			);
 			name = "System Frameworks";
 			sourceTree = "<group>";
@@ -539,6 +543,8 @@
 			children = (
 				D4E4BFA004F333B100A87BC9 /* MenuMetersPref.h */,
 				D4E4BFA104F333B100A87BC9 /* MenuMetersPref.m */,
+				AA1000092A00000000000009 /* MenuMetersPrefWindow.h */,
+				AA10000A2A0000000000000A /* MenuMetersPrefWindow.m */,
 				D4E4BFB904F333D000A87BC9 /* Resources */,
 				908780A71FB087B90053DDC5 /* EMCLoginItem.h */,
 				908780A91FB087D70053DDC5 /* EMCLoginItem.m */,
@@ -570,7 +576,7 @@
 			children = (
 				33679E51239767B30021408D /* v2.0.8alert.rtf */,
 				D4ECB3B705FE730000954E26 /* Info.plist */,
-				3384540A2105C3AA00D4DA92 /* MenuMetersPref.xib */,
+				3384540A2105C3AA00D4DA92 /* MenuMetersPref.strings */,
 				D4E4BF9C04F333B100A87BC9 /* InfoPlist.strings */,
 				D4E4BF8F04F333B100A87BC9 /* DiskImageSet.strings */,
 				D4E4BF9904F333B100A87BC9 /* Icon */,
@@ -731,8 +737,7 @@
 				33883D1B23655C9900B8AC14 /* Dark Color ArrowsIdle.tiff in Resources */,
 				33883D1C23655C9900B8AC14 /* Dark Color ArrowsRead.tiff in Resources */,
 				33883D2023655C9900B8AC14 /* LightsWrite.tiff in Resources */,
-				33883D47236568CB00B8AC14 /* MenuMetersPref.xib in Resources */,
-				330247672366CEA800F88D61 /* dsa_pub.pem in Resources */,
+				33883D47236568CB00B8AC14 /* MenuMetersPref.strings in Resources */,
 				33883D4C2365E61200B8AC14 /* Localizable.strings in Resources */,
 				33883D482365E3D400B8AC14 /* DiskImageSet.strings in Resources */,
 				33B440112594675E00CBBEDF /* com.ragingmenace.MenuMeters.plist in Resources */,
@@ -775,8 +780,7 @@
 				6349C13724BB733300C6FC99 /* Dark Color ArrowsIdle.tiff in Resources */,
 				6349C13824BB733300C6FC99 /* Dark Color ArrowsRead.tiff in Resources */,
 				6349C13924BB733300C6FC99 /* LightsWrite.tiff in Resources */,
-				6349C13A24BB733300C6FC99 /* MenuMetersPref.xib in Resources */,
-				6349C13B24BB733300C6FC99 /* dsa_pub.pem in Resources */,
+				6349C13A24BB733300C6FC99 /* MenuMetersPref.strings in Resources */,
 				6349C13C24BB733300C6FC99 /* Localizable.strings in Resources */,
 				6349C13D24BB733300C6FC99 /* DiskImageSet.strings in Resources */,
 				33B440122594675E00CBBEDF /* com.ragingmenace.MenuMeters.plist in Resources */,
@@ -814,7 +818,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nLOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\n\n# By default, use the configured code signing identity for the project/target\nIDENTITY=\"${CODE_SIGN_IDENTITY}\"\nif [ \"$IDENTITY\" == \"\" ]\nthen\n# If a code signing identity is not specified, use ad hoc signing\nIDENTITY=\"-\"\nfi\ncodesign --verbose --force --deep -o runtime --sign \"$IDENTITY\" \"$LOCATION/Sparkle.framework/Versions/A/Resources/AutoUpdate.app\"\ncodesign --verbose --force -o runtime --sign \"$IDENTITY\" \"$LOCATION/Sparkle.framework/Versions/A\"\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nLOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\n\n# By default, use the configured code signing identity for the project/target\nIDENTITY=\"${CODE_SIGN_IDENTITY}\"\nif [ \"$IDENTITY\" == \"\" ]\nthen\n# If a code signing identity is not specified, use ad hoc signing\nIDENTITY=\"-\"\nfi\nSPARKLE=\"$LOCATION/Sparkle.framework/Versions/B\"\ncodesign --verbose --force --deep -o runtime --sign \"$IDENTITY\" \"$SPARKLE/XPCServices/Installer.xpc\"\ncodesign --verbose --force --deep -o runtime --sign \"$IDENTITY\" \"$SPARKLE/XPCServices/Downloader.xpc\"\ncodesign --verbose --force --deep -o runtime --sign \"$IDENTITY\" \"$SPARKLE/Autoupdate\"\ncodesign --verbose --force --deep -o runtime --sign \"$IDENTITY\" \"$SPARKLE/Updater.app\"\ncodesign --verbose --force -o runtime --sign \"$IDENTITY\" \"$SPARKLE\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -843,6 +847,7 @@
 				33883CFD23655C9900B8AC14 /* MenuMeterDiskSpace.m in Sources */,
 				33883CFE23655C9900B8AC14 /* MenuMeterDiskIO.m in Sources */,
 				33883D3423655CBF00B8AC14 /* MenuMetersPref.m in Sources */,
+				AA10000B2A0000000000000B /* MenuMetersPrefWindow.m in Sources */,
 				33883CFF23655C9900B8AC14 /* AppDelegate.m in Sources */,
 				33883D0023655C9900B8AC14 /* MenuMeterNetPPP.m in Sources */,
 				33883D0223655C9900B8AC14 /* MenuMeterNetExtra.m in Sources */,
@@ -875,6 +880,7 @@
 				6349C11724BB733300C6FC99 /* MenuMeterDiskSpace.m in Sources */,
 				6349C11824BB733300C6FC99 /* MenuMeterDiskIO.m in Sources */,
 				6349C11924BB733300C6FC99 /* MenuMetersPref.m in Sources */,
+				AA10000C2A0000000000000C /* MenuMetersPrefWindow.m in Sources */,
 				6349C11A24BB733300C6FC99 /* AppDelegate.m in Sources */,
 				6349C11B24BB733300C6FC99 /* MenuMeterNetPPP.m in Sources */,
 				6349C11D24BB733300C6FC99 /* MenuMeterNetExtra.m in Sources */,
@@ -886,10 +892,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		3384540A2105C3AA00D4DA92 /* MenuMetersPref.xib */ = {
+		3384540A2105C3AA00D4DA92 /* MenuMetersPref.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3384540B2105C3AA00D4DA92 /* Base */,
+				AA10000D2A0000000000000D /* en */,
 				3384540D2105C3B100D4DA92 /* ja */,
 				3384540E2105C3B300D4DA92 /* fr */,
 				3384540F2105C3B600D4DA92 /* de */,
@@ -899,7 +905,7 @@
 				538B152824465532008BAFC2 /* fi */,
 				08F9457D2752440700FC62A5 /* tr */,
 			);
-			name = MenuMetersPref.xib;
+			name = MenuMetersPref.strings;
 			sourceTree = "<group>";
 		};
 		33883D492365E61200B8AC14 /* Localizable.strings */ = {
@@ -993,7 +999,7 @@
 				INFOPLIST_PREFIX_HEADER = ./InfoPlistPreprocessor.h;
 				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujitach.MenuMeters;
@@ -1061,7 +1067,7 @@
 				INFOPLIST_PREFIX_HEADER = ./InfoPlistPreprocessor.h;
 				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujitach.MenuMeters;
@@ -1126,7 +1132,7 @@
 				INFOPLIST_PREFIX_HEADER = ./InfoPlistPreprocessor.h;
 				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujitach.MenuMeters;
@@ -1193,7 +1199,7 @@
 				INFOPLIST_PREFIX_HEADER = ./InfoPlistPreprocessor.h;
 				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujitach.MenuMeters;

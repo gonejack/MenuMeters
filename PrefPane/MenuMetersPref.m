@@ -22,12 +22,14 @@
 //
 
 #import "MenuMetersPref.h"
+#import "MenuMetersPrefWindow.h"
 #import "EMCLoginItem.h"
 #import "MenuMeterCPUExtra.h"
 #import "MenuMeterDiskExtra.h"
 #import "MenuMeterMemExtra.h"
 #import "MenuMeterNetExtra.h"
 #import "TemperatureReader.h"
+#import <ApplicationServices/ApplicationServices.h>
 ///////////////////////////////////////////////////////////////
 //
 //	Private methods and constants
@@ -99,18 +101,25 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
 @implementation MenuMetersPref
 {
 #ifdef SPARKLE
-    SUUpdater*updater;
+    SPUUpdater *updater;
 #endif
 }
 -(IBAction)showAlertConcerningSystemEventsEtc:(id)sender
 {
-    NSButton*b=sender;
-    if([b state]==NSControlStateValueOn){
-        NSAlert*alert=[[NSAlert alloc] init];
-        alert.messageText=@"Using this feature for the first time will bring up two alerts by the system";
+    NSButton *button = sender;
+    BOOL enabled = (button.state == NSControlStateValueOn);
+    [[NSUserDefaults standardUserDefaults] setBool:enabled forKey:@"activityMonitorOpenSpecificPanes"];
+    if (enabled) {
+        NSAlert *alert = [[NSAlert alloc] init];
+        alert.messageText = @"MenuMeters needs Accessibility permission";
         [alert addButtonWithTitle:@"OK"];
-        alert.informativeText=@"This feature uses AppleScript and System Events to simulate a click to switch to a specific pane of the Activity Monitor. This requires 1. one confirmation dialog to allow MenuMeters to use AppleScript, and 2. a trip to the Security & Privacy pane of the System Preferences to allow MenuMeters to use Accesibility features.";
+        alert.informativeText = @"To switch to a specific Activity Monitor pane, MenuMeters simulates a click on the pane's toolbar button. macOS will ask you to allow MenuMeters to control your computer using Accessibility features. You can change this later in System Settings > Privacy & Security > Accessibility.";
         [alert runModal];
+
+        // Ask for Accessibility access the first time the feature is enabled.
+        // The call is harmless when access has already been granted.
+        NSDictionary *options = @{ (__bridge NSString *)kAXTrustedCheckOptionPrompt: @YES };
+        AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)options);
     }
 }
 -(IBAction)openAbout:(id)sender
@@ -156,7 +165,6 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
 }
 -(void)initCommon:(NSString*)about
 {
-    [self loadWindow];
     [self mainViewDidLoad];
     [self willSelect];
     [self setupAboutTab:about];
@@ -257,23 +265,32 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
     }
     
 }
-#ifdef SPARKLE
--(instancetype)initWithAboutFileName:(NSString*)about andUpdater:(SUUpdater*)updater_
+- (instancetype)initWithAboutFileName:(NSString *)about updater:(id)updater_
 {
-    self=[super initWithWindowNibName:@"MenuMetersPref"];
-    updater=updater_;
-    [self initCommon:about];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openPrefPane:) name:@"openPref" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hiddenBySystem:) name:@"hiddenBySystem" object:nil];
+    self = [super initWithWindow:nil];
+    if (self) {
+#ifdef SPARKLE
+        updater = updater_;
+#endif
+        [self buildPreferenceWindow];
+        [self initCommon:about];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openPrefPane:) name:@"openPref" object:nil];
+#ifdef SPARKLE
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hiddenBySystem:) name:@"hiddenBySystem" object:nil];
+#endif
+    }
     return self;
+}
+
+#ifdef SPARKLE
+-(instancetype)initWithAboutFileName:(NSString*)about andUpdater:(SPUUpdater*)updater_
+{
+    return [self initWithAboutFileName:about updater:updater_];
 }
 #else
 -(instancetype)initWithAboutFileName:(NSString*)about
 {
-    self=[super initWithWindowNibName:@"MenuMetersPref"];
-    [self initCommon:about];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openPrefPane:) name:@"openPref" object:nil];
-    return self;
+    return [self initWithAboutFileName:about updater:nil];
 }
 #endif
 -(NSView*)mainView{
@@ -290,8 +307,13 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
 }
 -(void)setupSparkleUI
 {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    tintPercentageSlider.floatValue = [defaults floatForKey:@"tintPercentage"];
+    activityMonitorPaneCheckbox.state = [defaults boolForKey:@"activityMonitorOpenSpecificPanes"] ? NSControlStateValueOn : NSControlStateValueOff;
+
     // This is hacky, but if we're a Sparkle build this sets up the updater UI bits,
-    // and if we're not, just hide them
+    // and if we're not, just hide them. The colour tint and Activity Monitor
+    // controls are not Sparkle-specific, so they stay visible in both builds.
 #ifdef SPARKLE
     if(updater.automaticallyChecksForUpdates){
         NSTimeInterval updateInterval=updater.updateCheckInterval;
@@ -308,7 +330,9 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
         [updateIntervalButton selectItemAtIndex:0];
     }
 #else
-    sparkleUIContainer.hidden = YES;
+    updateIntervalLabel.hidden = YES;
+    updateIntervalButton.hidden = YES;
+    checkUpdatesButton.hidden = YES;
 #endif
 }
 -(IBAction)updateInterval:(id)sender
@@ -340,6 +364,11 @@ static void scChangeCallback(SCDynamicStoreRef store, CFArrayRef changedKeys, vo
         [updater setUpdateCheckInterval:intervalInDays*3600*24];
     }
 #endif
+}
+-(IBAction)tintPercentageChanged:(id)sender
+{
+    [[NSUserDefaults standardUserDefaults] setFloat:tintPercentageSlider.floatValue
+                                             forKey:@"tintPercentage"];
 }
 ///////////////////////////////////////////////////////////////
 //

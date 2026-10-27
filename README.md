@@ -6,9 +6,11 @@ by Yuji Tachikawa, based on the classic MenuMeters by Alex Harper).
 
 ## Requirements
 
-- macOS 11 Big Sur or later (Apple Silicon and Intel)
+- macOS 12 Monterey or later (Apple Silicon and Intel)
 - Xcode 16 or later, **or** the Command Line Tools
-- A full Xcode installation is only needed for Interface Builder / nib editing
+- A full Xcode installation is needed for `xcodebuild` or for editing the
+  remaining main-menu nib; `build-clt.sh` builds everything with the Command
+  Line Tools
 
 The app is built as a universal binary (`arm64` + `x86_64`) and uses ARC,
 modern Objective-C, and current AppKit/IOKit APIs.
@@ -22,8 +24,12 @@ modern Objective-C, and current AppKit/IOKit APIs.
 3. Build and run.
 
 `Sparkle.framework` is bundled in the repository, so no package download is
-required. For a signed/notarized release, sign the app with your Developer ID
-and let Sparkle sign its updates with the matching key.
+required. The bundled Sparkle 2.10.1 requires macOS 12, which is why the app's
+deployment target is macOS 12.0.
+
+For a signed/notarized release, sign the app with your Developer ID. Updates
+must be signed with the EdDSA key whose public half is stored in
+`MenuMeters-Info.plist` (`SUPublicEDKey`); see [Release signing](#release-signing).
 
 ### Command Line Tools only
 
@@ -41,10 +47,46 @@ codesign -f -s - --options runtime \
          /Applications/MenuMeters.app
 ```
 
-The ad-hoc signing instructions include
-`com.apple.security.cs.disable-library-validation` because the linked
-`Sparkle.framework` is not signed with the same identity. When using a real
-Developer ID, sign the framework and the app with that identity instead.
+`MenuMeters.entitlements` only contains the app's normal entitlements. If you
+ad-hoc sign a hardened-runtime build that loads the bundled
+`Sparkle.framework`, you may additionally need
+`com.apple.security.cs.disable-library-validation` in a temporary entitlements
+file. Do not add that key to Developer ID release builds; instead sign the
+framework and the app with the same identity.
+
+## Release signing
+
+MenuMeters uses Sparkle 2 and EdDSA update signatures. The public key is in
+`MenuMeters-Info.plist`; the matching private key must be kept outside the
+repository and backed up securely. Do not commit it.
+
+The appcast entry for each release must contain an EdDSA signature. The easiest
+way is to let Sparkle's `generate_appcast` tool create or update the appcast:
+
+```sh
+/path/to/Sparkle/bin/generate_appcast --account MenuMeters /path/to/releases
+```
+
+Alternatively, sign a single archive with `sign_update` and put the resulting
+`sparkle:edSignature` attribute on the `<enclosure>` element:
+
+```sh
+/path/to/Sparkle/bin/sign_update --account MenuMeters MenuMeters.zip
+```
+
+The `MenuMeters` keychain account is the one created for this project. If the
+key is stored in a file instead, pass it with `--ed-key-file /path/to/key`.
+
+Sparkle 2.10 requires macOS 12. When writing an appcast item manually, include
+`<sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>`.
+`generate_appcast` copies this from the app's `LSMinimumSystemVersion`.
+
+The old DSA signature and `dsa_pub.pem` are no longer used. Existing appcast
+entries must be re-signed with the EdDSA key before users can update to a
+Sparkle 2 build. Because Sparkle 1 verifies DSA signatures, users still running
+a DSA build need a one-time manual update unless you can also add a valid
+`sparkle:dsaSignature` to the appcast entry using the old DSA private key
+(which is not stored in this repository).
 
 ### Tests and verification
 
@@ -71,9 +113,8 @@ request.
 
 The codebase was originally written for Mac OS X 10.2–10.4. It has been kept
 running through successive macOS releases; see
-[`Docs/Modernization.md`](Docs/Modernization.md) for the current state, the
-compatibility shims, and known follow-up work (most notably the legacy Sparkle
-1.x updater and the AppleScript-based Activity Monitor pane switching).
+[`Docs/Modernization.md`](Docs/Modernization.md) for the current state and the
+compatibility shims.
 
 ## Other versions and related software
 
