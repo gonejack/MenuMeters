@@ -33,8 +33,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        NSColor.ignoresAlpha = false
-
         if isRunningOnReadOnlyVolume() {
             alertConcerningAppTranslocation()
         }
@@ -69,7 +67,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         netExtra = NetExtra(bundleID: MM.netBundleID)
         memExtra = MemExtra(bundleID: MM.memBundleID)
 
-        LoginItem.cleanLegacyEntries()
         if !LoginItem.isEnabled() {
             LoginItem.setEnabled(true)
         }

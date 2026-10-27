@@ -8,7 +8,7 @@ on:
 jobs:
   command-line-tools:
     name: Command Line Tools build
-    runs-on: macos-15
+    runs-on: macos-26
     steps:
       - uses: actions/checkout@v4
       - name: Show toolchain
@@ -33,7 +33,7 @@ jobs:
 
   xcode:
     name: Xcode build
-    runs-on: macos-15
+    runs-on: macos-26
     steps:
       - uses: actions/checkout@v4
       - name: Show Xcode version

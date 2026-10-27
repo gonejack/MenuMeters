@@ -21,7 +21,7 @@ APP="$OUT/MenuMeters.app"
 OBJ="$OUT/obj"
 RES="$APP/Contents/Resources"
 FRAMEWORKS="$APP/Contents/Frameworks"
-DEPLOYMENT_TARGET=12.0
+DEPLOYMENT_TARGET=26.0
 
 rm -rf "$OUT"
 mkdir -p "$OBJ" "$APP/Contents/MacOS" "$RES" "$FRAMEWORKS"
@@ -31,10 +31,6 @@ COMMON_FLAGS=(
     -sdk "$SDK"
     -module-name MenuMeters
     -O -whole-module-optimization
-    # The macOS 15+ Command Line Tools ship libswiftCompatibility56.a with an
-    # arm64 slice only, which breaks x86_64 links against macOS 12. MenuMeters
-    # does not use Swift concurrency, so no back-deployment library is needed.
-    -runtime-compatibility-version none
     -Xlinker -rpath -Xlinker @loader_path/../Frameworks
 )
 

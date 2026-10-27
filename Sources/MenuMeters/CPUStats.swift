@@ -75,8 +75,10 @@ final class CPUStats {
         if let range = name.range(of: "CPU") { name = String(name[..<range.lowerBound]) }
         name = name.replacingOccurrences(of: "(TM)", with: "™")
             .replacingOccurrences(of: "(R)", with: "®")
-        if let arch = NXGetLocalArchInfo(), let description = arch.pointee.description {
-            name += " (\(String(cString: description)))"
+        var machine = [CChar](repeating: 0, count: 64)
+        var machineSize = machine.count
+        if sysctlbyname("hw.machine", &machine, &machineSize, nil, 0) == 0 {
+            name += " (\(String(cString: machine)))"
         }
         return name
     }

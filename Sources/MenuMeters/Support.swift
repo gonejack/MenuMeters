@@ -208,72 +208,20 @@ enum AppLauncher {
 enum LoginItem {
     /// Registers the app as a login item. Used by the preferences checkbox.
     static func setEnabled(_ enabled: Bool) {
-        if #available(macOS 13, *) {
-            let service = SMAppService.mainApp
-            do {
-                if enabled {
-                    if service.status != .enabled { try service.register() }
-                } else if service.status == .enabled {
-                    try service.unregister()
-                }
-            } catch {
-                NSLog("MenuMeters: unable to change login item: \(error)")
+        let service = SMAppService.mainApp
+        do {
+            if enabled {
+                if service.status != .enabled { try service.register() }
+            } else if service.status == .enabled {
+                try service.unregister()
             }
-            return
-        }
-        let list = LSSharedFileListCreate(nil, kLSSharedFileListSessionLoginItems.takeUnretainedValue(), nil)?
-            .takeRetainedValue()
-        guard let list else { return }
-        if enabled {
-            guard !legacyLoginItemExists(list) else { return }
-            let url = Bundle.main.bundleURL as CFURL
-            LSSharedFileListInsertItemURL(list, kLSSharedFileListItemLast.takeUnretainedValue(),
-                                          nil, nil, url, nil, nil)
-        } else {
-            removeLegacyLoginItems(list, matching: [Bundle.main.bundleURL.path])
+        } catch {
+            NSLog("MenuMeters: unable to change login item: \(error)")
         }
     }
 
     static func isEnabled() -> Bool {
-        if #available(macOS 13, *) {
-            return SMAppService.mainApp.status == .enabled
-        }
-        guard let list = LSSharedFileListCreate(nil, kLSSharedFileListSessionLoginItems.takeUnretainedValue(), nil)?
-            .takeRetainedValue() else { return false }
-        return legacyLoginItemExists(list)
-    }
-
-    /// Removes login items left behind by the old preference pane layout.
-    static func cleanLegacyEntries() {
-        let oldPaths = [
-            NSString(string: "~/Library/PreferencePanes/MenuMeters.prefPane/Contents/Resources/MenuMetersApp.app").expandingTildeInPath,
-            "/Library/PreferencePanes/MenuMeters.prefPane/Contents/Resources/MenuMetersApp.app"
-        ]
-        guard let list = LSSharedFileListCreate(nil, kLSSharedFileListSessionLoginItems.takeUnretainedValue(), nil)?
-            .takeRetainedValue() else { return }
-        removeLegacyLoginItems(list, matching: oldPaths)
-    }
-
-    private static func legacyLoginItemExists(_ list: LSSharedFileList) -> Bool {
-        snapshot(list).contains {
-            loginItemURL(list, $0)?.path == Bundle.main.bundleURL.path
-        }
-    }
-
-    private static func removeLegacyLoginItems(_ list: LSSharedFileList, matching paths: [String]) {
-        for item in snapshot(list) {
-            if let path = loginItemURL(list, item)?.path, paths.contains(path) {
-                LSSharedFileListItemRemove(list, item)
-            }
-        }
-    }
-
-    private static func snapshot(_ list: LSSharedFileList) -> [LSSharedFileListItem] {
-        LSSharedFileListCopySnapshot(list, nil)?.takeRetainedValue() as? [LSSharedFileListItem] ?? []
-    }
-
-    private static func loginItemURL(_ list: LSSharedFileList, _ item: LSSharedFileListItem) -> URL? {
-        LSSharedFileListItemCopyResolvedURL(item, 0, nil)?.takeRetainedValue() as URL?
+        SMAppService.mainApp.status == .enabled
     }
 }
 

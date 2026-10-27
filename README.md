@@ -6,8 +6,8 @@ menu bar. This is the maintained fork that runs as a regular menu-bar app
 
 ## Requirements
 
-- macOS 12 Monterey or later (Apple Silicon and Intel)
-- Xcode 16 or later, **or** the Command Line Tools
+- macOS 26 Tahoe or later (Apple Silicon and Intel)
+- Xcode 26 or later, **or** the Command Line Tools
 
 The app is a universal binary (`arm64` + `x86_64`) and is written in Swift with
 programmatic AppKit views. There are no nibs or Objective-C sources.
@@ -25,7 +25,9 @@ programmatic AppKit views. There are no nibs or Objective-C sources.
 Preferences from MenuMeters 2.1.6 and earlier are imported once from
 `~/Library/Preferences/com.ragingmenace.MenuMeters.plist`. The current app
 stores its settings in the standard domain for its own bundle identifier,
-`com.yujitach.MenuMeters`.
+`com.yujitach.MenuMeters`. Colors saved by 2.1.6 and earlier use the legacy
+`NSArchiver` format, which is no longer decoded; those colors fall back to the
+defaults while the remaining preferences are still imported.
 
 ## Build
 
@@ -37,9 +39,8 @@ stores its settings in the standard domain for its own bundle identifier,
 
 `Sparkle.framework` is bundled in the repository, so no package download is
 required. The project uses ad-hoc signing for local builds; select your
-Developer ID team and identity for a distributable build. The bundled Sparkle
-2.10.1 requires macOS 12, which is why the app's deployment target is
-macOS 12.0.
+Developer ID team and identity for a distributable build. The app's deployment
+target is macOS 26.0; the bundled Sparkle 2.10.1 supports it.
 
 ### Command Line Tools only
 
@@ -59,12 +60,6 @@ NO_SPARKLE=1 ./build-clt.sh
 
 The update controls are then hidden at runtime. This is useful when testing on
 a machine without the bundled framework.
-
-The script passes `-runtime-compatibility-version none` to `swiftc`. Recent
-Command Line Tools ship `libswiftCompatibility56.a` with an arm64 slice only,
-which otherwise prevents linking the x86_64 executable against macOS 12.
-MenuMeters does not use Swift concurrency, so no back-deployment library is
-needed.
 
 To update an existing installation, quit MenuMeters first and replace the
 bundle rather than copying only the executable:
@@ -100,8 +95,8 @@ Alternatively, sign a single archive with `sign_update` and put the resulting
 /path/to/Sparkle/bin/sign_update --account MenuMeters MenuMeters.zip
 ```
 
-Sparkle 2.10 requires macOS 12. When writing an appcast item manually, include
-`<sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>`.
+The app requires macOS 26. When writing an appcast item manually, include
+`<sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>`.
 `generate_appcast` copies this from the app's `LSMinimumSystemVersion`.
 
 The old DSA signature and `dsa_pub.pem` are no longer used. Existing appcast

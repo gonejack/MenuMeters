@@ -52,11 +52,9 @@ final class Prefs {
 
     private func loadColor(_ key: String, def: NSColor) -> NSColor {
         guard let data = defaults.data(forKey: key) else { return def }
-        if let color = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: data) {
-            return color
-        }
-        // Legacy NSArchiver data written by MenuMeters 2.1.6 and earlier.
-        return (NSUnarchiver.unarchiveObject(with: data) as? NSColor) ?? def
+        // NSArchiver data written by MenuMeters 2.1.6 and earlier cannot be
+        // decoded by the keyed-unarchiver APIs; fall back to the default color.
+        return (try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: data)) ?? def
     }
 
     private func saveColor(_ key: String, _ color: NSColor) {

@@ -50,11 +50,11 @@ The historical meter identifiers are unchanged:
 - `com.ragingmenace.MenuMeterMem`
 - `com.ragingmenace.MenuMeterNet`
 
-This keeps existing preferences and login-item entries working. Colors written
-by the old version are read with a keyed-archive first and the legacy
-`NSUnarchiver` path as a fallback. New colors use secure keyed archives.
-Downgrading to 2.1.6 or earlier will show default colors for colors saved by
-this version.
+This keeps existing preference values working. Colors written by 2.1.6 and
+earlier use legacy `NSArchiver` data, which the current app does not decode;
+those colors fall back to the defaults while the other preferences are
+imported. New colors use secure keyed archives. Downgrading to 2.1.6 or earlier
+will show default colors for colors saved by this version.
 
 ## API modernization
 
@@ -63,15 +63,17 @@ this version.
 | Private `NSMenuExtra` / SystemUIServer menu extras | Public `NSStatusItem` in a standalone accessory app |
 | Objective-C app delegate and nib | Swift `NSApplicationDelegate`, programmatic AppKit |
 | `NSOnState` / `NSOffState` | `NSControl.StateValue.on` / `.off` |
-| `NSArchiver` / `NSUnarchiver` colors | `NSKeyedArchiver` / `NSKeyedUnarchiver`, legacy read fallback |
+| `NSArchiver` / `NSUnarchiver` colors | `NSKeyedArchiver` / `NSKeyedUnarchiver` |
 | `NSBeginAlertSheet` | `NSAlert` |
 | `FSRef` / `FSGetVolumeInfo` | `URL` resource values |
 | `IOMasterPort()` | `IOMainPort()` / `kIOMainPortDefault` |
+| `NXGetLocalArchInfo()` | `sysctlbyname("hw.machine")` |
+| `NSColor.ignoresAlpha` | `NSColorWell.supportsAlpha` |
 | `String(cString:)` from raw buffers | Bounded UTF-8 conversion |
 | `/usr/bin/top` subprocess | `libproc` process snapshots |
 | AppleScript / System Events automation | `AXUIElement` accessibility traversal, best effort |
 | Sparkle 1 `SUUpdater` + DSA | Sparkle 2 `SPUStandardUpdaterController` + EdDSA |
-| `LSSharedFileList` only | `SMAppService.mainApp` on macOS 13+, `LSSharedFileList` fallback on macOS 12 |
+| `LSSharedFileList` | `SMAppService.mainApp` |
 | Fixed `NSTimer` selectors | Block-based timers with weak captures and tolerance |
 
 Timers keep the user-selected interval and use tolerance so the system can
@@ -103,11 +105,6 @@ resources, and ad-hoc signs the resulting `out/MenuMeters.app`. Setting
 `NO_SPARKLE=1` builds without the framework; the `#if canImport(Sparkle)`
 branches hide update controls in that configuration.
 
-The x86_64 link passes `-runtime-compatibility-version none` because recent
-Command Line Tools ship the Swift 5.6 back-deployment compatibility library
-with an arm64 slice only. MenuMeters does not use Swift concurrency, so the
-back-deployment library is not required.
-
 The Xcode project contains the same sources and resources, uses resource
 variant groups for the localized string tables, and embeds Sparkle with a
 `CodeSignOnCopy` build phase. The shared `MenuMeters` scheme builds the app;
@@ -115,7 +112,7 @@ CI runs both the Xcode and Command Line Tools builds.
 
 ## Deployment and signing
 
-- Minimum deployment target: **macOS 12.0**, matching Sparkle 2.10.1.
+- Minimum deployment target: **macOS 26.0**.
 - Architectures: `arm64` and `x86_64`.
 - Swift language mode: Swift 5.
 - Local builds use ad-hoc signing. Release builds should use a Developer ID
@@ -131,9 +128,10 @@ CI runs both the Xcode and Command Line Tools builds.
 - Activity Monitor's toolbar is not public API. The accessibility traversal
   used for pane switching is intentionally best effort and may need adjustment
   after major Activity Monitor redesigns. It requires Accessibility permission.
-- `NSUnarchiver` and `LSSharedFileList` produce deprecation warnings. They are
-  retained only for reading old preferences and for the macOS 12 login-item
-  fallback.
+- Colors archived by MenuMeters 2.1.6 and earlier are not decoded and fall
+  back to the defaults. Login items registered by the old preference-pane
+  version are also not removed automatically; use System Settings to delete
+  stale entries.
 - The preference window uses fixed frames inherited from the old nib. A future
   layout pass could make it resize more gracefully.
 - Existing appcast entries signed with DSA must be re-signed with the EdDSA key.

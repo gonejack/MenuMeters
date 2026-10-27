@@ -568,6 +568,7 @@ final class PrefsWindowController: NSWindowController, NSWindowDelegate, NSToolb
 
     private func colorWell(_ parent: NSView, _ frame: NSRect, _ action: Selector) -> NSColorWell {
         let well = NSColorWell(frame: frame)
+        well.supportsAlpha = true
         well.target = self
         well.action = action
         parent.addSubview(well)
