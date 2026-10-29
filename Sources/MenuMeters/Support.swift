@@ -147,8 +147,6 @@ extension Notification.Name {
     static let openPref = Notification.Name("openPref")
     /// Posted when a status item is removed; object is the meter bundle ID.
     static let menuExtraUnloaded = Notification.Name("menuExtraUnloaded")
-    /// Posted when macOS hides a status item because the menu bar is full.
-    static let hiddenBySystem = Notification.Name("hiddenBySystem")
 }
 
 /// Notification name used to tell one meter that its preferences changed.

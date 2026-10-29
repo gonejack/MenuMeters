@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>MenuMeters</string>
 	<key>CFBundleGetInfoString</key>
-	<string>MenuMeters 3.0.0, by many contributors</string>
+	<string>MenuMeters 3.0.1, by many contributors</string>
 	<key>CFBundleIconFile</key>
 	<string>MenuMeters.icns</string>
 	<key>CFBundleIdentifier</key>
@@ -19,11 +19,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.0.0</string>
+	<string>3.0.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>3.0.0</string>
+	<string>3.0.1</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>

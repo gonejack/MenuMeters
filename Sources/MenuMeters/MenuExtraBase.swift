@@ -82,9 +82,6 @@ class MenuExtraBase: NSObject, NSMenuDelegate {
 
     func timerFired(_ timer: Timer) {
         statusItem?.button?.image = makeImage()
-        if isInstalledButHiddenBySystem {
-            NotificationCenter.default.post(name: .hiddenBySystem, object: nil)
-        }
     }
 
     /// Creates or removes the status item according to the meter enablement pref.
@@ -234,12 +231,6 @@ class MenuExtraBase: NSObject, NSMenuDelegate {
         let index = tab > 0 ? tab - 1 : buttons.count + tab
         guard index >= 0, index < buttons.count else { return false }
         return AXUIElementPerformAction(buttons[index], kAXPressAction as CFString) == .success
-    }
-
-    var isInstalledButHiddenBySystem: Bool {
-        guard let window = statusItem?.button?.window else { return false }
-        guard window.frame.width > 0, window.frame.height > 0 else { return false }
-        return !window.occlusionState.contains(.visible)
     }
 
     // MARK: - NSMenuDelegate

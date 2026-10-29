@@ -13,7 +13,6 @@ final class PrefsWindowController: NSWindowController, NSWindowDelegate, NSToolb
     private let aboutFile: String
     private let netConfig = NetConfig()
     private var powerMateAvailable = false
-    private var hiddenAlertIsShown = false
 
     private var prefTabs: NSTabView!
     private var aboutView: NSTextView!
@@ -649,31 +648,6 @@ final class PrefsWindowController: NSWindowController, NSWindowDelegate, NSToolb
         updateAllControls()
     }
 
-    @objc private func hiddenBySystem(_ notification: Notification) {
-        guard let frontmost = NSWorkspace.shared.frontmostApplication,
-              frontmost.bundleIdentifier != Bundle.main.bundleIdentifier,
-              !(window?.isVisible ?? false),
-              !hiddenAlertIsShown else { return }
-        var hidden = UserDefaults.standard.stringArray(forKey: "hiddenArray") ?? []
-        if let bundleID = frontmost.bundleIdentifier, hidden.contains(bundleID) { return }
-
-        hiddenAlertIsShown = true
-        let appName = frontmost.localizedName ?? frontmost.bundleIdentifier ?? "unknown"
-        let alert = NSAlert()
-        alert.alertStyle = .critical
-        alert.messageText = "MenuMeters is hidden due to lack of space"
-        alert.informativeText = "It might be hidden because \(appName) has a long list of menus, or your MacBook has a notch.\nTry reducing the number of CPU cores shown, etc."
-        alert.addButton(withTitle: L(MM.openPrefsTitle))
-        alert.addButton(withTitle: "Ignore this issue when the frontmost app is \(appName)")
-        if alert.runModal() == .alertFirstButtonReturn {
-            promotePreferences()
-        } else if let bundleID = frontmost.bundleIdentifier {
-            hidden.append(bundleID)
-            UserDefaults.standard.set(hidden, forKey: "hiddenArray")
-        }
-        hiddenAlertIsShown = false
-    }
-
     // MARK: - Window delegate
 
     func windowWillClose(_ notification: Notification) {
@@ -697,8 +671,6 @@ final class PrefsWindowController: NSWindowController, NSWindowDelegate, NSToolb
                            name: .menuExtraUnloaded, object: nil)
         center.addObserver(self, selector: #selector(menuExtraChangedPrefs(_:)),
                            name: Notification.Name(MM.prefsBundleID), object: MM.prefChange)
-        center.addObserver(self, selector: #selector(hiddenBySystem(_:)),
-                           name: .hiddenBySystem, object: nil)
     }
 
     private func populateDiskImageSets() {

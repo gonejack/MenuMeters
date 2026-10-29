@@ -31,7 +31,7 @@ The application is an `LSUIElement` accessory app and temporarily switches to a
 regular activation policy while the preferences window is open.
 
 The public notification names from the old implementation are retained:
-`openPref`, `menuExtraUnloaded`, and `hiddenBySystem`. Meter preference-change
+`openPref` and `menuExtraUnloaded`. Meter preference-change
 notifications still use the meter bundle identifier as the notification name
 and `"prefChange"` as the object.
 
