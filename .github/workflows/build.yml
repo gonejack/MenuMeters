@@ -10,7 +10,7 @@ jobs:
     name: Command Line Tools build
     runs-on: macos-26
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Show toolchain
         run: |
           xcodebuild -version || true
@@ -25,7 +25,7 @@ jobs:
           test -f out/MenuMeters.app/Contents/Resources/en.lproj/Localizable.strings
           test -f "out/MenuMeters.app/Contents/Resources/Color ArrowsIdle.tiff"
       - name: Upload app bundle
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: MenuMeters-clt
           path: out/MenuMeters.app
@@ -34,7 +34,7 @@ jobs:
     name: Xcode build
     runs-on: macos-26
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Show Xcode version
         run: xcodebuild -version
       - name: Build MenuMeters
@@ -54,7 +54,7 @@ jobs:
           test -f "$APP/Contents/Resources/en.lproj/Localizable.strings"
           test -f "$APP/Contents/Resources/Color ArrowsIdle.tiff"
       - name: Upload app bundle
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: MenuMeters-xcode
           path: out/DerivedData/Build/Products/Release/MenuMeters.app
