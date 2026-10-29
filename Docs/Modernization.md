@@ -13,7 +13,7 @@ sources, and no preference pane.
 | File | Responsibility |
 | --- | --- |
 | `main.swift` | Creates `NSApplication`, installs the app delegate, and runs the accessory app |
-| `AppDelegate.swift` | Startup, single-instance handling, update controller, meter creation, main menu |
+| `AppDelegate.swift` | Startup, single-instance handling, meter creation, main menu |
 | `MenuExtraBase.swift` | Shared `NSStatusItem` lifecycle, timers, menu plumbing, theme changes, Activity Monitor switching |
 | `CPUExtra.swift`, `CPUStats.swift`, `CPUTopProcesses.swift`, `Uptime.swift` | CPU meter, graphs, top processes, load and uptime |
 | `DiskExtra.swift`, `DiskIO.swift`, `DiskSpace.swift` | Disk activity and volume-space meters |
@@ -26,7 +26,7 @@ sources, and no preference pane.
 | `PowerMate.swift` | Griffin PowerMate support |
 
 Each meter owns one `NSStatusItem` and is created independently. A failure in
-one meter does not prevent the updater or the preferences window from starting.
+one meter does not prevent the preferences window from starting.
 The application is an `LSUIElement` accessory app and temporarily switches to a
 regular activation policy while the preferences window is open.
 
@@ -72,7 +72,6 @@ will show default colors for colors saved by this version.
 | `String(cString:)` from raw buffers | Bounded UTF-8 conversion |
 | `/usr/bin/top` subprocess | `libproc` process snapshots |
 | AppleScript / System Events automation | `AXUIElement` accessibility traversal, best effort |
-| Sparkle 1 `SUUpdater` + DSA | Sparkle 2 `SPUStandardUpdaterController` + EdDSA |
 | `LSSharedFileList` | `SMAppService.mainApp` |
 | Fixed `NSTimer` selectors | Block-based timers with weak captures and tolerance |
 
@@ -90,7 +89,7 @@ All app resources live in `Resources/`:
   `MenuMetersPref.strings`, and `DiskImageSet.strings`.
 - `Resources/DiskIcons/` contains the TIFF icon sets.
 - `Resources/MenuMeters.icns` is the app icon.
-- `Resources/v2.0.8alert.rtf` is shown in the About tab.
+- `Resources/Welcome.rtf` is shown in the About tab.
 - `Resources/com.ragingmenace.MenuMeters.plist` provides the bundled defaults
   used during migration.
 - `Resources/releases.html` is the release-history page.
@@ -100,15 +99,12 @@ Both build paths copy the disk TIFFs and localized tables to the top level of
 `Bundle.localizedString(forKey:value:table:)` expect them.
 
 `build-clt.sh` is the reference build. It compiles every Swift source for
-`arm64` and `x86_64`, links against the bundled Sparkle framework, copies the
-resources, and ad-hoc signs the resulting `out/MenuMeters.app`. Setting
-`NO_SPARKLE=1` builds without the framework; the `#if canImport(Sparkle)`
-branches hide update controls in that configuration.
+`arm64` and `x86_64`, copies the resources, and ad-hoc signs the resulting
+`out/MenuMeters.app`. The app has no bundled third-party frameworks.
 
-The Xcode project contains the same sources and resources, uses resource
-variant groups for the localized string tables, and embeds Sparkle with a
-`CodeSignOnCopy` build phase. The shared `MenuMeters` scheme builds the app;
-CI runs both the Xcode and Command Line Tools builds.
+The Xcode project contains the same sources and resources and uses resource
+variant groups for the localized string tables. The shared `MenuMeters` scheme
+builds the app; CI runs both the Xcode and Command Line Tools builds.
 
 ## Deployment and signing
 
@@ -116,10 +112,9 @@ CI runs both the Xcode and Command Line Tools builds.
 - Architectures: `arm64` and `x86_64`.
 - Swift language mode: Swift 5.
 - Local builds use ad-hoc signing. Release builds should use a Developer ID
-  identity, sign the embedded Sparkle framework and the app with the same
-  identity, and be notarized.
-- Sparkle updates use EdDSA. The public key is in `MenuMeters-Info.plist`; the
-  private key is not in the repository.
+  identity and be notarized.
+- This fork has no automatic updater; it does not check for or download
+  updates.
 
 ## Known limitations and follow-up work
 
@@ -134,9 +129,6 @@ CI runs both the Xcode and Command Line Tools builds.
   stale entries.
 - The preference window uses fixed frames inherited from the old nib. A future
   layout pass could make it resize more gracefully.
-- Existing appcast entries signed with DSA must be re-signed with the EdDSA key.
-  Users still on a DSA build may need a one-time manual update, as described in
-  the README.
 
 ## Verification
 
@@ -144,12 +136,6 @@ CI runs both the Xcode and Command Line Tools builds.
 ./build-clt.sh
 lipo -info out/MenuMeters.app/Contents/MacOS/MenuMeters
 codesign --verify --deep --strict out/MenuMeters.app
-```
-
-The no-Sparkle configuration is verified separately:
-
-```sh
-NO_SPARKLE=1 ./build-clt.sh
 ```
 
 The Xcode build can be run with a full Xcode installation:

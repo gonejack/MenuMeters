@@ -21,7 +21,6 @@ jobs:
       - name: Verify app bundle
         run: |
           lipo -info out/MenuMeters.app/Contents/MacOS/MenuMeters
-          lipo -info out/MenuMeters.app/Contents/Frameworks/Sparkle.framework/Versions/B/Sparkle
           codesign --verify --deep --strict out/MenuMeters.app
           test -f out/MenuMeters.app/Contents/Resources/en.lproj/Localizable.strings
           test -f "out/MenuMeters.app/Contents/Resources/Color ArrowsIdle.tiff"
@@ -52,7 +51,6 @@ jobs:
         run: |
           APP=out/DerivedData/Build/Products/Release/MenuMeters.app
           test -x "$APP/Contents/MacOS/MenuMeters"
-          test -d "$APP/Contents/Frameworks/Sparkle.framework"
           test -f "$APP/Contents/Resources/en.lproj/Localizable.strings"
           test -f "$APP/Contents/Resources/Color ArrowsIdle.tiff"
       - name: Upload app bundle

@@ -100,14 +100,8 @@
 "Graph and Throughput" = "Grafik ve Veri Hacmi";
 "Display Network Menu Meter" = "Ağ ölçeri göster";
 "Ignore values below 1K/s" = "1K/sn altındaki değerleri yok say";
-"Automatic update check interval:" = "Güncellemeleri Denetleme Sıklığı:";
 "Color tint:" = "Renk Tonu:";
 "original" = "orijinal";
 "Activity monitor:" = "Etkinlik Monitörü:";
-"Once per day" = "Günde bir";
-"Never" = "Hiçbir zaman";
-"Once per week" = "Haftada bir";
-"Once per month" = "Ayda bir";
 "Opens specific panes" = "Belirli panoları açar";
-"Check updates now" = "Şimdi Denetle";
 "pure black/white" = "saf siyah/beyaz";

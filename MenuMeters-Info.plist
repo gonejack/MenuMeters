@@ -32,13 +32,5 @@
 	<true/>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
-	<key>SUEnableAutomaticChecks</key>
-	<true/>
-	<key>SUFeedURL</key>
-	<string>https://member.ipmu.jp/yuji.tachikawa/MenuMetersElCapitan/MenuMeters-Update.xml</string>
-	<key>SUPublicEDKey</key>
-	<string>D8HvzxzrWvsinNA2EqgBnD7YtIL+v9f/TDtoww5y65U=</string>
-	<key>SUScheduledCheckInterval</key>
-	<integer>36000</integer>
 </dict>
 </plist>

@@ -2,26 +2,19 @@
 //  AppDelegate.swift
 //  MenuMeters
 //
-//  Application lifecycle: updater, preferences, meters and the menu bar.
+//  Application lifecycle: preferences, meters and the menu bar.
 //
 
 import Cocoa
-#if canImport(Sparkle)
-import Sparkle
-#endif
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    private static let welcomeFile = "v2.0.8alert"
+    private static let welcomeFile = "Welcome"
 
     private var prefsWindow: PrefsWindowController?
     private var cpuExtra: CPUExtra?
     private var diskExtra: DiskExtra?
     private var netExtra: NetExtra?
     private var memExtra: MemExtra?
-
-    #if canImport(Sparkle)
-    private var updaterController: SPUStandardUpdaterController?
-    #endif
 
     // MARK: - NSApplicationDelegate
 
@@ -39,20 +32,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         killOlderInstances()
 
-        #if canImport(Sparkle)
-        let controller = SPUStandardUpdaterController(startingUpdater: false,
-                                                      updaterDelegate: nil,
-                                                      userDriverDelegate: nil)
-        // Older versions wrote the feed URL into the defaults; it would take
-        // precedence over SUFeedURL in Info.plist.
-        controller.updater.clearFeedURLFromUserDefaults()
-        controller.startUpdater()
-        updaterController = controller
-        prefsWindow = PrefsWindowController(aboutFile: Self.welcomeFile,
-                                            updater: controller.updater)
-        #else
         prefsWindow = PrefsWindowController(aboutFile: Self.welcomeFile)
-        #endif
 
         let key = Self.welcomeFile + "Presented"
         if !UserDefaults.standard.bool(forKey: key) {
@@ -61,7 +41,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         // Meters are created last: a failure while probing hardware must not
-        // prevent the updater or preferences from working.
+        // prevent the preferences from working.
         cpuExtra = CPUExtra(bundleID: MM.cpuBundleID)
         diskExtra = DiskExtra(bundleID: MM.diskBundleID)
         netExtra = NetExtra(bundleID: MM.netBundleID)
@@ -97,13 +77,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         about.target = self
         appMenu.addItem(about)
 
-        #if canImport(Sparkle)
-        let updates = NSMenuItem(title: "Check for Updates…",
-                                 action: #selector(checkForUpdates(_:)), keyEquivalent: "")
-        updates.target = self
-        appMenu.addItem(updates)
-        #endif
-
         appMenu.addItem(.separator())
         appMenu.addItem(withTitle: "Hide MenuMeters", action: #selector(NSApplication.hide(_:)),
                         keyEquivalent: "h")
@@ -132,12 +105,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         prefsWindow?.openAbout(sender)
     }
 
-    #if canImport(Sparkle)
-    @objc private func checkForUpdates(_ sender: Any?) {
-        updaterController?.checkForUpdates(sender)
-    }
-    #endif
-
     // MARK: - Single instance and translocation
 
     private func killOlderInstances() {
@@ -148,11 +115,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             let version = app.bundleURL
                 .flatMap { Bundle(url: $0) }?
                 .infoDictionary?["CFBundleVersion"] as? String ?? "0"
-            #if canImport(Sparkle)
-            let result = SUStandardVersionComparator.default.compareVersion(version, toVersion: thisVersion)
-            #else
             let result = Version.compare(version, thisVersion)
-            #endif
             NSLog("MenuMeters: running version \(version), ours \(thisVersion)")
             if result != .orderedDescending {
                 NSLog("MenuMeters: terminating older instance \(version)")
@@ -178,7 +141,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         alert.informativeText = """
             Please move the app to, say, /Applications, using your mouse/trackpad, not from the command line.
 
-            Apple decided that they don't allow the app to auto-update otherwise.
+            macOS runs downloaded apps from a temporary location, which prevents MenuMeters from registering itself as a login item.
 
             I am sorry for the inconvenience.
             """

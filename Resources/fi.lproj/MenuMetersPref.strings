@@ -100,14 +100,8 @@
 "Graph and Throughput" = "Kuvaaja ja siirtonopeus";
 "Display Network Menu Meter" = "Näytä verkon Menu Meter";
 "Ignore values below 1K/s" = "Älä huomioi alle 1 kB/s arvoja";
-"Automatic update check interval:" = "Automatic update check interval:";
 "Color tint:" = "Color tint:";
 "original" = "original";
 "Activity monitor:" = "Activity monitor:";
-"Once per day" = "Once per day";
-"Never" = "Never";
-"Once per week" = "Once per week";
-"Once per month" = "Once per month";
 "Opens specific panes" = "Opens specific panes";
-"Check updates now" = "Tarkasta päivitykset...";
 "pure black/white" = "pure black/white";

@@ -100,14 +100,8 @@
 "Graph and Throughput" = "Grafiek en doorvoer";
 "Display Network Menu Meter" = "Toon netwerk-MenuMeter";
 "Ignore values below 1K/s" = "Negeer waarden kleiner dan 1KB/s";
-"Automatic update check interval:" = "Automatic update check interval:";
 "Color tint:" = "Color tint:";
 "original" = "original";
 "Activity monitor:" = "Activity monitor:";
-"Once per day" = "Once per day";
-"Never" = "Never";
-"Once per week" = "Once per week";
-"Once per month" = "Once per month";
 "Opens specific panes" = "Opens specific panes";
-"Check updates now" = "Check updates now";
 "pure black/white" = "pure black/white";

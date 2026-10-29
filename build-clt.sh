@@ -8,8 +8,8 @@
 #
 #   out/MenuMeters.app
 #
-# The bundle contains the Swift executable (arm64 + x86_64), Sparkle, the
-# localized string tables, the disk icon sets, and the About text. Run it with
+# The bundle contains the Swift executable (arm64 + x86_64), the localized
+# string tables, the disk icon sets, and the About text. Run it with
 # `open out/MenuMeters.app`.
 #
 set -euo pipefail
@@ -20,30 +20,17 @@ OUT=out
 APP="$OUT/MenuMeters.app"
 OBJ="$OUT/obj"
 RES="$APP/Contents/Resources"
-FRAMEWORKS="$APP/Contents/Frameworks"
 DEPLOYMENT_TARGET=26.0
 
 rm -rf "$OUT"
-mkdir -p "$OBJ" "$APP/Contents/MacOS" "$RES" "$FRAMEWORKS"
+mkdir -p "$OBJ" "$APP/Contents/MacOS" "$RES"
 
 SOURCES=(Sources/MenuMeters/*.swift)
 COMMON_FLAGS=(
     -sdk "$SDK"
     -module-name MenuMeters
     -O -whole-module-optimization
-    -Xlinker -rpath -Xlinker @loader_path/../Frameworks
 )
-
-# Sparkle is optional at compile time: without the framework the app still
-# builds, but the update controls are hidden (the `#if canImport(Sparkle)`
-# branches in the sources take care of that). Set NO_SPARKLE=1 to force a
-# build without automatic updates.
-if [ "${NO_SPARKLE:-0}" != "1" ] && [ -d Sparkle.framework ]; then
-    COMMON_FLAGS+=(-F . -framework Sparkle)
-    ditto Sparkle.framework "$FRAMEWORKS/Sparkle.framework"
-else
-    echo "note: building without automatic updates"
-fi
 
 for arch in arm64 x86_64; do
     echo "Compiling $arch..."
@@ -63,7 +50,7 @@ printf 'APPL????' > "$APP/Contents/PkgInfo"
 
 # Application resources.
 cp Resources/MenuMeters.icns "$RES/"
-cp Resources/v2.0.8alert.rtf "$RES/"
+cp Resources/Welcome.rtf "$RES/"
 cp Resources/com.ragingmenace.MenuMeters.plist "$RES/"
 cp Resources/releases.html "$RES/"
 cp LICENSE "$RES/"

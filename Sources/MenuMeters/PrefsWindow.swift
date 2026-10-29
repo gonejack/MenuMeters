@@ -7,9 +7,6 @@
 
 import Cocoa
 import ApplicationServices
-#if canImport(Sparkle)
-import Sparkle
-#endif
 
 final class PrefsWindowController: NSWindowController, NSWindowDelegate, NSToolbarDelegate, NSTabViewDelegate {
     private let prefs = Prefs.shared
@@ -17,10 +14,6 @@ final class PrefsWindowController: NSWindowController, NSWindowDelegate, NSToolb
     private let netConfig = NetConfig()
     private var powerMateAvailable = false
     private var hiddenAlertIsShown = false
-
-    #if canImport(Sparkle)
-    private let updater: SPUUpdater?
-    #endif
 
     private var prefTabs: NSTabView!
     private var aboutView: NSTextView!
@@ -105,27 +98,14 @@ final class PrefsWindowController: NSWindowController, NSWindowDelegate, NSToolb
     private var netInactiveColor: NSColorWell!
 
     // About
-    private var updateIntervalLabel: NSTextField!
-    private var updateIntervalButton: NSPopUpButton!
-    private var checkUpdatesButton: NSButton!
     private var activityMonitorPaneCheckbox: NSButton!
     private var tintPercentageSlider: NSSlider!
-    private var sparkleUIContainer: NSView!
 
-    #if canImport(Sparkle)
-    init(aboutFile: String, updater: SPUUpdater?) {
-        self.aboutFile = aboutFile
-        self.updater = updater
-        super.init(window: nil)
-        setUp()
-    }
-    #else
     init(aboutFile: String) {
         self.aboutFile = aboutFile
         super.init(window: nil)
         setUp()
     }
-    #endif
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -153,7 +133,7 @@ final class PrefsWindowController: NSWindowController, NSWindowDelegate, NSToolb
         updateNetInterfaceMenu()
         updateAllControls()
         setupAboutTab()
-        setupSparkleUI()
+        setupAboutControls()
         setupToolbar()
         installObservers()
 
@@ -468,33 +448,23 @@ final class PrefsWindowController: NSWindowController, NSWindowDelegate, NSToolb
         aboutView = textView
         tabView.addSubview(scroll)
 
-        let sparkle = NSView(frame: NSRect(x: -3, y: -3, width: 554, height: 125))
-        sparkle.autoresizingMask = [.maxXMargin, .maxYMargin]
-        sparkleUIContainer = sparkle
-        tabView.addSubview(sparkle)
+        let footer = NSView(frame: NSRect(x: -3, y: -3, width: 554, height: 125))
+        footer.autoresizingMask = [.maxXMargin, .maxYMargin]
+        tabView.addSubview(footer)
 
-        updateIntervalLabel = label(sparkle, "Automatic update check interval:",
-                                    NSRect(x: 17, y: 24, width: 203, height: 16),
-                                    .left, 13, .labelColor)
-        _ = label(sparkle, "Color tint:", NSRect(x: 25, y: 82, width: 195, height: 16),
+        _ = label(footer, "Color tint:", NSRect(x: 25, y: 82, width: 195, height: 16),
                   .right, 13, .labelColor)
-        _ = label(sparkle, "original", NSRect(x: 233, y: 99, width: 109, height: 16),
+        _ = label(footer, "original", NSRect(x: 233, y: 99, width: 109, height: 16),
                   .left, 13, .secondaryLabelColor)
-        _ = label(sparkle, "Activity monitor:", NSRect(x: 25, y: 52, width: 195, height: 16),
+        _ = label(footer, "Activity monitor:", NSRect(x: 25, y: 52, width: 195, height: 16),
                   .right, 13, .labelColor)
-        updateIntervalButton = popup(sparkle, NSRect(x: 228, y: 17, width: 156, height: 25),
-                                     ["Never", "Once per day", "Once per week", "Once per month"], 1,
-                                     #selector(updateInterval(_:)))
-        activityMonitorPaneCheckbox = checkbox(sparkle, "Opens specific panes",
+        activityMonitorPaneCheckbox = checkbox(footer, "Opens specific panes",
                                                NSRect(x: 230, y: 51, width: 306, height: 18),
                                                #selector(showAlertConcerningSystemEventsEtc(_:)))
-        checkUpdatesButton = pushButton(sparkle, "Check updates now",
-                                        NSRect(x: 381, y: 13, width: 160, height: 32),
-                                        #selector(checkForUpdatesNow(_:)))
-        tintPercentageSlider = slider(sparkle, NSRect(x: 230, y: 76, width: 306, height: 28),
+        tintPercentageSlider = slider(footer, NSRect(x: 230, y: 76, width: 306, height: 28),
                                       0, 100, 10, 0, false, true, .regular,
                                       #selector(tintPercentageChanged(_:)))
-        _ = label(sparkle, "pure black/white", NSRect(x: 427, y: 99, width: 109, height: 16),
+        _ = label(footer, "pure black/white", NSRect(x: 427, y: 99, width: 109, height: 16),
                   .right, 13, .secondaryLabelColor)
 
         item.view = tabView
@@ -519,15 +489,6 @@ final class PrefsWindowController: NSWindowController, NSWindowDelegate, NSToolb
     private func checkbox(_ parent: NSView, _ key: String, _ frame: NSRect,
                           _ action: Selector) -> NSButton {
         let button = NSButton(checkboxWithTitle: LP(key), target: self, action: action)
-        button.frame = frame
-        button.font = .systemFont(ofSize: 13)
-        parent.addSubview(button)
-        return button
-    }
-
-    private func pushButton(_ parent: NSView, _ key: String, _ frame: NSRect,
-                            _ action: Selector) -> NSButton {
-        let button = NSButton(title: LP(key), target: self, action: action)
         button.frame = frame
         button.font = .systemFont(ofSize: 13)
         parent.addSubview(button)
@@ -841,62 +802,9 @@ final class PrefsWindowController: NSWindowController, NSWindowDelegate, NSToolb
         aboutView.textContainerInset = NSSize(width: 12, height: 8)
     }
 
-    private func setupSparkleUI() {
+    private func setupAboutControls() {
         tintPercentageSlider.doubleValue = prefs.tintPercentage
         activityMonitorPaneCheckbox.state = prefs.activityMonitorSpecificPanes ? .on : .off
-
-        #if canImport(Sparkle)
-        if let updater {
-            if updater.automaticallyChecksForUpdates {
-                let interval = updater.updateCheckInterval
-                if interval < 24 * 3600 + 1 {
-                    updateIntervalButton.selectItem(at: 1)
-                } else if interval < 7 * 24 * 3600 + 1 {
-                    updateIntervalButton.selectItem(at: 2)
-                } else if interval < 30 * 24 * 3600 + 1 {
-                    updateIntervalButton.selectItem(at: 3)
-                } else {
-                    updateIntervalButton.selectItem(at: 1)
-                }
-            } else {
-                updateIntervalButton.selectItem(at: 0)
-            }
-        } else {
-            hideUpdateControls()
-        }
-        #else
-        hideUpdateControls()
-        #endif
-    }
-
-    private func hideUpdateControls() {
-        updateIntervalLabel.isHidden = true
-        updateIntervalButton.isHidden = true
-        checkUpdatesButton.isHidden = true
-    }
-
-    @objc private func updateInterval(_ sender: Any?) {
-        #if canImport(Sparkle)
-        let days: Int
-        switch updateIntervalButton.indexOfSelectedItem {
-        case 0: days = -1
-        case 2: days = 7
-        case 3: days = 30
-        default: days = 1
-        }
-        if days <= 0 {
-            updater?.automaticallyChecksForUpdates = false
-        } else {
-            updater?.automaticallyChecksForUpdates = true
-            updater?.updateCheckInterval = TimeInterval(days * 24 * 3600)
-        }
-        #endif
-    }
-
-    @objc private func checkForUpdatesNow(_ sender: Any?) {
-        #if canImport(Sparkle)
-        updater?.checkForUpdates()
-        #endif
     }
 
     @objc private func tintPercentageChanged(_ sender: Any?) {

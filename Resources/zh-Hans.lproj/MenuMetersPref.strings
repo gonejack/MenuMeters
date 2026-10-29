@@ -100,14 +100,8 @@
 "Graph and Throughput" = "曲线和吞吐量";
 "Display Network Menu Meter" = "显示网络菜单仪表";
 "Ignore values below 1K/s" = "忽略低于 1KB/s 的数值";
-"Automatic update check interval:" = "Automatic update check interval:";
 "Color tint:" = "Color tint:";
 "original" = "original";
 "Activity monitor:" = "Activity monitor:";
-"Once per day" = "Once per day";
-"Never" = "Never";
-"Once per week" = "Once per week";
-"Once per month" = "Once per month";
 "Opens specific panes" = "Opens specific panes";
-"Check updates now" = "Check updates now";
 "pure black/white" = "pure black/white";

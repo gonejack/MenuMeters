@@ -12,6 +12,8 @@ menu bar. This is the maintained fork that runs as a regular menu-bar app
 The app is a universal binary (`arm64` + `x86_64`) and is written in Swift with
 programmatic AppKit views. There are no nibs or Objective-C sources.
 
+This fork has no automatic updater: builds never check for or download updates.
+
 ## Features
 
 - CPU usage, per-core graphs, temperature, and a top-process list
@@ -19,7 +21,6 @@ programmatic AppKit views. There are no nibs or Objective-C sources.
 - Memory usage, pressure, paging, and swap information
 - Network throughput, interface selection, and PPP/VPN support
 - Configurable colors, widths, intervals, and menu-bar display modes
-- Sparkle 2 automatic updates with EdDSA signatures
 - PowerMate support and automatic login-item registration
 
 Preferences from MenuMeters 2.1.6 and earlier are imported once from
@@ -37,10 +38,9 @@ defaults while the remaining preferences are still imported.
 2. Select the `MenuMeters` scheme and the `My Mac` destination.
 3. Build and run.
 
-`Sparkle.framework` is bundled in the repository, so no package download is
-required. The project uses ad-hoc signing for local builds; select your
-Developer ID team and identity for a distributable build. The app's deployment
-target is macOS 26.0; the bundled Sparkle 2.10.1 supports it.
+The project uses ad-hoc signing for local builds; select your Developer ID team
+and identity for a distributable build. The app's deployment target is
+macOS 26.0.
 
 ### Command Line Tools only
 
@@ -49,17 +49,8 @@ target is macOS 26.0; the bundled Sparkle 2.10.1 supports it.
 ```
 
 This produces a complete, ad-hoc-signed `out/MenuMeters.app` bundle containing
-the universal executable, Sparkle, localized strings, disk icons, and the
-About text. Run it with `open out/MenuMeters.app` or copy it to `/Applications`.
-
-To build without automatic updates:
-
-```sh
-NO_SPARKLE=1 ./build-clt.sh
-```
-
-The update controls are then hidden at runtime. This is useful when testing on
-a machine without the bundled framework.
+the universal executable, localized strings, disk icons, and the About text.
+Run it with `open out/MenuMeters.app` or copy it to `/Applications`.
 
 To update an existing installation, quit MenuMeters first and replace the
 bundle rather than copying only the executable:
@@ -77,38 +68,10 @@ out/MenuMeters.app/Contents/MacOS/MenuMeters --unregister-login-item
 
 ## Release signing
 
-MenuMeters uses Sparkle 2 and EdDSA update signatures. The public key is in
-`MenuMeters-Info.plist`; the matching private key must be kept outside the
-repository and backed up securely. Do not commit it.
-
-The appcast entry for each release must contain an EdDSA signature. The easiest
-way is to let Sparkle's `generate_appcast` tool create or update the appcast:
-
-```sh
-/path/to/Sparkle/bin/generate_appcast --account MenuMeters /path/to/releases
-```
-
-Alternatively, sign a single archive with `sign_update` and put the resulting
-`sparkle:edSignature` attribute on the `<enclosure>` element:
-
-```sh
-/path/to/Sparkle/bin/sign_update --account MenuMeters MenuMeters.zip
-```
-
-The app requires macOS 26. When writing an appcast item manually, include
-`<sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>`.
-`generate_appcast` copies this from the app's `LSMinimumSystemVersion`.
-
-The old DSA signature and `dsa_pub.pem` are no longer used. Existing appcast
-entries must be re-signed with the EdDSA key before users can update to a
-Sparkle 2 build. Because Sparkle 1 verifies DSA signatures, users still running
-a DSA build need a one-time manual update unless you can also add a valid
-`sparkle:dsaSignature` to the appcast entry using the old DSA private key
-(which is not stored in this repository).
-
-For a Developer ID release, sign the embedded framework and the app with the
-same identity, then notarize and staple the result. The `build-clt.sh` output
-is ad-hoc signed only and is intended for local use.
+For a Developer ID release, sign the app with your Developer ID identity, then
+notarize and staple the result. The `build-clt.sh` output is ad-hoc signed only
+and is intended for local use. There is no update feed or update-signing key to
+manage.
 
 ## Verification
 
@@ -129,8 +92,7 @@ every push and pull request.
 | --- | --- |
 | `Sources/MenuMeters/` | Swift app lifecycle, preferences, meters, temperature, PowerMate, login item |
 | `Resources/` | Localizations, disk icon TIFFs, app icon, About RTF, default preferences, release page |
-| `MenuMeters-Info.plist` | Bundle metadata, deployment target, and Sparkle keys |
-| `Sparkle.framework` | Bundled Sparkle 2.10.1 universal framework |
+| `MenuMeters-Info.plist` | Bundle metadata and deployment target |
 | `build-clt.sh` | Universal app-bundle build without Xcode |
 | `Docs/Modernization.md` | Detailed modernization and compatibility notes |
 

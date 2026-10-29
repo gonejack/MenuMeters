@@ -22,7 +22,7 @@
 		5513AE493A5907270F6E961C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3B9EFC40C6404D9CCA13FF /* AppDelegate.swift */; };
 		5615301BE52827A54B23BC98 /* LightsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 37CEEBBDE21A0174943A475D /* LightsReadWrite.tiff */; };
 		57A3B14B1E76284859BA4A24 /* Color ArrowsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = E7101E778AC2989F9B4246FB /* Color ArrowsRead.tiff */; };
-		6283449F03AE94F92FEFDA33 /* v2.0.8alert.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 718E03EEC00C77A1EC29FBE4 /* v2.0.8alert.rtf */; };
+		6283449F03AE94F92FEFDA33 /* Welcome.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 718E03EEC00C77A1EC29FBE4 /* Welcome.rtf */; };
 		65B4889393B9BABB82BF6683 /* Uptime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C738CFDB0EF7B8EB80428CF /* Uptime.swift */; };
 		65E7D4591C6786B69D4B1A17 /* Dark ArrowsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = BDD04773A6F8FB8353F692B9 /* Dark ArrowsRead.tiff */; };
 		6E2B6DCA00CBBB6A5DAE550C /* NetConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AF2E26C27AD6858D23CDE1 /* NetConfig.swift */; };
@@ -38,7 +38,6 @@
 		839E561FB2CBF1029AEA3044 /* ArrowsIdle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 47AFE81DE14884FE30B6EF2F /* ArrowsIdle.tiff */; };
 		862C95CC1CA4D36E378C1B3D /* Disk ArrowsRead.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 9EFDB226671196EA21EC9927 /* Disk ArrowsRead.tiff */; };
 		8768E678562F93D12CF7D29E /* MenuMeters.icns in Resources */ = {isa = PBXBuildFile; fileRef = 634DFED098C574D838C87A40 /* MenuMeters.icns */; };
-		8ADAE0F5F490051E6124B73B /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 903629BFFA928D1E6E626669 /* Sparkle.framework */; };
 		8F86391B41CE3904E767875B /* Disk ArrowsWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D74BD208D7D893169C6FC234 /* Disk ArrowsWrite.tiff */; };
 		9616CDD243D782F24C015C03 /* PowerMate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B715A571DA756B1EF5F062 /* PowerMate.swift */; };
 		A04F044E74BC189444F5CB45 /* CPUStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14506AA65DAFAFE1047F458E /* CPUStats.swift */; };
@@ -53,7 +52,6 @@
 		C628ACF25BA924DFBD1BABA9 /* NetStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F13427E74583F2DE39B717 /* NetStats.swift */; };
 		C6F425F3BE67E71A1F5C1D06 /* MenuExtraBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7A5E9E8278D6A26391B0E0 /* MenuExtraBase.swift */; };
 		D0E2EAA54B9E1BE1086AAE70 /* Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354FDF25D96C9A4C5A0DA780 /* Support.swift */; };
-		D8DE78DA622BEC5A3D9EEDD3 /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 903629BFFA928D1E6E626669 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DEEC5CBB530F3CDC49768BE7 /* Aqua LightsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 52E4747D00CD3671CBD28581 /* Aqua LightsReadWrite.tiff */; };
 		E1EB5FA42C3945BE7C5B13DB /* PrefsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61044B0857769AE2F8C9D8D8 /* PrefsWindow.swift */; };
 		E604ADF9BA623AFB8C222C8A /* MemStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07EFA09A59AA08887439A81D /* MemStats.swift */; };
@@ -66,20 +64,6 @@
 		F323F13E1BE45EB0C4305820 /* CPUTopProcesses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBB9E16886FE1FADF1F4FF6 /* CPUTopProcesses.swift */; };
 		F8F5571A4CD34D880FBD9447 /* ArrowsReadWrite.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 9B49AE04BE430EF7354C0151 /* ArrowsReadWrite.tiff */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		4DA428D6C2D5EAB4428B7FF0 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				D8DE78DA622BEC5A3D9EEDD3 /* Sparkle.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		06EED02F2F3AFDA990E24ADD /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
@@ -117,7 +101,7 @@
 		6BE1F9368C38F5E8B7F99EC9 /* tr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/DiskImageSet.strings; sourceTree = "<group>"; };
 		6DCFEEC13627F5B54F7EC7CE /* Aqua LightsIdle.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = "Aqua LightsIdle.tiff"; sourceTree = "<group>"; };
 		6E6CC905BE0C22FF03631F34 /* ja */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
-		718E03EEC00C77A1EC29FBE4 /* v2.0.8alert.rtf */ = {isa = PBXFileReference; includeInIndex = 1; path = v2.0.8alert.rtf; sourceTree = "<group>"; };
+		718E03EEC00C77A1EC29FBE4 /* Welcome.rtf */ = {isa = PBXFileReference; includeInIndex = 1; path = Welcome.rtf; sourceTree = "<group>"; };
 		730A3FCA4F2597C3162CD5FB /* ArrowsWrite.tiff */ = {isa = PBXFileReference; includeInIndex = 1; path = ArrowsWrite.tiff; sourceTree = "<group>"; };
 		76D39F0C28A66920026AFFD6 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
 		773E948F12FDBCBD17AF0B3E /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MenuMetersPref.strings; sourceTree = "<group>"; };
@@ -126,7 +110,6 @@
 		83AF2E26C27AD6858D23CDE1 /* NetConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetConfig.swift; sourceTree = "<group>"; };
 		8D37EADEE862E6CBB6B36C3E /* NetPPP.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetPPP.swift; sourceTree = "<group>"; };
 		8D93B963B8C87B888C0ABF0A /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/DiskImageSet.strings; sourceTree = "<group>"; };
-		903629BFFA928D1E6E626669 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		9180752E1C38F35D9FC84B88 /* CPUExtra.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CPUExtra.swift; sourceTree = "<group>"; };
 		93B38C01F4B19A6BE7A38190 /* DiskSpace.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DiskSpace.swift; sourceTree = "<group>"; };
 		93D2DB854A59DE02AFB77506 /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -173,7 +156,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8ADAE0F5F490051E6124B73B /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,7 +210,6 @@
 			isa = PBXGroup;
 			children = (
 				F9E68E67394C8AE5486A8CB8 /* OS X */,
-				903629BFFA928D1E6E626669 /* Sparkle.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -246,7 +227,7 @@
 			children = (
 				6EBCDD444263FE52065339C9 /* DiskIcons */,
 				634DFED098C574D838C87A40 /* MenuMeters.icns */,
-				718E03EEC00C77A1EC29FBE4 /* v2.0.8alert.rtf */,
+				718E03EEC00C77A1EC29FBE4 /* Welcome.rtf */,
 				5DCAC7BB610982711335E148 /* com.ragingmenace.MenuMeters.plist */,
 				DDCF90A88D17F5FB73DAAD79 /* releases.html */,
 				9026647C7FD78793732F13D0 /* Localizable.strings */,
@@ -316,7 +297,6 @@
 				37C9D9D29FA2020543364763 /* Sources */,
 				7CF6325B56F08C17B71ADC71 /* Frameworks */,
 				57B156C97AD0C201B50D6F7B /* Resources */,
-				4DA428D6C2D5EAB4428B7FF0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -370,7 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8768E678562F93D12CF7D29E /* MenuMeters.icns in Resources */,
-				6283449F03AE94F92FEFDA33 /* v2.0.8alert.rtf in Resources */,
+				6283449F03AE94F92FEFDA33 /* Welcome.rtf in Resources */,
 				BADE326973B03F9CE1F1CC63 /* com.ragingmenace.MenuMeters.plist in Resources */,
 				F0C56CE53007E5006948741B /* releases.html in Resources */,
 				748ACC9ECCF13F803CD86DFB /* Aqua LightsIdle.tiff in Resources */,
@@ -508,7 +488,6 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "MenuMeters-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujitach.MenuMeters;
@@ -656,7 +635,6 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "MenuMeters-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujitach.MenuMeters;

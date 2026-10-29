@@ -100,14 +100,8 @@
 "Graph and Throughput" = "Grafik und Durchsatz";
 "Display Network Menu Meter" = "Netzwerk Menu Meter zeigen";
 "Ignore values below 1K/s" = "Werte unter 1KB/Sek. ignorieren";
-"Automatic update check interval:" = "Automatische Updates: ";
 "Color tint:" = "Farbton:";
 "original" = "Original";
 "Activity monitor:" = "Aktivitätsanzeige:";
-"Once per day" = "Täglich";
-"Never" = "Nie";
-"Once per week" = "Wöchentlich";
-"Once per month" = "Monatlich";
 "Opens specific panes" = "Öffnet entsprechende Kategorien";
-"Check updates now" = "Nach Updates suchen";
 "pure black/white" = "Schwarz-Weiß";
